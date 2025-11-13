@@ -101,4 +101,26 @@ def is_suspicious(url):
 
     # Resultado final
     if reasons:
-        result_text = "⚠️ <_
+        result_text = "⚠️ <strong>URL suspeita:</strong> " + ", ".join(reasons)
+    else:
+        result_text = "✅ <strong>URL parece segura.</strong>"
+
+    if details:
+        result_text += "<br><br>" + "<br>".join(details)
+
+    return result_text
+
+
+@app.route("/ataques")
+def ataques():
+    return render_template("ataques.html")
+
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    result = None
+    url = None
+    if request.method == "POST":
+        url = request.form.get("url")
+        if url:
+            result = is_suspicious(url)
