@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Striped Owl Security</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#071227;
+      --bg2:#0f2746;
+      --panel:rgba(255,255,255,0.04);
+      --button:#00a0ff;
+      --neon:#4effa5;
+      --muted:#cfe9ff;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;margin:0;
+      font-family:"Roboto Mono","Segoe UI",monospace;
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--muted);
+    }
+
+    .container{max-width:980px;margin:0 auto;padding:36px 18px;display:flex;flex-direction:column;align-items:center;min-height:100vh;}
+    .hero{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;margin-top:22px;}
+
+    h1.site-title{
+      margin:0;
+      font-family:"Orbitron","Roboto Mono",sans-serif;
+      text-transform:uppercase;
+      font-weight:700;
+      font-size:clamp(24px,4.6vw,40px);
+      line-height:0.9;
+      color:#dffcff;
+      text-shadow:0 0 8px rgba(78,255,165,0.08),0 6px 18px rgba(0,0,0,0.6);
+      border-left:3px solid rgba(78,255,165,0.08);
+      border-right:3px solid rgba(78,255,165,0.03);
+      padding:6px 10px;
+    }
+
+    h1.site-title::after{
+      content:'';
+      position:absolute;left:0;right:0;bottom:-8px;height:3px;
+      background:linear-gradient(90deg,transparent,rgba(78,255,165,0.22),transparent);
+      filter:blur(6px);
+    }
+
+    p.subtitle{
+      margin-top:6px;font-size:1rem;color:rgba(207,233,255,0.9);
+      text-align:center;max-width:760px;
+    }
+
+    .search-container{
+      margin-top:12px;background:var(--panel);
+      padding:14px 16px;border-radius:8px;
+      box-shadow:0 8px 28px rgba(0,0,0,0.5);
+      display:flex;gap:8px;align-items:center;width:100%;max-width:720px;
+    }
+
+    input[type="text"]{
+      flex:1;padding:12px 14px;border:none;border-radius:6px;
+      background:rgba(255,255,255,0.02);color:var(--muted);
+      font-family:"Roboto Mono",monospace;border:1px solid rgba(255,255,255,0.03);
+    }
+
+    button.primary{
+      padding:10px 18px;border:none;
+      background:linear-gradient(180deg,var(--button),#0077c9);
+      color:#041726;border-radius:6px;cursor:pointer;font-weight:700;
+      font-family:"Orbitron",sans-serif;
+    }
+
+    .support{margin-top:26px;width:100%;display:flex;gap:18px;flex-wrap:wrap;justify-content:center;}
+    .card{background:rgba(255,255,255,0.03);border-radius:10px;padding:16px;min-width:260px;max-width:420px;
+      box-shadow:0 6px 22px rgba(0,0,0,0.45);display:flex;flex-direction:column;gap:10px;}
+    .card h3{margin:0;font-size:1.02rem;font-family:"Orbitron",sans-serif;color:#e8ffff}
+    .card p{margin:0;color:rgba(255,255,255,0.8);font-size:0.95rem;font-family:"Roboto Mono",monospace}
+    .pay-row{display:flex;gap:12px;align-items:center;width:100%}
+    .paypal-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:#003087;color:#fff;text-decoration:none;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,0.25);}
+    .paypal-btn svg{width:28px;height:28px;display:block}
+
+    .pix-box{display:flex;flex-direction:column;gap:8px;background:linear-gradient(90deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));padding:12px;border-radius:8px;width:100%;}
+    .pix-key{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;padding:8px;border-radius:6px;background:rgba(0,0,0,0.25);font-weight:600;color:#eafff0;font-family:"Roboto Mono",monospace}
+    .copy-btn{border:none;background:transparent;color:var(--neon);padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:700;}
+    .copy-btn:hover{background:rgba(78,255,165,0.04)}
+    .pix-note{font-size:0.85rem;color:rgba(255,255,255,0.75)}
+
+    footer{margin-top:auto;padding:18px 0 6px 0;width:100%;text-align:center;color:rgba(255,255,255,0.55);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1 class="site-title">STRIPED OWL SECURITY</h1>
+      <p class="subtitle">Analise domínios, IPs e URLs suspeitos para detectar malware e outras violações.</p>
+
+      <div class="search-container">
+        <form method="POST" style="display:flex;gap:8px;align-items:center;width:100%;">
+          <input type="text" name="url" placeholder="Digite a URL ou IP para verificar" required>
+          <button type="submit" class="primary">Verificar</button>
+        </form>
+      </div>
+    </header>
+
+    <!-- SEÇÃO APOIE -->
+    <section class="support">
+      <div class="card">
+        <h3>Apoie o projeto</h3>
+        <p>Se você gosta do trabalho do Striped Owl Security, sua contribuição ajuda a manter o serviço no ar.</p>
+
+        <div class="pay-row">
+          <a class="paypal-btn" href="https://www.paypal.com/donate?business=machshevreis%40mailfence.com" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 6h8a6 6 0 0 1 0 12h-1.5a.5.5 0 0 0-.48.37L17.5 24H12a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" fill="#003087"/>
+              <path d="M12 6h-2a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6.5l1.52-6.63a1.5 1.5 0 0 1 1.44-1.16H20a6 6 0 0 0 0-12h-8z" fill="#179bd7" opacity="0.95"/>
+            </svg>
+            Doar com PayPal
+          </a>
+        </div>
+        <p style="margin-top:8px;font-size:0.9rem;color:rgba(255,255,255,0.8)">Conta PayPal: <strong>machshevreis@mailfence.com</strong></p>
+      </div>
+
+      <div class="card">
+        <h3>PIX</h3>
+        <p class="pix-note">Pague rápido usando PIX — toque para copiar a chave.</p>
+
+        <div class="pix-box">
+          <div class="pix-key" id="pixKey">
+            machshevreis@mailfence.com
+            <button class="copy-btn" id="copyPixBtn">COPIAR</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>© 2025 Striped Owl Security. Todos os direitos reservados.</footer>
+  </div>
+
+  <script>
+    // Copiar chave PIX
+    (function(){
+      const copyBtn = document.getElementById('copyPixBtn');
+      const pixKeyEl = document.getElementById('pixKey');
+      copyBtn.addEventListener('click', async function(){
+        const text = pixKeyEl.textContent.trim();
+        try {
+          await navigator.clipboard.writeText(text);
+          copyBtn.textContent = 'COPIADO ✓';
+          setTimeout(()=> copyBtn.textContent = 'COPIAR', 2200);
+        } catch {
+          alert('Copie manualmente a chave PIX: ' + text);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
