@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
 
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
@@ -15,6 +16,12 @@
             color: #ffffff;
             margin: 0;
             padding: 0;
+        }
+
+        /* AQUI É O TAMANHO DA IMAGEM — AJUSTADO */
+        .header-logo {
+            width: 440px;
+            height: auto;
         }
 
         .header {
@@ -66,21 +73,17 @@
             background: #5b87c7;
         }
 
+        /* títulos + imagem lado a lado */
         .header-title {
             display: flex;
             align-items: center;
-            gap: 15px;
-        }
-
-        .header-logo {
-            width: 60px;
-            height: auto;
+            gap: 20px;
         }
 
         h1 {
             font-family: "Share Tech Mono", monospace;
-            font-size: 56px;
-            font-weight: 600;
+            font-size: 48px;
+            font-weight: 700;
             color: #ffffff;
             text-shadow: 0 0 7px rgba(255, 255, 255, 0.7),
                          0 0 15px rgba(100, 200, 255, 0.3),
@@ -223,8 +226,8 @@
             background: #5b87c7;
         }
 
-        .paypal-text,
-        .pix-text {
+        .pix-text,
+        .paypal-text {
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
@@ -246,6 +249,7 @@
             color: #ffffffb0;
             border-top: 1px solid #ffffff22;
         }
+
     </style>
 </head>
 
@@ -255,7 +259,7 @@
         <a href="ataque.html" class="highlight-button">Destaques</a>
 
         <div class="header-title">
-            <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo">
+            <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo" alt="Coruja">
             <h1>STRIPED OWL SECURITY</h1>
         </div>
 
