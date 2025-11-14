@@ -1,164 +1,182 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    
-    <style>
-        /* Variáveis de Cor baseadas na imagem de montanhas */
-        :root {
-            --bg-color-fallback: #38426b; /* Cor de fallback caso a imagem não carregue */
-            --accent: #5c6bc0;           /* Azul Escuro do botão "CHECK" */
-            --accent-hover: #4b5ca9;     
-            --title-color: #ffffff;      
-            --input-bg: #ffffff;         
-            --input-color: #333;         
-        }
 
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Cores inspiradas na imagem: Fundo escuro/azul marinho, montanhas/céu escuros, texto claro */
         body {
-            background-color: var(--bg-color-fallback);
-            background-image: url('/mnt/data/12d02cea-cf84-4ac5-8bbb-3408c591e657.png'); /* Caminho da imagem carregada */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: var(--title-color);
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
+            /* Cor de fundo base: Azul escuro, similar ao céu/água na imagem */
+            background-color: #0b1a2f; 
+            color: #ffffff; /* Texto claro */
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px; /* Mais padding no topo para centralizar */
+        }
+
+        h1 {
+            font-family: "Share Tech Mono", monospace;
+            font-size: 56px; /* Aumentado para destaque */
+            font-weight: 600;
+            color: #ffffff; /* Texto branco puro */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); /* Leve brilho branco */
+            letter-spacing: 4px; /* Aumentado */
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #a0c3e7; /* Azul claro para o subtítulo */
+            margin-top: 5px;
         }
 
         .container {
-            padding: 0 15px;
-            max-width: 780px;
-            width: 100%;
+            max-width: 650px; /* Levemente mais largo para acomodar o input box */
+            margin: 0 auto;
+            /* Fundo do container transparente ou sutilmente diferente do body */
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra mais escura */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+        }
+
+        .input-box {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: auto 0;
-        }
-
-        .hero-section {
-            text-align: center;
-            margin-bottom: 30px;
-            width: 100%;
-        }
-        
-        .logo-title {
-            color: var(--title-color);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 3rem;
-            letter-spacing: 5px;
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
-            margin: 0;
-        }
-
-        .hero-section p {
-             display: none; 
-        }
-
-        .form-container {
-            background-color: transparent;
-            padding: 0;
-            margin: 0;
-            box-shadow: none;
-        }
-        
-        .search-form {
-            display: flex;
-            width: 100%;
-            gap: 0;
+            gap: 10px;
+            margin-bottom: 25px;
         }
 
         input[type="text"] {
-            flex-grow: 1;
-            padding: 20px;
-            border-radius: 4px 0 0 4px;
-            border: none;
-            background-color: var(--input-bg);
-            color: var(--input-color);
-            font-size: 1.3rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            height: 65px;
+            flex: 1;
+            padding: 15px; /* Aumentado o padding para se parecer com a imagem */
+            border: 1px solid #557096; /* Borda cinza/azul sutil */
+            border-radius: 6px;
+            font-size: 18px;
+            background-color: #1a2a40; /* Fundo do input mais escuro que o container */
+            color: #ffffff;
         }
-
+        
         input[type="text"]::placeholder {
-            color: #999;
+            color: #8c9fae;
         }
 
         button {
-            width: 160px;
-            padding: 20px 25px;
-            background-color: var(--accent);
+            padding: 15px 25px; /* Aumentado o padding para se parecer com a imagem */
             border: none;
-            border-radius: 0 4px 4px 0;
+            /* Cor do botão similar ao botão CHECK da imagem */
+            background: #4a75a7; 
             color: white;
-            font-size: 1.3rem;
-            font-weight: bold;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            height: 65px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background 0.3s;
         }
 
         button:hover {
-            background-color: var(--accent-hover);
+            background: #5b87c7; /* Cor mais clara no hover */
         }
 
-        .donation-section, .footer-text, .result-box {
-            display: none;
+        .result-box {
+            margin-top: 20px;
+            background: #1a2a40;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4a75a7;
+            white-space: pre-wrap;
+            color: #ffffff;
+            font-size: 16px;
         }
 
-        @media (max-width: 600px) {
-            .logo-title {
-                font-size: 2.2rem;
-                letter-spacing: 3px;
-            }
-            .search-form {
-                flex-direction: column;
-            }
-            input[type="text"] {
-                padding: 15px;
-                font-size: 1.1rem;
-                border-radius: 4px;
-                height: 55px;
-            }
-            button {
-                width: 100%;
-                font-size: 1.1rem;
-                border-radius: 4px;
-                height: 55px;
-            }
+        .support-box {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05); /* Fundo sutil */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        .support-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .support-method {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .support-method img {
+            width: 26px;
+            height: 26px;
+            filter: invert(1) hue-rotate(180deg) brightness(1.5); /* Ajuste de cor para ícones em fundo escuro */
+        }
+        
+        /* Ajuste específico para o PIX, que é SVG preto */
+        .support-method img[src*="PIX_logo"] {
+            filter: invert(0) !important; /* PIX deve ter a cor original (branco/cinza) */
+            background-color: white;
+            border-radius: 50%;
         }
     </style>
+
 </head>
 <body>
 
-<div class="container">
-    <div class="hero-section">
-        <p class="logo-title">STRIPED OWL SECURITY</p>
+    <div class="header">
+        <h1>STRIPED OWL SECURITY</h1>
+        <p class="subtitle">Analise arquivos, domínios, IPs e URLs suspeitos para detectar malware e outras violações</p>
     </div>
 
-    <div class="form-container">
-        <form method="POST" class="search-form">
-            <input type="text" name="url" placeholder="Digite a URL ou IP para verificar" required>
-            <button type="submit">Verificar</button>
+    <div class="container">
+        <form method="POST">
+            <div class="input-box">
+                <input type="text" name="url" placeholder="Type what you want to test for phishing..." required>
+                <button type="submit">CHECK</button>
+                </div>
         </form>
-    </div>
-    
-    {% if result %}<div class="result-box"></div>{% endif %}
-    <div class="donation-section"></div>
-</div>
 
-<div class="footer-text"></div>
+        {% if result %}
+            <div class="result-box">{{ result|safe }}</div>
+        {% endif %}
+    </div>
+
+    <div class="support-box">
+        <div class="support-title">Apoie este projeto</div>
+
+        <div class="support-method">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174861.png" alt="PayPal Icon">
+            <span>PayPal: <b>machshevreis@mailfence.com</b></span>
+        </div>
+
+        <div class="support-method">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/PIX_logo.svg" alt="PIX Icon">
+            <span>PIX: <b>machshevreis@mailfence.com</b></span>
+        </div>
+    </div>
 
 </body>
 </html>
