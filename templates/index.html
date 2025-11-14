@@ -48,17 +48,16 @@
             z-index: 2; 
         }
 
-        /* ESTILO DO H1 COM FONTE HACKER E EFEITO GLOW */
+        /* ESTILO DO H1 HACKER */
         h1 {
-            font-family: "Share Tech Mono", monospace; /* Fonte estilo hacker */
+            font-family: "Share Tech Mono", monospace; 
             font-size: 56px;
-            font-weight: 600; /* Manteve o peso original ou um pouco mais ousado */
+            font-weight: 600; 
             color: #ffffff;
-            /* Efeito de brilho (glow) para estilo hacker */
             text-shadow: 0 0 7px rgba(255, 255, 255, 0.7), 
                          0 0 15px rgba(100, 200, 255, 0.3), 
                          0 0 25px rgba(100, 200, 255, 0.1);
-            letter-spacing: 6px; /* Espaçamento mais largo */
+            letter-spacing: 6px; 
             margin-bottom: 5px;
             text-transform: uppercase;
         }
@@ -126,6 +125,54 @@
             color: #ffffff;
             font-size: 16px;
         }
+        
+        /* ESTILOS PARA O NOVO BLOCO DE ARTIGOS */
+        .articles-container {
+            max-width: 650px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .articles-container h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .article-item {
+            background: #1a2a40;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4a75a7; 
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .article-item:hover {
+            background: #2a3a50; 
+        }
+
+        .article-item a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .article-item span {
+            font-size: 12px;
+            color: #a0c3e7;
+        }
+        /* FIM DOS ESTILOS PARA ARTIGOS */
         
         .support-container {
             max-width: 600px;
@@ -225,7 +272,7 @@
     <div class="container">
         <form method="POST">
             <div class="input-box">
-                <input type="text" name="url" placeholder="Digite o que você deseja testar..." required>
+                <input type="text" name="url" placeholder="Type what you want to test for phishing..." required>
                 <button type="submit">VERIFICAR</button>
             </div>
         </form>
@@ -237,6 +284,24 @@
         {% endif %}
     </div>
 
+    <div class="articles-container">
+        <h2>Alertas de Segurança</h2>
+        
+        <div class="article-item">
+            <a href="#">Novo Ransomware ataca empresas de energia globais</a>
+            <span>Malware | 13 de Novembro, 2025</span>
+        </div>
+
+        <div class="article-item">
+            <a href="#">Vulnerabilidade crítica em Zoom permite acesso remoto</a>
+            <span>Vulnerabilidade | 12 de Novembro, 2025</span>
+        </div>
+
+        <div class="article-item">
+            <a href="#">Hackers usam IA para criar campanhas de Phishing sofisticadas</a>
+            <span>Cibersegurança & IA | 10 de Novembro, 2025</span>
+        </div>
+    </div>
     <div class="support-container">
         <div class="support-card">
             <h2>Apoie</h2>
