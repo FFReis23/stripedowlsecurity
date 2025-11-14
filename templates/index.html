@@ -8,26 +8,27 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
     <style>
-        /* Variáveis de Cor baseadas na imagem de montanhas (Captura de tela de 2025-11-13 16-54-25.jpg) */
+        /* Variáveis de Cor baseadas na imagem de montanhas */
         :root {
-            --bg-color-main: #38426b;    /* Azul/Roxo Escuro */
-            --card-bg: rgba(0, 0, 0, 0.15); /* Quase transparente */
-            --accent: #5c6bc0;           /* Azul Escuro do botão "CHECK" */
+            --bg-color-main: #38426b;    
+            --card-bg: rgba(0, 0, 0, 0.15); 
+            --accent: #5c6bc0;           
             --accent-hover: #4b5ca9;     
-            --title-color: #ffffff;      /* Título Branco Puro */
-            --input-bg: #ffffff;         /* Fundo do Input Branco Puro */
-            --input-color: #333;         /* Texto do Input Escuro */
-            --text-muted: #d1d9ec;       /* Texto Secundário (sutilmente claro) */
+            --title-color: #ffffff;      
+            --input-bg: #ffffff;         
+            --input-color: #333;         
+            --text-light: #ffffff;       
+            --text-muted: #d1d9ec;       
         }
 
         body {
             background-color: var(--bg-color-main); 
-            color: var(--title-color); /* Texto padrão branco */
+            color: var(--title-color); 
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
             
-            /* CENTRALIZAÇÃO VERTICAL E HORIZONTAL para que o conteúdo fique no meio da tela */
+            /* CENTRALIZAÇÃO VERTICAL E HORIZONTAL */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -35,25 +36,20 @@
             min-height: 100vh; 
         }
 
-        /* Container Principal (Apenas para limitar a largura e centralizar o bloco de conteúdo) */
+        /* Container Principal */
         .container {
-            /* Definido o padding-top/bottom como 0 para forçar o alinhamento vertical */
             padding: 0 15px;
-            
-            /* Usamos max-width 780px para simular o tamanho do bloco central da imagem */
             max-width: 780px; 
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Margem vertical para afastar o conteúdo principal das bordas se a tela for maior que 100vh */
             margin: auto 0; 
         }
 
-        /* --- Hero / Título --- */
+        /* Hero / Título */
         .hero-section {
             text-align: center;
-            /* Ajusta a distância entre o título e a caixa de busca, imitando o layout da imagem */
             margin-bottom: 25px; 
             width: 100%;
         }
@@ -63,7 +59,6 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            /* Tamanho ajustado para o estilo da imagem de referência */
             font-size: 3.5rem; 
             letter-spacing: 5px;
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
@@ -77,79 +72,84 @@
 
         /* --- Formulário (Caixa de Busca) --- */
         .form-container {
-            background-color: transparent; /* Removido o fundo preto semi-transparente para imitar a imagem */
+            background-color: transparent; 
             padding: 0; 
-            border-radius: 0;
-            max-width: 100%; /* Ocupa a largura total do container */
             margin: 0;
-            box-shadow: none; /* Removida a sombra */
+            box-shadow: none; 
         }
         
         .search-form {
             display: flex;
             width: 100%;
-            /* Remover gap para que o input e o botão se encostem, como na imagem */
             gap: 0; 
         }
 
         input[type="text"] {
             flex-grow: 1;
-            padding: 15px; /* Aumentado o padding para simular o campo grande da imagem */
-            border-radius: 4px 0 0 4px; /* Apenas na esquerda */
+            /* AUMENTO DO CAMPO: Padding maior para altura e largura */
+            padding: 20px; 
+            border-radius: 4px 0 0 4px; 
             border: none;
             background-color: var(--input-bg); 
             color: var(--input-color);
-            font-size: 1.1rem; /* Fonte maior */
+            /* AUMENTO DA LETRA */
+            font-size: 1.3rem; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            height: 55px; /* Altura fixa para simular o botão */
+            /* Altura fixa ajustada ao novo padding */
+            height: 65px; 
         }
         input[type="text"]::placeholder {
+            /* O placeholder herda o font-size acima, mas ajustamos a cor se necessário */
             color: #999;
         }
         button {
-            width: 150px; /* Tamanho fixo para o botão, como na imagem */
-            padding: 15px 25px;
+            width: 160px; /* Leve aumento na largura do botão */
+            /* AUMENTO DO CAMPO: Padding maior para altura */
+            padding: 20px 25px;
             background-color: var(--accent); 
             border: none;
-            border-radius: 0 4px 4px 0; /* Apenas na direita */
+            border-radius: 0 4px 4px 0; 
             color: white;
-            font-size: 1.1rem;
+            /* AUMENTO DA LETRA */
+            font-size: 1.3rem; 
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            height: 55px;
+            /* Altura fixa ajustada ao novo padding */
+            height: 65px; 
         }
         button:hover {
             background-color: var(--accent-hover);
         }
 
-        /* --- Elementos Removidos (Doações e Footer) --- */
+        /* --- Elementos Invisíveis --- */
         .donation-section, .footer-text {
-            /* Deixados no código, mas invisíveis, caso você queira trazê-los de volta */
             display: none; 
         }
 
-        /* Responsividade para o Título */
+        /* Responsividade */
         @media (max-width: 600px) {
             .logo-title {
-                font-size: 1.8rem;
-                letter-spacing: 2px;
+                font-size: 2.2rem;
+                letter-spacing: 3px;
             }
             .hero-section p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             .search-form {
-                /* Em telas pequenas, o layout de coluna é melhor */
                 flex-direction: column; 
             }
             input[type="text"] {
-                border-radius: 4px; /* Arredonda tudo */
-                height: 50px;
+                padding: 15px; /* Ajuste o padding em telas pequenas */
+                font-size: 1.1rem;
+                border-radius: 4px; 
+                height: 55px;
             }
             button {
                 width: 100%;
-                border-radius: 4px; /* Arredonda tudo */
-                height: 50px;
+                font-size: 1.1rem;
+                border-radius: 4px; 
+                height: 55px;
             }
         }
     </style>
@@ -175,14 +175,9 @@
         </div>
     {% endif %}
 
-
-    <div class="donation-section">
-        </div>
+    <div class="donation-section"></div>
 </div>
-
-<div class="footer-text">
-    <p>© 2025 <span>Striped Owl Security</span>. Todos os direitos reservados.</p>
-</div>
+<div class="footer-text"></div>
 
 </body>
 </html>
