@@ -25,40 +25,47 @@
             background-color: var(--bg-color-main); 
             color: var(--text-light);
             font-family: 'Roboto', Arial, sans-serif;
-            padding-top: 40px;
+            margin: 0;
+            padding: 0;
+            
+            /* --- CENTRALIZAÇÃO VERTICAL E HORIZONTAL --- */
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            justify-content: center; /* Centraliza o conteúdo verticalmente */
+            min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
+            /* ------------------------------------------- */
         }
 
-        /* Container Principal */
+        /* Container Principal (Apenas para limitar a largura) */
         .container {
             max-width: 980px;
             width: 100%;
             padding: 0 15px;
+            /* Se quiser que o conteúdo principal (Hero, Form, Doação) fique em um bloco centralizado */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* Hero / Título */
         .hero-section {
             text-align: center;
-            margin-bottom: 35px; /* Aumentado o margin para compensar a remoção da imagem */
+            margin-bottom: 35px;
         }
-        
-        /* REMOÇÃO DA IMAGEM: A estilização .hero-section img foi removida. */
         
         .logo-title {
             color: var(--title-color); 
             font-family: 'Orbitron', sans-serif; 
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 2.5rem; /* AUMENTO DO TAMANHO DA FONTE DO TÍTULO */
+            font-size: 2.5rem; /* Tamanho do título aumentado */
             letter-spacing: 3px;
             text-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
         .hero-section p {
             color: var(--text-muted); 
-            font-size: 1.1rem; /* AUMENTO DO TAMANHO DA FONTE DA DESCRIÇÃO */
+            font-size: 1.1rem; /* Tamanho da descrição aumentado */
             margin-top: 10px;
         }
 
@@ -68,6 +75,7 @@
             padding: 15px 25px; 
             border-radius: 10px;
             max-width: 600px;
+            width: 100%;
             margin: 0 auto 40px auto;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
@@ -115,6 +123,7 @@
         .donation-section {
             background-color: #213042; 
             max-width: 600px;
+            width: 100%;
             margin: 30px auto;
             padding: 25px;
             border-radius: 10px;
@@ -166,13 +175,15 @@
             word-break: break-all;
         }
 
-        /* Footer */
+        /* Footer (Para manter o footer no fim da tela em layouts centralizados) */
         .footer-text {
             text-align: center;
             margin-top: 40px;
             padding-bottom: 20px;
             font-size: 0.85rem;
             color: var(--text-muted);
+            /* Importante para a centralização vertical: */
+            margin-top: auto;
         }
         .footer-text span {
             color: var(--accent);
@@ -241,10 +252,9 @@
             </div>
         </div>
     </div>
-
-    <div class="footer-text">
-        <p>© 2025 <span>Striped Owl Security</span>. Todos os direitos reservados.</p>
-    </div>
+</div>
+<div class="footer-text">
+    <p>© 2025 <span>Striped Owl Security</span>. Todos os direitos reservados.</p>
 </div>
 
 </body>
