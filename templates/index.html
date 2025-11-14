@@ -1,154 +1,173 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Striped Owl Security</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Striped Owl Security</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        :root {
+            --bg-color: #0a2c57;       /* Azul escuro principal */
+            --card-bg: #05263d;        /* Fundo dos blocos */
+            --accent: #00bcd4;         /* Azul ciano para destaques */
+            --text-light: #c9d8e3;     /* Cinza-azulado claro */
+            --text-muted: #8ea8c3;     /* Texto secundário */
+        }
 
-  <!-- Fonte estilo hacker -->
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: "Arial", sans-serif;
+            padding-top: 40px;
+        }
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f9fc;
-      color: #222;
-      margin: 0;
-      padding: 0;
-    }
+        /* Hero */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .hero-section img {
+            max-width: 140px;
+            margin-bottom: 10px;
+        }
+        .logo-title {
+            color: var(--accent);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+        .hero-section p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
 
-    .header {
-      text-align: center;
-      padding: 45px 20px;
-    }
+        /* Formulário */
+        .form-container {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 520px;
+            margin: 0 auto 25px auto;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid var(--accent);
+            background-color: transparent;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        input[type="text"]::placeholder {
+            color: #6ca6c1;
+        }
+        button {
+            margin-top: 15px;
+            padding: 8px 22px;
+            background-color: var(--accent);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #009fb3;
+        }
 
-    h1 {
-      font-family: "Share Tech Mono", monospace;
-      font-size: 48px;
-      font-weight: 600;
-      color: #00ff55; /* verde neon hacker */
-      text-shadow: 0 0 4px #00ff55, 0 0 8px #00b340;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
+        /* Doações */
+        .donation-section {
+            background-color: var(--card-bg);
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .donation-section h4 {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .donation-section p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .donation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .donation-buttons button {
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+        .pix-box {
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            padding: 12px 20px;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
 
-    .subtitle {
-      font-size: 17px;
-      color: #444;
-      margin-top: -5px;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.08);
-    }
-
-    .input-box {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 25px;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 12px 20px;
-      border: none;
-      background: #00b33c;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background: #00992f;
-    }
-
-    .result-box {
-      margin-top: 20px;
-      background: #eef4ff;
-      padding: 20px;
-      border-radius: 8px;
-      border-left: 4px solid #007bff;
-      white-space: pre-wrap;
-    }
-
-    .support-box {
-      margin-top: 40px;
-      padding: 20px;
-      text-align: center;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.06);
-    }
-
-    .support-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .support-method {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-
-    .support-method img {
-      width: 26px;
-      height: 26px;
-    }
-  </style>
-
+        /* Footer */
+        .footer-text {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .footer-text span {
+            color: var(--accent);
+        }
+    </style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>STRIPED OWL SECURITY</h1>
-    <p class="subtitle">Análise de URLs e domínios suspeitos</p>
-  </div>
-
-  <div class="container">
-    <form method="POST">
-      <div class="input-box">
-        <input type="text" name="url" placeholder="Digite uma URL ou domínio..." required>
-        <button type="submit">Verificar</button>
-      </div>
-    </form>
-
-    {% if result %}
-      <div class="result-box">{{ result|safe }}</div>
-    {% endif %}
-  </div>
-
-  <div class="support-box">
-    <div class="support-title">Apoie este projeto</div>
-
-    <div class="support-method">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174861.png">
-      <span>PayPal: <b>machshevreis@mailfence.com</b></span>
+<div class="container">
+    <div class="hero-section">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        <p class="logo-title">STRIPED OWL SECURITY</p>
+        <p>Analise domínios, IPs e URLs suspeitos para detectar malware e outras violações.</p>
     </div>
 
-    <div class="support-method">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/PIX_logo.svg">
-      <span>PIX: <b>machshevreis@mailfence.com</b></span>
+    <div class="form-container">
+        <form method="POST">
+            <input type="text" name="url" placeholder="Digite a URL ou IP para verificar" required>
+            <br>
+            <button type="submit">Verificar</button>
+        </form>
     </div>
-  </div>
+
+    <div class="donation-section">
+        <h4>Apoie o Striped Owl Security</h4>
+        <p>Ajude a manter este site online e atualizado.</p>
+        <div class="donation-buttons">
+            <form action="https://www.paypal.com/donate" method="post" target="_blank">
+                <input type="hidden" name="business" value="machshevreis@mailfence.com">
+                <input type="hidden" name="currency_code" value="BRL">
+                <button type="submit">Doar com PayPal</button>
+            </form>
+            <div class="pix-box">
+                <p><strong>Doação via Pix - Mercado Pago</strong></p>
+                <p>Chave Pix: machshevreis@mailfence.com</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-text">
+        <p>© 2025 <span>Striped Owl Security</span>. Todos os direitos reservados.</p>
+    </div>
+</div>
 
 </body>
 </html>
