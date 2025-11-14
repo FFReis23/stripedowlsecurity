@@ -115,7 +115,7 @@
             font-size: 24px;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 20px; /* Ajuste o margin-bottom para a remoção do parágrafo */
+            margin-bottom: 20px; 
         }
         
         .support-options {
@@ -125,25 +125,30 @@
             margin-top: 20px;
         }
         
-        /* NOVO ESTILO PARA O QUADRADO DO PAYPAL - Compartilha a classe .pix-box */
+        /* ESTILO DO PAYPAL AJUSTADO PARA TER O MESMO FUNDO E BORDA DO PIX */
         #paypal-box {
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Altura e largura iguais ao pix-box */
             width: 250px; 
-            height: 97px; 
-            /* Fundo azul para simular o botão */
-            background-color: #4a75a7;
-            border: 1px solid #557096; /* Mantém a borda visualmente próxima ao Pix */
-            box-shadow: none; 
+            /* Altura ajustada para que o texto "Doar com PayPal" fique centralizado */
+            height: 56px; 
+            /* CORREÇÃO: Fundo igual ao do Pix */
+            background-color: #0b1a2f; 
+            /* CORREÇÃO: Borda igual à do Pix */
+            border: 1px solid #557096;
+            border-radius: 6px;
+            padding: 15px 20px; /* Adicionado padding para igualar a área total */
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Adicionado shadow interno */
             transition: background 0.3s;
             cursor: pointer;
             font-weight: bold;
+            text-align: center; /* Centraliza o texto */
         }
         
         #paypal-box:hover {
-             background: #5b87c7;
+             /* Mantém um hover sutil */
+             background: rgba(255, 255, 255, 0.05); 
         }
         
         #paypal-box .paypal-text {
@@ -206,8 +211,9 @@
     <div class="support-container">
         <div class="support-card">
             <h2>Apoie</h2>
+            
             <div class="support-options">
-                <div class="pix-box" id="paypal-box">
+                <div id="paypal-box">
                     <div class="paypal-text">Doar com PayPal</div>
                 </div>
 
