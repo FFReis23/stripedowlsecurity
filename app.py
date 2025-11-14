@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 import re
 import tldextract
 import requests
@@ -59,7 +59,7 @@ def is_suspicious(url):
     if ext.domain in blacklist:
         reasons.append(f"Domínio na lista negra: {ext.domain}")
 
-    # WHOIS (API gratuita)
+    # WHOIS (via API gratuita)
     try:
         api_url = f"https://api.whoisfreaks.com/v1.0/whois?apiKey=free&whois=live&domainName={hostname}"
         whois_data = requests.get(api_url, timeout=5).json()
@@ -101,7 +101,7 @@ def is_suspicious(url):
     return result_text
 
 
-# Página de destaques
+# Página extra
 @app.route("/ataques")
 def ataques():
     return render_template("ataques.html")
