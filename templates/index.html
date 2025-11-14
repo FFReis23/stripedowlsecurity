@@ -5,172 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
     <style>
-        /* Cores inspiradas na imagem: Fundo escuro/azul marinho, montanhas/céu escuros, texto claro */
         body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: #0b1a2f;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
-
-        .header {
+            background: #0a0f1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
             text-align: center;
-            padding: 60px 20px 40px;
         }
 
         h1 {
-            font-family: "Share Tech Mono", monospace;
-            font-size: 56px;
-            font-weight: 600;
-            color: #ffffff;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
-            letter-spacing: 4px;
-            margin-bottom: 5px;
+            font-size: 32px;
+            margin-bottom: 10px;
         }
 
-        .subtitle {
-            font-size: 18px;
-            color: #a0c3e7;
-            margin-top: 5px;
-        }
-
-        .container {
-            max-width: 650px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .input-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #557096;
-            border-radius: 6px;
-            font-size: 18px;
-            background-color: #1a2a40;
-            color: #ffffff;
-        }
-
-        input[type="text"]::placeholder {
-            color: #8c9fae;
-        }
-
-        button {
-            padding: 15px 25px;
-            border: none;
-            background: #4a75a7;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #5b87c7;
-        }
-
-        .result-box {
-            margin-top: 20px;
-            background: #1a2a40;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #4a75a7;
-            white-space: pre-wrap;
-            color: #ffffff;
-            font-size: 16px;
-        }
-
+        /* CAIXA APOIE */
         .support-box {
             margin-top: 40px;
-            padding: 20px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 600px;
-            margin: 40px auto;
+            padding: 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .support-title {
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 26px;
             margin-bottom: 15px;
-            color: #ffffff;
+            font-weight: bold;
         }
 
-        .support-method {
+        .support-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .support-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            padding: 12px 20px;
             font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: 0.3s;
+            background: #1a2a40;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .support-method img {
-            width: 26px;
-            height: 26px;
-            filter: invert(1) hue-rotate(180deg) brightness(1.5);
+        .support-btn img {
+            width: 22px;
+            height: 22px;
+            filter: invert(1);
         }
 
-        .support-method img[src*="PIX_logo"] {
-            filter: invert(0) !important;
-            background-color: white;
-            border-radius: 50%;
+        .support-btn:hover {
+            background: #4a75a7;
+        }
+
+        #pix-msg {
+            display: none;
+            margin-top: 15px;
+            color: #8aff8a;
+            font-size: 15px;
         }
     </style>
+
 </head>
 <body>
 
-    <div class="header">
-        <h1>STRIPED OWL SECURITY</h1>
-        <p class="subtitle">Analise arquivos, domínios, IPs e URLs suspeitos para detectar malware e outras violações</p>
-    </div>
+    <h1>Striped Owl Security</h1>
+    <p>Protegendo sua informação com precisão e inteligência.</p>
 
-    <div class="container">
-        <form method="POST">
-            <div class="input-box">
-                <input type="text" name="url" placeholder="Type what you want to test for phishing..." required>
-                <button type="submit">CHECK</button>
-            </div>
-        </form>
 
-        {% if result %}
-        <div class="result-box">{{ result|safe }}</div>
-        {% endif %}
-    </div>
+    <!-- ============================== -->
+    <!-- SEÇÃO COMPLETA DO APOIO -->
+    <!-- ============================== -->
 
     <div class="support-box">
-        <div class="support-title">Apoie este projeto</div>
+        <div class="support-title">Apoie</div>
 
-        <div class="support-method">
-            <img src="https://cdn-icons-png.flaticon.com/512/174/174861.png" alt="PayPal Icon">
-            <span>PayPal: <b>machshevreis@mailfence.com</b></span>
+        <div class="support-buttons">
+
+            <!-- BOTÃO PAYPAL -->
+            <a href="https://www.paypal.com/donate?business=machshevreis@mailfence.com"
+               target="_blank" class="support-btn paypal">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174861.png" alt="PayPal">
+                PayPal
+            </a>
+
+            <!-- BOTÃO PIX -->
+            <button class="support-btn pix" onclick="copyPix()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/PIX_logo.svg" alt="PIX">
+                PIX
+            </button>
+
         </div>
 
-        <div class="support-method">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/PIX_logo.svg" alt="PIX Icon">
-            <span>PIX: <b>machshevreis@mailfence.com</b></span>
-        </div>
+        <p id="pix-msg">
+            ✔ Chave PIX copiada: <b>machshevreis@mailfence.com</b>
+        </p>
     </div>
+
+
+
+    <script>
+        function copyPix() {
+            navigator.clipboard.writeText("machshevreis@mailfence.com");
+            document.getElementById("pix-msg").style.display = "block";
+
+            setTimeout(() => {
+                document.getElementById("pix-msg").style.display = "none";
+            }, 3000);
+        }
+    </script>
 
 </body>
 </html>
