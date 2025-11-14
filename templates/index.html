@@ -9,10 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Estilos Base e Formulário */
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            background-color: #0b1a2f; /* Fundo Escuro */
+            background-color: #0b1a2f;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -23,23 +22,20 @@
             padding: 60px 20px 40px;
         }
 
-        /* AJUSTE PARA ESTILO HACKER E BRILHO */
         h1 {
             font-family: "Share Tech Mono", monospace;
             font-size: 56px;
             font-weight: 600;
             color: #ffffff;
-            /* Estilo Hacker: Glow digital com branco e azul sutil */
             text-shadow: 0 0 7px rgba(255, 255, 255, 0.7), 
                          0 0 15px rgba(100, 200, 255, 0.3), 
-                         0 0 25px rgba(100, 200, 255, 0.1); 
-            letter-spacing: 6px; /* Espaçamento para visual eletrônico */
+                         0 0 25px rgba(100, 200, 255, 0.1);
+            letter-spacing: 6px;
             margin-bottom: 5px;
         }
 
-        /* AJUSTE DE TAMANHO DA FONTE */
         .subtitle {
-            font-size: 16px; /* Tamanho da fonte diminuído */
+            font-size: 16px;
             color: #a0c3e7;
             margin-top: 5px;
         }
@@ -101,9 +97,6 @@
             font-size: 16px;
         }
 
-        /* ---------------------------------- */
-        /* Estilos da Seção de Apoio (Doação) */
-        /* ---------------------------------- */
         .support-container {
             max-width: 600px;
             margin: 40px auto;
@@ -111,7 +104,7 @@
         }
 
         .support-card {
-            background-color: #1a2a40; /* Fundo do card de busca (consistente) */
+            background-color: #1a2a40;
             border-radius: 10px;
             padding: 30px 20px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -138,7 +131,6 @@
             margin-top: 20px;
         }
 
-        /* Estilo para o botão PayPal (azul do botão CHECK - consistente) */
         .btn-paypal {
             padding: 15px 25px;
             border: none;
@@ -155,10 +147,9 @@
             background: #5b87c7;
         }
 
-        /* Estilo para a caixa do PIX (fundo do body com borda de input) */
         .pix-box {
-            background-color: #0b1a2f; /* Fundo do body (consistente) */
-            border: 1px solid #557096; /* Borda do input de texto (consistente) */
+            background-color: #0b1a2f;
+            border: 1px solid #557096;
             border-radius: 6px;
             padding: 15px 20px;
             text-align: left;
@@ -192,28 +183,34 @@
         <form method="POST">
             <div class="input-box">
                 <input type="text" name="url" placeholder="Type what you want to test for phishing..." required>
-                <button type="submit">CHECK</button>
+                <button type="submit">VERIFICAR</button>
             </div>
         </form>
 
+        {% if result %}
+        <div class="result-box">
+            {{ result|safe }}
         </div>
+        {% endif %}
+    </div>
 
     <div class="support-container">
         <div class="support-card">
             <h2>Apoie o Striped Owl Security</h2>
             <p>Ajude a manter este site online e atualizado.</p>
-    
+
             <div class="support-options">
                 <button class="btn-paypal">
                     Doar com PayPal
                 </button>
-    
+
                 <div class="pix-box">
-                    <span>Doação via Pix - Mercado Pago</span>
+                    <span>Doação via Pix</span>
                     <div class="pix-key">Chave Pix: machshevreis@mailfence.com</div>
                 </div>
             </div>
         </div>
     </div>
-    </body>
+
+</body>
 </html>
