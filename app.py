@@ -5,7 +5,6 @@ import requests
 import socket
 import ssl
 from datetime import datetime
-import whois
 
 app = Flask(__name__)
 
@@ -19,16 +18,15 @@ def is_suspicious(url):
     ext = tldextract.extract(url)
     hostname = ext.domain + "." + ext.suffix
 
-    # ------------------------------------------------------
-    # HTTPS / SSL
-    # ------------------------------------------------------
+    # HTTPS
     if not url.startswith("https://"):
         reasons.append("URL não utiliza HTTPS")
     else:
         try:
             ctx = ssl.create_default_context()
+
             with ctx.wrap_socket(socket.socket(), server_hostname=hostname) as s:
-                s.settimeout(4)
+                s.settimeout(3)
                 s.connect((hostname, 443))
                 cert = s.getpeercert()
 
@@ -36,25 +34,18 @@ def is_suspicious(url):
                 if exp_date < datetime.utcnow():
                     reasons.append("Certificado SSL expirado")
 
-        except Exception as e:
+        except Exception:
             reasons.append("Erro ao verificar SSL/TLS")
-            details.append(f"Detalhe SSL: {str(e)}")
 
-    # ------------------------------------------------------
-    # Verificação se usa IP
-    # ------------------------------------------------------
+    # Uso de IP
     if re.match(r"^https?:\/\/\d+\.\d+\.\d+\.\d+", url):
         reasons.append("Uso de IP no lugar de domínio")
 
-    # ------------------------------------------------------
     # Subdomínios
-    # ------------------------------------------------------
     if len(ext.subdomain.split(".")) > 2:
         reasons.append("Muitos subdomínios")
 
-    # ------------------------------------------------------
     # Palavras suspeitas
-    # ------------------------------------------------------
     palavras_suspeitas = [
         "login", "secure", "update", "verify",
         "account", "bank", "confirm", "payment"
@@ -63,27 +54,19 @@ def is_suspicious(url):
     if any(p in url.lower() for p in palavras_suspeitas):
         reasons.append("Contém palavras suspeitas")
 
-    # ------------------------------------------------------
-    # Lista negra
-    # ------------------------------------------------------
+    # Lista negra simples
     blacklist = ["malicious-site.com", "phishing-domain.net"]
     if ext.domain in blacklist:
         reasons.append(f"Domínio na lista negra: {ext.domain}")
 
-    # ------------------------------------------------------
-    # WHOIS
-    # ------------------------------------------------------
+    # WHOIS (via API – sem erros)
     try:
-        w = whois.whois(hostname)
+        api_url = f"https://api.whoisfreaks.com/v1.0/whois?apiKey=free&whois=live&domainName={hostname}"
+        whois_data = requests.get(api_url, timeout=5).json()
 
-        if hasattr(w, "creation_date") and w.creation_date:
-
-            creation_date = (
-                w.creation_date[0]
-                if isinstance(w.creation_date, list)
-                else w.creation_date
-            )
-
+        if "creation_date" in whois_data:
+            creation_date_str = whois_data["creation_date"]
+            creation_date = datetime.strptime(creation_date_str[:10], "%Y-%m-%d")
             age_days = (datetime.now() - creation_date).days
 
             if age_days < 30:
@@ -91,33 +74,27 @@ def is_suspicious(url):
 
             details.append(f"Idade do domínio: {age_days} dias")
 
-    except Exception as e:
-        details.append(f"Erro WHOIS: {str(e)}")
+        else:
+            details.append("WHOIS disponível, mas sem data de criação registrada")
 
-    # ------------------------------------------------------
-    # Verificação de redirecionamentos
-    # ------------------------------------------------------
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
+    except Exception:
+        details.append("Não foi possível obter informações WHOIS")
 
+    # Redirecionamentos
     try:
-        resp = requests.head(url, allow_redirects=True, timeout=8, headers=headers)
+        resp = requests.head(url, allow_redirects=True, timeout=4)
         if len(resp.history) > 0:
             details.append(f"Redirecionamentos detectados: {len(resp.history)}")
+    except Exception:
+        details.append("Não foi possível verificar redirecionamentos")
 
-    except Exception as e:
-        details.append(f"Erro ao verificar redirecionamentos: {str(e)}")
-
-    # ------------------------------------------------------
     # Resultado final
-    # ------------------------------------------------------
     if reasons:
         result_text = "⚠️ <strong>URL suspeita:</strong> " + ", ".join(reasons)
     else:
         result_text = "✅ <strong>URL parece segura.</strong>"
 
-    # Adiciona detalhes extras
+    # Detalhes adicionais
     if details:
         result_text += "<br><br>" + "<br>".join(details)
 
