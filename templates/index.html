@@ -17,21 +17,19 @@
             padding: 0;
         }
         
-        /* ESTILO DO CABEÇALHO PARA FICAR IGUAL AO ISITPHISHING.ORG */
+        /* ESTILO DO CABEÇALHO COM A IMAGEM DE FUNDO */
         .header {
-            /* Use a URL da sua imagem da montanha aqui. Substitua 'URL_DA_SUA_IMAGEM' */
+            /* Use a URL da sua imagem da montanha aqui. Substitua 'URL_DA_SUA_IMAGEM_DA_MONTANHA' */
             background-image: url('URL_DA_SUA_IMAGEM_DA_MONTANHA'); 
             background-size: cover;
             background-position: center;
-            /* Altura fixa para simular o banner, ajuste conforme necessário */
             height: 250px; 
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Alinha o conteúdo na parte inferior */
+            justify-content: flex-end; 
             align-items: center;
             text-align: center;
             padding: 0 20px 40px;
-            /* Adiciona um overlay escuro sutil para aumentar a legibilidade do texto branco */
             position: relative;
         }
 
@@ -42,37 +40,39 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.2); /* Overlay escuro */
+            background: rgba(0, 0, 0, 0.2); 
             z-index: 1;
         }
 
         .header > * {
-            z-index: 2; /* Garante que o texto fique acima do overlay */
+            z-index: 2; 
         }
-        /* FIM DO ESTILO DE CABEÇALHO */
 
-
+        /* ESTILO DO H1 COM FONTE HACKER E EFEITO GLOW */
         h1 {
-            font-family: "Roboto", Arial, sans-serif; /* Fonte para parecer mais padrão e em negrito */
+            font-family: "Share Tech Mono", monospace; /* Fonte estilo hacker */
             font-size: 56px;
-            font-weight: 900; /* Super negrito */
+            font-weight: 600; /* Manteve o peso original ou um pouco mais ousado */
             color: #ffffff;
-            text-shadow: none; /* Remove o brilho */
-            letter-spacing: 2px; /* Reduz o espaçamento */
+            /* Efeito de brilho (glow) para estilo hacker */
+            text-shadow: 0 0 7px rgba(255, 255, 255, 0.7), 
+                         0 0 15px rgba(100, 200, 255, 0.3), 
+                         0 0 25px rgba(100, 200, 255, 0.1);
+            letter-spacing: 6px; /* Espaçamento mais largo */
             margin-bottom: 5px;
             text-transform: uppercase;
         }
 
         .subtitle {
-            font-size: 14px; /* LETRAS MENORES */
-            color: #d0d0d0; /* Branco mais suave para menor destaque */
+            font-size: 14px; 
+            color: #d0d0d0; 
             margin-top: 5px;
             font-weight: 400;
         }
 
         .container {
             max-width: 650px;
-            margin: 20px auto; /* Adicionado margem superior */
+            margin: 20px auto; 
             background: rgba(255, 255, 255, 0.05);
             padding: 30px;
             border-radius: 10px;
@@ -127,7 +127,6 @@
             font-size: 16px;
         }
         
-        /* Mantendo os estilos de suporte para o caso de você usá-los mais tarde */
         .support-container {
             max-width: 600px;
             margin: 40px auto;
@@ -156,7 +155,6 @@
             margin-top: 20px;
         }
         
-        /* Estilos de PayPal e Pix mantidos para coerência, embora não estejam no screenshot */
         #paypal-box {
             display: flex;
             justify-content: center;
