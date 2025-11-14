@@ -125,65 +125,69 @@
             margin-top: 20px;
         }
         
-        /* ESTILO DO PAYPAL AJUSTADO PARA TER O MESMO FUNDO E BORDA DO PIX */
+        /* ESTILO DO QUADRADO PAYPAL (FUNDO AZUL ORIGINAL) */
         #paypal-box {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 250px; 
-            /* Altura ajustada para que o texto "Doar com PayPal" fique centralizado */
             height: 56px; 
-            /* CORREÇÃO: Fundo igual ao do Pix */
-            background-color: #0b1a2f; 
-            /* CORREÇÃO: Borda igual à do Pix */
-            border: 1px solid #557096;
+            /* Fundo Azul */
+            background-color: #4a75a7; 
+            border: none; /* Removida a borda para ficar com o estilo do botão */
             border-radius: 6px;
-            padding: 15px 20px; /* Adicionado padding para igualar a área total */
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Adicionado shadow interno */
+            padding: 15px 20px; 
+            box-shadow: none; 
             transition: background 0.3s;
             cursor: pointer;
             font-weight: bold;
-            text-align: center; /* Centraliza o texto */
+            text-align: center;
         }
         
         #paypal-box:hover {
-             /* Mantém um hover sutil */
-             background: rgba(255, 255, 255, 0.05); 
+             background: #5b87c7; 
         }
         
-        #paypal-box .paypal-text {
+        /* ESTILO DO QUADRADO PIX (NOVO) */
+        #pix-box-unified {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 250px;
+            height: 56px; 
+            /* Fundo Azul (Igual ao PayPal) */
+            background-color: #4a75a7;
+            border: none; /* Removida a borda para igualar */
+            border-radius: 6px;
+            padding: 15px 20px;
+            box-shadow: none;
+            transition: background 0.3s;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #pix-box-unified:hover {
+            background: #5b87c7;
+        }
+
+        .paypal-text, .pix-text {
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
+            margin-bottom: 5px; /* Espaço para a chave abaixo */
         }
-
-
-        .pix-box {
-            background-color: #0b1a2f;
-            border: 1px solid #557096;
-            border-radius: 6px;
-            padding: 15px 20px;
-            text-align: left;
-            width: 250px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .pix-box span {
-            display: block;
-            font-size: 14px;
-            color: #8c9fae;
-            margin-bottom: 5px;
-        }
-
-        .pix-box .pix-key {
+        
+        .pix-key {
             font-family: 'Share Tech Mono', monospace;
             font-size: 15px;
             color: #ffffff;
             word-break: break-all;
         }
-        
-        /* Remove estilos não utilizados */
-        .support-card p, .btn-paypal { display: none; }
+
+        /* Remove estilos de elementos não utilizados ou substituídos */
+        .pix-box span, .support-card p, .btn-paypal { display: none; }
     </style>
 </head>
 <body>
@@ -217,8 +221,8 @@
                     <div class="paypal-text">Doar com PayPal</div>
                 </div>
 
-                <div class="pix-box">
-                    <span>Doar via Pix</span>
+                <div id="pix-box-unified">
+                    <div class="pix-text">PIX</div> 
                     <div class="pix-key">machshevreis@mailfence.com</div>
                 </div>
             </div>
