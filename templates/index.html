@@ -5,63 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"> <style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Cor de fundo da image_34313a.png (azul claro/violeta) */
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            background-color: #3f51b5; /* Azul do fundo da Image 1 */
-            color: #ffffff; /* Texto branco */
+            background-color: #5c6bc0; 
+            color: #ffffff; 
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Garante que o footer fique no final */
+            min-height: 100vh;
         }
 
         .main-content {
-            flex-grow: 1; /* Permite que o conteúdo principal ocupe o espaço disponível */
+            flex-grow: 1; 
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Centraliza verticalmente o conteúdo */
+            justify-content: center;
             padding: 40px 20px;
         }
 
+        /* --- Seção de Título e Busca (Adaptada) --- */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px; /* Reduzido para aproximar a frase */
         }
 
         h1 {
-            font-family: 'Montserrat', sans-serif; /* Fonte para o título principal, similar à Image 1 */
+            font-family: 'Montserrat', sans-serif;
             font-size: 48px;
             font-weight: 700;
-            color: #ffffff;
+            /* Cor do título no exemplo (azul vibrante) */
+            color: #00bcd4; 
             letter-spacing: 2px;
             margin: 0;
         }
+        
+        /* Frase de descrição adicionada */
+        .description-phrase {
+            font-size: 16px;
+            color: #a0c3e7; /* Azul claro para o texto */
+            margin-top: 10px;
+            margin-bottom: 40px; /* Espaço após a frase e antes do container */
+            max-width: 450px;
+            text-align: center;
+        }
 
         .search-container {
-            max-width: 700px;
+            max-width: 600px;
             width: 100%;
-            background-color: #5c6bc0; /* Fundo do container da search bar da Image 1 */
-            padding: 25px;
+            /* Fundo da barra de busca da image_34930c.png */
+            background-color: #213042; 
+            padding: 30px; /* Aumentado o padding para se parecer com a imagem */
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             display: flex;
+            flex-direction: column; /* Input e botão em colunas */
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
         input[type="text"] {
-            flex-grow: 1;
+            width: 90%; /* Ajustado para ter margem interna no container */
             padding: 12px 15px;
-            border: 1px solid #7986cb; /* Borda do input */
-            border-radius: 6px;
+            border: 2px solid #26c6da; /* Borda azul clara do input */
+            border-radius: 4px;
             font-size: 16px;
-            background-color: #ffffff;
-            color: #333;
+            /* Fundo do input na image_34930c.png */
+            background-color: #1a2a40; 
+            color: #ffffff;
             outline: none;
+            text-align: center; /* Centraliza o texto do placeholder */
         }
 
         input[type="text"]::placeholder {
@@ -69,11 +87,12 @@
         }
 
         button {
-            padding: 12px 25px;
+            padding: 12px 40px; /* Mais largo */
             border: none;
-            background-color: #5c6bc0; /* Cor do botão da Image 1 */
+            /* Cor do botão "Verificar" da image_34930c.png */
+            background-color: #00bcd4; 
             color: white;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
@@ -81,27 +100,27 @@
         }
 
         button:hover {
-            background-color: #4b5ca9; /* Escurece um pouco no hover */
+            background-color: #00acc1;
         }
 
-        /* Seção de Doação (adaptada da Image 2) */
+        /* --- Seção de Doação (Mantida) --- */
         .donation-section {
-            margin-top: 60px; /* Espaço entre a busca e a doação */
-            background-color: #213042; /* Fundo da seção de doação da Image 2 */
+            margin-top: 60px;
+            background-color: #213042; 
             border-radius: 12px;
             padding: 30px;
             width: 100%;
-            max-width: 700px;
+            max-width: 600px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            border: 1px solid #33485c; /* Borda sutil */
+            border: 1px solid #26c6da; 
         }
 
         .donation-title {
             font-size: 24px;
             font-weight: 700;
             text-align: center;
-            color: #26c6da; /* Cor do título da doação da Image 2 */
-            margin-bottom: 10px;
+            color: #26c6da; 
+            margin-bottom: 5px;
         }
 
         .donation-subtitle {
@@ -115,68 +134,73 @@
             display: flex;
             gap: 20px;
             justify-content: center;
-            flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
+            align-items: stretch;
         }
 
-        .paypal-box, .pix-box {
-            background-color: #1a2a40; /* Fundo interno das caixas */
+        .paypal-box {
+            background-color: transparent; 
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            flex: 1; /* Permite que as caixas cresçam e diminuam */
-            min-width: 250px; /* Largura mínima para as caixas */
-            border: 1px solid #26c6da; /* Borda da Image 2 */
+            padding: 0;
+            flex: 1;
+            min-width: 180px;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Para espaçar o conteúdo verticalmente */
+            align-items: center;
         }
 
         .paypal-box button {
-            background-color: #00bcd4; /* Cor do botão "Doar com PayPal" da Image 2 */
+            background-color: #00bcd4; 
             color: white;
-            padding: 12px 20px;
-            border-radius: 6px;
+            padding: 15px 20px;
+            border-radius: 4px;
             font-size: 16px;
             font-weight: bold;
             width: 100%;
-            margin-top: 15px; /* Espaço acima do botão */
         }
 
         .paypal-box button:hover {
             background-color: #00acc1;
         }
+        
+        .pix-box {
+            background-color: #1a2a40; 
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1.5; 
+            min-width: 250px;
+            border: 1px solid #26c6da; 
+            color: #a0c3e7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
         .pix-box p {
-            margin: 0 0 10px 0;
-            color: #a0c3e7;
+            margin: 0;
             font-size: 15px;
+            line-height: 1.4;
         }
 
-        .pix-box strong {
+        .pix-box .chave {
             color: #ffffff;
-            font-size: 16px;
-            word-break: break-all; /* Garante que a chave Pix não estoure o layout */
+            font-weight: bold;
+            word-break: break-all;
         }
 
+        /* --- Footer --- */
         .footer {
-            margin-top: 60px; /* Espaço antes do footer */
+            margin-top: 60px;
             text-align: center;
             padding: 20px;
             font-size: 14px;
             color: #a0c3e7;
-            background-color: #213042; /* Fundo do footer da Image 2 */
+            background-color: #213042; 
             border-top: 1px solid #33485c;
             width: 100%;
         }
 
         /* Adaptação para telas menores */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 38px;
-            }
+        @media (max-width: 650px) {
             .search-container {
-                flex-direction: column;
-                gap: 10px;
                 padding: 20px;
             }
             button {
@@ -199,6 +223,8 @@
         <div class="header">
             <h1>STRIPED OWL SECURITY</h1>
         </div>
+        
+        <p class="description-phrase">Analise domínios, IPs e URLs suspeitos para detectar malware e outras violações.</p>
 
         <div class="search-container">
             <input type="text" name="url" placeholder="Digite a URL ou IP para verificar" required>
@@ -216,7 +242,7 @@
 
                 <div class="pix-box">
                     <p>Doação via Pix - Mercado Pago</p>
-                    <p>Chave Pix: <strong>machshevreis@mailfence.com</strong></p>
+                    <p class="chave">Chave Pix: machshevreis@mailfence.com</p>
                 </div>
             </div>
         </div>
