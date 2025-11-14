@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Striped Owl Security</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
     <style>
-        /* Variáveis de Cor baseadas na imagem de montanhas */
+        /* Variáveis de Cor baseadas na imagem de montanhas (Captura de tela de 2025-11-13 16-54-25.jpg) */
         :root {
-            --bg-color-main: #38426b;    
-            --card-bg: rgba(0, 0, 0, 0.15); 
-            --accent: #5c6bc0;           
+            --bg-color-fallback: #38426b; /* Cor de fallback caso a imagem não carregue */
+            --accent: #5c6bc0;           /* Azul Escuro do botão "CHECK" */
             --accent-hover: #4b5ca9;     
             --title-color: #ffffff;      
             --input-bg: #ffffff;         
             --input-color: #333;         
-            --text-light: #ffffff;       
-            --text-muted: #d1d9ec;       
         }
 
         body {
-            background-color: var(--bg-color-main); 
+            /* 1. ADICIONANDO IMAGEM DE FUNDO (USAR SUA IMAGEM) */
+            background-color: var(--bg-color-fallback); 
+            background-image: url('CAMINHO_PARA_SUA_IMAGEM_DE_FUNDO.jpg'); /* Substitua pelo caminho real */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
             color: var(--title-color); 
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family: 'Orbitron', sans-serif;
             margin: 0;
             padding: 0;
             
@@ -39,6 +42,7 @@
         /* Container Principal */
         .container {
             padding: 0 15px;
+            /* Largura total do bloco central, como na imagem */
             max-width: 780px; 
             width: 100%;
             display: flex;
@@ -47,10 +51,11 @@
             margin: auto 0; 
         }
 
-        /* Hero / Título */
+        /* --- Hero / Título --- */
         .hero-section {
             text-align: center;
-            margin-bottom: 25px; 
+            /* Distância ajustada para imitar a imagem */
+            margin-bottom: 30px; 
             width: 100%;
         }
         
@@ -59,15 +64,16 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 3.5rem; 
+            /* Tamanho ajustado: entre 2.5rem e 3.5rem para imitar a imagem */
+            font-size: 3rem; 
             letter-spacing: 5px;
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
-            margin-bottom: 5px;
+            /* Remove margem inferior para deixar o título mais compacto */
+            margin: 0; 
         }
+        /* DESCRIÇÃO REMOVIDA PARA IMITAR O LAYOUT DA IMAGEM */
         .hero-section p {
-            color: var(--text-muted); 
-            font-size: 1.3rem; 
-            margin-top: 0;
+             display: none; 
         }
 
         /* --- Formulário (Caixa de Busca) --- */
@@ -86,7 +92,7 @@
 
         input[type="text"] {
             flex-grow: 1;
-            /* AUMENTO DO CAMPO: Padding maior para altura e largura */
+            /* AUMENTO DO CAMPO: Padding maior para altura */
             padding: 20px; 
             border-radius: 4px 0 0 4px; 
             border: none;
@@ -95,27 +101,23 @@
             /* AUMENTO DA LETRA */
             font-size: 1.3rem; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            /* Altura fixa ajustada ao novo padding */
             height: 65px; 
         }
         input[type="text"]::placeholder {
-            /* O placeholder herda o font-size acima, mas ajustamos a cor se necessário */
             color: #999;
         }
         button {
-            width: 160px; /* Leve aumento na largura do botão */
-            /* AUMENTO DO CAMPO: Padding maior para altura */
+            width: 160px; 
             padding: 20px 25px;
             background-color: var(--accent); 
             border: none;
             border-radius: 0 4px 4px 0; 
             color: white;
-            /* AUMENTO DA LETRA */
+            /* AUMENTO DA LETRA (CHECK) */
             font-size: 1.3rem; 
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            /* Altura fixa ajustada ao novo padding */
             height: 65px; 
         }
         button:hover {
@@ -123,7 +125,7 @@
         }
 
         /* --- Elementos Invisíveis --- */
-        .donation-section, .footer-text {
+        .donation-section, .footer-text, .result-box {
             display: none; 
         }
 
@@ -133,14 +135,11 @@
                 font-size: 2.2rem;
                 letter-spacing: 3px;
             }
-            .hero-section p {
-                font-size: 1.1rem;
-            }
             .search-form {
                 flex-direction: column; 
             }
             input[type="text"] {
-                padding: 15px; /* Ajuste o padding em telas pequenas */
+                padding: 15px;
                 font-size: 1.1rem;
                 border-radius: 4px; 
                 height: 55px;
@@ -159,8 +158,7 @@
 <div class="container">
     <div class="hero-section">
         <p class="logo-title">STRIPED OWL SECURITY</p>
-        <p>Analise domínios, IPs e URLs suspeitos.</p>
-    </div>
+        </div>
 
     <div class="form-container">
         <form method="POST" class="search-form">
@@ -169,12 +167,7 @@
         </form>
     </div>
     
-    {% if result %}
-        <div class="result-box">
-            {{ result|safe }}
-        </div>
-    {% endif %}
-
+    {% if result %}<div class="result-box"></div>{% endif %}
     <div class="donation-section"></div>
 </div>
 <div class="footer-text"></div>
