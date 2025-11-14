@@ -5,207 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
         body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: #0b1a2f;
-            color: #ffffff;
             margin: 0;
-            padding: 0;
-        }
-        
-        .header {
-            background-image: url('URL_DA_SUA_IMAGEM_DA_MONTANHA'); 
-            background-size: cover;
-            background-position: center;
-            height: 250px; 
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end; 
-            align-items: center;
+            font-family: "Orbitron", sans-serif;
+            background-color: #0a0a0a;
+            color: #00ff9f;
             text-align: center;
-            padding: 0 20px 40px;
-            position: relative;
-        }
-
-        .header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2); 
-            z-index: 1;
-        }
-
-        .header > * {
-            z-index: 2; 
-        }
-
-        .highlight-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 3;
-            background-color: #4a75a7;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            transition: background 0.3s;
-            text-transform: uppercase;
-        }
-
-        .highlight-button:hover {
-            background: #5b87c7;
         }
 
         h1 {
-            font-family: "Share Tech Mono", monospace; 
-            font-size: 56px;
-            font-weight: 600; 
-            color: #ffffff;
-            text-shadow: 0 0 7px rgba(255, 255, 255, 0.7), 
-                         0 0 15px rgba(100, 200, 255, 0.3), 
-                         0 0 25px rgba(100, 200, 255, 0.1);
-            letter-spacing: 6px; 
-            margin-bottom: 5px;
-            text-transform: uppercase;
+            margin-top: 60px;
+            font-size: 32px;
+            text-shadow: 0 0 15px #00ff9f;
         }
 
-        .subtitle {
-            font-size: 14px; 
-            color: #d0d0d0; 
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        .container {
-            max-width: 650px;
-            margin: 20px auto; 
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .input-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #557096;
-            border-radius: 6px;
+        p {
             font-size: 18px;
-            background-color: #1a2a40;
-            color: #ffffff;
-        }
-
-        input[type="text"]::placeholder {
-            color: #8c9fae;
-        }
-
-        button {
-            padding: 15px 25px;
-            border: none;
-            background: #4a75a7;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #5b87c7;
-        }
-
-        .result-box {
             margin-top: 20px;
-            background: #1a2a40;
+        }
+
+        .footer {
+            margin-top: 80px;
             padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #4a75a7;
-            white-space: pre-wrap;
-            color: #ffffff;
-            font-size: 16px;
+            font-size: 14px;
+            color: #00ff9f;
+            opacity: 0.7;
+            border-top: 1px solid #00ff9f55;
         }
-        
-        .support-container {
-            max-width: 600px;
-            margin: 40px auto;
-            text-align: center;
-        }
+    </style>
+</head>
 
-        .support-card {
-            background-color: #1a2a40;
-            border-radius: 10px;
-            padding: 30px 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+<body>
 
-        .support-card h2 {
-            font-size: 18px; /* TAMANHO REDUZIDO */
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 20px; 
-        }
-        
-        .support-options {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-        
-        /* Tornamos o botão PayPal um <a> estilizado para funcionar como link */
-        #paypal-box {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 250px; 
-            height: 56px; 
-            background-color: #4a75a7; 
-            border: none;
-            border-radius: 6px;
-            padding: 15px 20px; 
-            transition: background 0.3s;
-            cursor: pointer;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            color: #ffffff;
-        }
-        
-        #paypal-box:hover {
-             background: #5b87c7; 
-        }
-        
-        #pix-box-unified {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 250px;
-            height: 56px; 
-            background-color: #4a75a7;
-            border: none;
-            border-radius: 6px;
-            padding: 15px 20px;
-            transition: background 0.3s;
-            cursor: pointer;
-            font-weight: bold;
+    <h1>Striped Owl Security</h1>
+
+    <p>Ajude a manter nosso site no ar!</p>
+
+    <br><br>
+
+    <!-- Botão PayPal -->
+    <form action="https://www.paypal.com/donate" method="post" target="_blank">
+        <input type="hidden" name="business" value="machshevreis@mailfence.com">
+        <input type="hidden" name="currency_code" value="BRL">
+        <button type="submit"
+            style="padding: 12px 24px; font-size: 18px; background: #0070ba; color: white; border: none; cursor: pointer; border-radius: 8px;">
+            Doar via PayPal
+        </button>
+    </form>
+
+    <br>
+
+    <!-- Botão PIX -->
+    <button onclick="navigator.clipboard.writeText('machshevreis@mailfence.com'); alert('Chave PIX copiada: machshevreis@mailfence.com');"
+        style="padding: 12px 24px; font-size: 18px; background: #00c853; color: white; border: none; cursor: pointer; border-radius: 8px;">
+        Doar via Pix
+    </button>
+
+    <!-- RODAPÉ -->
+    <div class="footer">
+        © 2025 Striped Owl Security — Todos os direitos reservados.
+    </div>
+
+</body>
+</html>
