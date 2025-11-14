@@ -115,37 +115,43 @@
             font-size: 24px;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 5px;
+            margin-bottom: 20px; /* Ajuste o margin-bottom para a remoção do parágrafo */
         }
-
-        .support-card p {
-            font-size: 16px;
-            color: #a0c3e7;
-            margin-bottom: 25px;
-        }
-
+        
         .support-options {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
         }
-
-        .btn-paypal {
-            padding: 15px 25px;
-            border: none;
-            background: #4a75a7;
-            color: #ffffff;
-            border-radius: 6px;
+        
+        /* NOVO ESTILO PARA O QUADRADO DO PAYPAL - Compartilha a classe .pix-box */
+        #paypal-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Altura e largura iguais ao pix-box */
+            width: 250px; 
+            height: 97px; 
+            /* Fundo azul para simular o botão */
+            background-color: #4a75a7;
+            border: 1px solid #557096; /* Mantém a borda visualmente próxima ao Pix */
+            box-shadow: none; 
+            transition: background 0.3s;
             cursor: pointer;
+            font-weight: bold;
+        }
+        
+        #paypal-box:hover {
+             background: #5b87c7;
+        }
+        
+        #paypal-box .paypal-text {
             font-size: 16px;
             font-weight: bold;
-            transition: background 0.3s;
+            color: #ffffff;
         }
 
-        .btn-paypal:hover {
-            background: #5b87c7;
-        }
 
         .pix-box {
             background-color: #0b1a2f;
@@ -170,6 +176,9 @@
             color: #ffffff;
             word-break: break-all;
         }
+        
+        /* Remove estilos não utilizados */
+        .support-card p, .btn-paypal { display: none; }
     </style>
 </head>
 <body>
@@ -196,18 +205,15 @@
 
     <div class="support-container">
         <div class="support-card">
-            <h2>Apoie o Striped Owl Security</h2>
-            <p>Ajude a manter este site online e atualizado.</p>
-
+            <h2>Apoie</h2>
             <div class="support-options">
-                <button class="btn-paypal">
-                    Doar com PayPal
-                </button>
+                <div class="pix-box" id="paypal-box">
+                    <div class="paypal-text">Doar com PayPal</div>
+                </div>
 
                 <div class="pix-box">
                     <span>Doar via Pix</span>
-                    <div Chave PIX</div>
-                    <div class="pix-key">machshevreis@gmail.com</div>
+                    <div class="pix-key">machshevreis@mailfence.com</div>
                 </div>
             </div>
         </div>
