@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Cor de fundo da image_34313a.png (azul claro/violeta) */
+        /* Cor de fundo principal: Azul/Roxo Escuro da imagem */
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            background-color: #5c6bc0; 
+            background-color: #38426b; 
             color: #ffffff; 
             margin: 0;
             padding: 0;
@@ -29,28 +29,27 @@
             padding: 40px 20px;
         }
 
-        /* --- Seção de Título e Busca (Adaptada) --- */
+        /* --- Seção de Título e Busca (Adaptada ao novo esquema de cores) --- */
         .header {
             text-align: center;
-            margin-bottom: 25px; /* Reduzido para aproximar a frase */
+            margin-bottom: 25px;
         }
 
         h1 {
             font-family: 'Montserrat', sans-serif;
             font-size: 48px;
             font-weight: 700;
-            /* Cor do título no exemplo (azul vibrante) */
-            color: #00bcd4; 
+            /* Cor do título (mantido branco ou levemente claro) */
+            color: #ffffff; 
             letter-spacing: 2px;
             margin: 0;
         }
         
-        /* Frase de descrição adicionada */
         .description-phrase {
             font-size: 16px;
-            color: #a0c3e7; /* Azul claro para o texto */
+            color: #d1d9ec; /* Azul muito claro para o texto */
             margin-top: 10px;
-            margin-bottom: 40px; /* Espaço após a frase e antes do container */
+            margin-bottom: 40px; 
             max-width: 450px;
             text-align: center;
         }
@@ -58,28 +57,27 @@
         .search-container {
             max-width: 600px;
             width: 100%;
-            /* Fundo da barra de busca da image_34930c.png */
-            background-color: #213042; 
-            padding: 30px; /* Aumentado o padding para se parecer com a imagem */
+            /* Fundo da barra de busca (quase transparente ou cinza sutil) */
+            background-color: rgba(0, 0, 0, 0.1); 
+            padding: 15px; /* Reduzido o padding para ficar mais compacto */
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             display: flex;
-            flex-direction: column; /* Input e botão em colunas */
             align-items: center;
-            gap: 20px;
+            gap: 10px;
         }
 
         input[type="text"] {
-            width: 90%; /* Ajustado para ter margem interna no container */
+            flex-grow: 1;
             padding: 12px 15px;
-            border: 2px solid #26c6da; /* Borda azul clara do input */
+            /* Cor de fundo branca do input da imagem */
+            background-color: #ffffff; 
+            color: #333;
+            border: none;
             border-radius: 4px;
             font-size: 16px;
-            /* Fundo do input na image_34930c.png */
-            background-color: #1a2a40; 
-            color: #ffffff;
             outline: none;
-            text-align: center; /* Centraliza o texto do placeholder */
+            text-align: left; /* Alinhamento padrão da URL */
         }
 
         input[type="text"]::placeholder {
@@ -87,10 +85,10 @@
         }
 
         button {
-            padding: 12px 40px; /* Mais largo */
+            padding: 12px 25px;
             border: none;
-            /* Cor do botão "Verificar" da image_34930c.png */
-            background-color: #00bcd4; 
+            /* Cor do botão "CHECK" da imagem (Azul/Roxo escuro) */
+            background-color: #5c6bc0; 
             color: white;
             border-radius: 4px;
             cursor: pointer;
@@ -100,26 +98,27 @@
         }
 
         button:hover {
-            background-color: #00acc1;
+            background-color: #485794;
         }
 
-        /* --- Seção de Doação (Mantida) --- */
+        /* --- Seção de Doação (Cores Adaptadas) --- */
         .donation-section {
             margin-top: 60px;
+            /* Fundo da doação mais escuro para destaque */
             background-color: #213042; 
             border-radius: 12px;
             padding: 30px;
             width: 100%;
             max-width: 600px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            border: 1px solid #26c6da; 
+            border: 1px solid #485794; /* Borda sutil */
         }
 
         .donation-title {
             font-size: 24px;
             font-weight: 700;
             text-align: center;
-            color: #26c6da; 
+            color: #d1d9ec; 
             margin-bottom: 5px;
         }
 
@@ -148,7 +147,7 @@
         }
 
         .paypal-box button {
-            background-color: #00bcd4; 
+            background-color: #485794; /* Azul/Roxo do botão da busca */
             color: white;
             padding: 15px 20px;
             border-radius: 4px;
@@ -158,7 +157,7 @@
         }
 
         .paypal-box button:hover {
-            background-color: #00acc1;
+            background-color: #38426b;
         }
         
         .pix-box {
@@ -167,7 +166,7 @@
             padding: 15px;
             flex: 1.5; 
             min-width: 250px;
-            border: 1px solid #26c6da; 
+            border: 1px solid #485794; /* Borda sutil */
             color: #a0c3e7;
             display: flex;
             flex-direction: column;
@@ -201,6 +200,7 @@
         /* Adaptação para telas menores */
         @media (max-width: 650px) {
             .search-container {
+                flex-direction: column;
                 padding: 20px;
             }
             button {
@@ -228,7 +228,7 @@
 
         <div class="search-container">
             <input type="text" name="url" placeholder="Digite a URL ou IP para verificar" required>
-            <button type="submit">Verificar</button>
+            <button type="submit">CHECK</button>
         </div>
 
         <div class="donation-section">
