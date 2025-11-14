@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         /* Cor de fundo principal: Azul/Roxo Escuro da imagem */
@@ -29,25 +29,27 @@
             padding: 40px 20px;
         }
 
-        /* --- Seção de Título e Busca (Adaptada ao novo esquema de cores) --- */
+        /* --- Seção de Título e Busca --- */
         .header {
             text-align: center;
             margin-bottom: 25px;
         }
 
         h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 48px;
-            font-weight: 700;
-            /* Cor do título (mantido branco ou levemente claro) */
+            /* ESTILO HACKER APLICADO AQUI */
+            font-family: 'Press Start 2P', cursive; 
+            font-size: 38px; /* Ajustado para a fonte Press Start 2P */
+            font-weight: 400;
+            /* Cor do título mantida branca */
             color: #ffffff; 
-            letter-spacing: 2px;
+            letter-spacing: 5px; /* Aumentado o espaçamento */
             margin: 0;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); /* Leve brilho branco */
         }
         
         .description-phrase {
             font-size: 16px;
-            color: #d1d9ec; /* Azul muito claro para o texto */
+            color: #d1d9ec; 
             margin-top: 10px;
             margin-bottom: 40px; 
             max-width: 450px;
@@ -57,9 +59,8 @@
         .search-container {
             max-width: 600px;
             width: 100%;
-            /* Fundo da barra de busca (quase transparente ou cinza sutil) */
             background-color: rgba(0, 0, 0, 0.1); 
-            padding: 15px; /* Reduzido o padding para ficar mais compacto */
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             display: flex;
@@ -70,14 +71,13 @@
         input[type="text"] {
             flex-grow: 1;
             padding: 12px 15px;
-            /* Cor de fundo branca do input da imagem */
             background-color: #ffffff; 
             color: #333;
             border: none;
             border-radius: 4px;
             font-size: 16px;
             outline: none;
-            text-align: left; /* Alinhamento padrão da URL */
+            text-align: left;
         }
 
         input[type="text"]::placeholder {
@@ -87,7 +87,7 @@
         button {
             padding: 12px 25px;
             border: none;
-            /* Cor do botão "CHECK" da imagem (Azul/Roxo escuro) */
+            /* Cor do botão (Azul/Roxo escuro) */
             background-color: #5c6bc0; 
             color: white;
             border-radius: 4px;
@@ -101,17 +101,16 @@
             background-color: #485794;
         }
 
-        /* --- Seção de Doação (Cores Adaptadas) --- */
+        /* --- Seção de Doação --- */
         .donation-section {
             margin-top: 60px;
-            /* Fundo da doação mais escuro para destaque */
             background-color: #213042; 
             border-radius: 12px;
             padding: 30px;
             width: 100%;
             max-width: 600px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            border: 1px solid #485794; /* Borda sutil */
+            border: 1px solid #485794;
         }
 
         .donation-title {
@@ -147,7 +146,7 @@
         }
 
         .paypal-box button {
-            background-color: #485794; /* Azul/Roxo do botão da busca */
+            background-color: #485794; 
             color: white;
             padding: 15px 20px;
             border-radius: 4px;
@@ -166,7 +165,7 @@
             padding: 15px;
             flex: 1.5; 
             min-width: 250px;
-            border: 1px solid #485794; /* Borda sutil */
+            border: 1px solid #485794;
             color: #a0c3e7;
             display: flex;
             flex-direction: column;
@@ -199,6 +198,9 @@
 
         /* Adaptação para telas menores */
         @media (max-width: 650px) {
+            h1 {
+                font-size: 28px;
+            }
             .search-container {
                 flex-direction: column;
                 padding: 20px;
@@ -228,7 +230,7 @@
 
         <div class="search-container">
             <input type="text" name="url" placeholder="Digite a URL ou IP para verificar" required>
-            <button type="submit">CHECK</button>
+            <button type="submit">Verificar</button>
         </div>
 
         <div class="donation-section">
