@@ -9,10 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Cores inspiradas na imagem: Fundo escuro/azul marinho, montanhas/céu escuros, texto claro */
+        /* Estilos Base e Formulário */
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            background-color: #0b1a2f;
+            background-color: #0b1a2f; /* Fundo Escuro */
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -96,45 +96,83 @@
             font-size: 16px;
         }
 
-        .support-box {
-            margin-top: 40px;
-            padding: 20px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* ---------------------------------- */
+        /* Estilos da NOVA Seção de Apoio (Doação) */
+        /* ---------------------------------- */
+        .support-container {
             max-width: 600px;
             margin: 40px auto;
+            text-align: center;
         }
 
-        .support-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
+        .support-card {
+            background-color: #1a434c; /* Cor de fundo escura/esverdeada da caixa (similar à imagem) */
+            border-radius: 12px;
+            padding: 30px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .support-card h2 {
+            font-size: 24px;
+            font-weight: 700;
             color: #ffffff;
+            margin-bottom: 5px;
         }
 
-        .support-method {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
+        .support-card p {
             font-size: 16px;
+            color: #a0c3e7;
+            margin-bottom: 25px;
         }
 
-        .support-method img {
-            width: 26px;
-            height: 26px;
-            filter: invert(1) hue-rotate(180deg) brightness(1.5);
+        .support-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .support-method img[src*="PIX_logo"] {
-            filter: invert(0) !important;
-            background-color: white;
-            border-radius: 50%;
+        /* Estilo para o botão PayPal (cor clara/turquesa da imagem) */
+        .btn-paypal {
+            padding: 15px 25px;
+            border: 2px solid #5ce0e0;
+            background: #25a4ac;
+            color: #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .btn-paypal:hover {
+            background: #2cb7c0;
+            border-color: #5ce0e0;
+        }
+
+        /* Estilo para a caixa do PIX (cor escura com borda fina) */
+        .pix-box {
+            background-color: #0b1a2f; /* Fundo mais escuro (cor do body) */
+            border: 1px solid #5ce0e0; /* Borda da cor do botão PayPal */
+            border-radius: 8px;
+            padding: 15px 20px;
+            text-align: left;
+            width: 250px;
+        }
+
+        .pix-box span {
+            display: block;
+            font-size: 14px;
+            color: #a0c3e7;
+            margin-bottom: 5px;
+        }
+
+        .pix-box .pix-key {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 15px;
+            color: #ffffff;
+            word-break: break-all;
         }
     </style>
 </head>
@@ -153,41 +191,24 @@
             </div>
         </form>
 
-        {% if result %}
-        <div class="result-box">{{ result|safe }}</div>
-        {% endif %}
-    </div>
-
-    <div class="support-box">
-        <div class="support-title">Apoie este projeto</div>
-
-        <div class="support-method" style="gap:20px; justify-content:center;">
-            <!-- Botão PayPal -->
-            <form action="https://www.paypal.com/donate" method="post" target="_blank" style="display:inline-block;">
-                <input type="hidden" name="business" value="machshevreis@mailfence.com" />
-                <input type="hidden" name="no_recurring" value="0" />
-                <input type="hidden" name="currency_code" value="BRL" />
-                <button type="submit" style="padding:12px 20px; border:none; background:#0070ba; color:white; border-radius:6px; cursor:pointer; font-weight:bold;">PayPal</button>
-            </form>
-
-            <!-- Botão PIX -->
-            <button onclick="navigator.clipboard.writeText('machshevreis@mailfence.com'); alert('Chave PIX copiada!');" 
-                style="padding:12px 20px; border:none; background:#00cc66; color:white; border-radius:6px; cursor:pointer; font-weight:bold;">
-                PIX
-            </button>
-        </div>
-    </div>
-
-        <div class="support-method">
-            <img src="https://cdn-icons-png.flaticon.com/512/174/174861.png" alt="PayPal Icon">
-            <span>PayPal: <b>machshevreis@mailfence.com</b></span>
         </div>
 
-        <div class="support-method">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/PIX_logo.svg" alt="PIX Icon">
-            <span>PIX: <b>machshevreis@mailfence.com</b></span>
+    <div class="support-container">
+        <div class="support-card">
+            <h2>Apoie o Striped Owl Security</h2>
+            <p>Ajude a manter este site online e atualizado.</p>
+    
+            <div class="support-options">
+                <button class="btn-paypal">
+                    Doar com PayPal
+                </button>
+    
+                <div class="pix-box">
+                    <span>Doação via Pix - Mercado Pago</span>
+                    <div class="pix-key">Chave Pix: machshevreis@mailfence.com</div>
+                </div>
+            </div>
         </div>
     </div>
-
-</body>
+    </body>
 </html>
