@@ -1,313 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Striped Owl Security</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: #0b1a2f;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .header {
-            background-image: url('URL_DA_SUA_IMAGEM_DA_MONTANHA'); 
-            background-size: cover;
-            background-position: center;
-            height: 250px; 
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end; 
-            align-items: center;
+            background: #0a0a0a;
+            color: #00e1ff;
+            font-family: "Orbitron", sans-serif;
             text-align: center;
-            padding: 0 20px 40px;
-            position: relative;
-        }
-
-        .header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2); 
-            z-index: 1;
-        }
-
-        .header > * {
-            z-index: 2; 
-        }
-
-        .highlight-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 3;
-            background-color: #4a75a7;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            transition: background 0.3s;
-            text-transform: uppercase;
-        }
-
-        .highlight-button:hover {
-            background: #5b87c7;
-        }
-
-        /* TITULO COM LOGO */
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            z-index: 2;
+            padding: 40px;
         }
 
         .header-logo {
-            width: 60px;
-            height: auto;
+            width: 140px;
+            margin-bottom: 10px;
         }
 
         h1 {
-            font-family: "Share Tech Mono", monospace; 
-            font-size: 56px;
-            font-weight: 600; 
-            color: #ffffff;
-            text-shadow: 0 0 7px rgba(255, 255, 255, 0.7), 
-                         0 0 15px rgba(100, 200, 255, 0.3), 
-                         0 0 25px rgba(100, 200, 255, 0.1);
-            letter-spacing: 6px; 
-            margin: 0;
-            text-transform: uppercase;
+            font-size: 28px;
+            margin-top: 0;
         }
 
-        .subtitle {
-            font-size: 14px;
-            color: #d0d0d0; 
-            margin-top: 5px;
-            font-weight: 400;
+        .button-box {
+            margin-top: 30px;
         }
 
-        .container {
-            max-width: 650px;
-            margin: 20px auto; 
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
+        .btn {
+            background: #001f29;
+            color: #00eaff;
+            padding: 14px 25px;
+            font-size: 18px;
+            border: 2px solid #00eaff;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .input-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #557096;
-            border-radius: 6px;
-            font-size: 18px;
-            background-color: #1a2a40;
-            color: #ffffff;
-        }
-
-        input[type="text"]::placeholder {
-            color: #8c9fae;
-        }
-
-        button {
-            padding: 15px 25px;
-            border: none;
-            background: #4a75a7;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #5b87c7;
-        }
-
-        .result-box {
-            margin-top: 20px;
-            background: #1a2a40;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #4a75a7;
-            white-space: pre-wrap;
-            color: #ffffff;
-            font-size: 16px;
-        }
-        
-        .support-container {
-            max-width: 600px;
-            margin: 40px auto;
-            text-align: center;
-        }
-
-        .support-card {
-            background-color: #1a2a40;
-            border-radius: 10px;
-            padding: 30px 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .support-card h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 20px; 
-        }
-        
-        .support-options {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        /* PAYPAL */
-        #paypal-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 250px; 
-            height: 56px; 
-            background-color: #4a75a7; 
-            border-radius: 6px;
-            padding: 15px 20px;
-            transition: background 0.3s;
-            cursor: pointer;
-            font-weight: bold;
-            text-align: center;
             text-decoration: none;
-            color: #ffffff;
-        }
-        
-        #paypal-box:hover {
-             background: #5b87c7; 
-        }
-
-        /* PIX */
-        #pix-box-unified {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 250px;
-            height: 56px; 
-            background-color: #4a75a7;
-            border-radius: 6px;
-            padding: 15px 20px;
-            transition: background 0.3s;
+            display: inline-block;
+            margin: 10px;
             cursor: pointer;
-            font-weight: bold;
-            text-align: center;
+            transition: 0.3s;
         }
 
-        #pix-box-unified:hover {
-            background: #5b87c7;
+        .btn:hover {
+            background: #00eaff;
+            color: #001f29;
+            box-shadow: 0 0 12px #00eaff;
         }
 
-        .paypal-text, .pix-text {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 5px;
-        }
-        
-        .pix-key {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 15px;
-            color: #ffffff;
-            word-break: break-all;
+        .pix-box {
+            background: #041017;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid #00eaff;
+            display: inline-block;
+            margin-top: 10px;
         }
 
-        /* RODAPÉ */
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 14px;
-            color: #ffffffb0;
-            border-top: 1px solid #ffffff22;
+        .pix-text {
+            font-size: 18px;
+            margin-bottom: 8px;
         }
-
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <a href="ataque.html" class="highlight-button">Destaques</a>
+    <img src="{{ url_for('static', filename='coruja.png') }}" alt="Coruja" class="header-logo">
 
-        <div class="header-title">
-            <img src="coruja.png" alt="Coruja" class="header-logo">
-            <h1>STRIPED OWL SECURITY</h1>
-        </div>
-        
-        <p class="subtitle">Analise IPs e URLs suspeitos para detectar malware e outras violações.</p>
-    </div>
+    <h1>STRIPED OWL SECURITY</h1>
+    <p>Ajude a manter este projeto no ar ⭐</p>
 
-    <div class="container">
-        <form method="POST">
-            <div class="input-box">
-                <input type="text" name="url" placeholder="Digite o que você deseja testar" required>
-                <button type="submit">VERIFICAR</button>
-            </div>
-        </form>
+    <div class="button-box">
+        <!-- Botão PayPal -->
+        <a class="btn" 
+           href="https://www.paypal.com/donate?business=machshevreis@mailfence.com">
+            💳 Doar via PayPal
+        </a>
 
-        {% if result %}
-        <div class="result-box">
-            {{ result|safe }}
-        </div>
-        {% endif %}
-    </div>
+        <!-- PIX -->
+        <div class="pix-box">
+            <div class="pix-text">Chave PIX:</div>
+            <div class="pix-text"><b>machshevreis@mailfence.com</b></div>
 
-    <div class="support-container">
-        <div class="support-card">
-            <h2>Apoie o site e ajude a manter no ar</h2>
-            
-            <div class="support-options">
-
-                <!-- BOTÃO PAYPAL -->
-                <a id="paypal-box" 
-                   href="https://www.paypal.com/donate?business=machshevreis@mailfence.com&currency_code=BRL" 
-                   target="_blank">
-                    <div class="paypal-text">Doar com PayPal</div>
-                </a>
-
-                <!-- PIX -->
-                <div id="pix-box-unified" onclick="navigator.clipboard.writeText('machshevreis@mailfence.com'); alert('Chave PIX copiada: machshevreis@mailfence.com');">
-                    <div class="pix-text">PIX</div> 
-                    <div class="pix-key">machshevreis@mailfence.com</div>
-                </div>
-
-            </div>
+            <button class="btn" onclick="copiarPix()">Copiar PIX</button>
         </div>
     </div>
 
-    <!-- RODAPÉ -->
-    <div class="footer">
-        © 2025 Striped Owl Security — Todos os direitos reservados.
-    </div>
+    <script>
+        function copiarPix() {
+            const chave = "machshevreis@mailfence.com";
+            navigator.clipboard.writeText(chave);
+            alert("Chave PIX copiada!");
+        }
+    </script>
 
 </body>
 </html>
