@@ -16,33 +16,63 @@
             margin: 0;
             padding: 0;
         }
-
+        
+        /* ESTILO DO CABEÇALHO PARA FICAR IGUAL AO ISITPHISHING.ORG */
         .header {
+            /* Use a URL da sua imagem da montanha aqui. Substitua 'URL_DA_SUA_IMAGEM' */
+            background-image: url('URL_DA_SUA_IMAGEM_DA_MONTANHA'); 
+            background-size: cover;
+            background-position: center;
+            /* Altura fixa para simular o banner, ajuste conforme necessário */
+            height: 250px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Alinha o conteúdo na parte inferior */
+            align-items: center;
             text-align: center;
-            padding: 60px 20px 40px;
+            padding: 0 20px 40px;
+            /* Adiciona um overlay escuro sutil para aumentar a legibilidade do texto branco */
+            position: relative;
         }
 
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2); /* Overlay escuro */
+            z-index: 1;
+        }
+
+        .header > * {
+            z-index: 2; /* Garante que o texto fique acima do overlay */
+        }
+        /* FIM DO ESTILO DE CABEÇALHO */
+
+
         h1 {
-            font-family: "Share Tech Mono", monospace;
+            font-family: "Roboto", Arial, sans-serif; /* Fonte para parecer mais padrão e em negrito */
             font-size: 56px;
-            font-weight: 600;
+            font-weight: 900; /* Super negrito */
             color: #ffffff;
-            text-shadow: 0 0 7px rgba(255, 255, 255, 0.7), 
-                         0 0 15px rgba(100, 200, 255, 0.3), 
-                         0 0 25px rgba(100, 200, 255, 0.1);
-            letter-spacing: 6px;
+            text-shadow: none; /* Remove o brilho */
+            letter-spacing: 2px; /* Reduz o espaçamento */
             margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
         .subtitle {
-            font-size: 16px;
-            color: #a0c3e7;
+            font-size: 14px; /* LETRAS MENORES */
+            color: #d0d0d0; /* Branco mais suave para menor destaque */
             margin-top: 5px;
+            font-weight: 400;
         }
 
         .container {
             max-width: 650px;
-            margin: 0 auto;
+            margin: 20px auto; /* Adicionado margem superior */
             background: rgba(255, 255, 255, 0.05);
             padding: 30px;
             border-radius: 10px;
@@ -96,7 +126,8 @@
             color: #ffffff;
             font-size: 16px;
         }
-
+        
+        /* Mantendo os estilos de suporte para o caso de você usá-los mais tarde */
         .support-container {
             max-width: 600px;
             margin: 40px auto;
@@ -125,16 +156,15 @@
             margin-top: 20px;
         }
         
-        /* ESTILO DO QUADRADO PAYPAL (FUNDO AZUL ORIGINAL) */
+        /* Estilos de PayPal e Pix mantidos para coerência, embora não estejam no screenshot */
         #paypal-box {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 250px; 
             height: 56px; 
-            /* Fundo Azul */
             background-color: #4a75a7; 
-            border: none; /* Removida a borda para ficar com o estilo do botão */
+            border: none;
             border-radius: 6px;
             padding: 15px 20px; 
             box-shadow: none; 
@@ -148,7 +178,6 @@
              background: #5b87c7; 
         }
         
-        /* ESTILO DO QUADRADO PIX (NOVO) */
         #pix-box-unified {
             display: flex;
             flex-direction: column;
@@ -156,9 +185,8 @@
             align-items: center;
             width: 250px;
             height: 56px; 
-            /* Fundo Azul (Igual ao PayPal) */
             background-color: #4a75a7;
-            border: none; /* Removida a borda para igualar */
+            border: none;
             border-radius: 6px;
             padding: 15px 20px;
             box-shadow: none;
@@ -176,7 +204,7 @@
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
-            margin-bottom: 5px; /* Espaço para a chave abaixo */
+            margin-bottom: 5px;
         }
         
         .pix-key {
@@ -185,9 +213,8 @@
             color: #ffffff;
             word-break: break-all;
         }
-
-        /* Remove estilos de elementos não utilizados ou substituídos */
-        .pix-box span, .support-card p, .btn-paypal { display: none; }
+        
+        .support-card p, .btn-paypal, .pix-box { display: none; }
     </style>
 </head>
 <body>
