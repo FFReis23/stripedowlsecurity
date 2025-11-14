@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
 
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+        /* ... (Mantenha o BODY, header-logo, e header) ... */
+
         body {
             font-family: 'Roboto', Arial, sans-serif;
             background-color: #0b1a2f;
@@ -52,25 +53,29 @@
         .header > * {
             z-index: 2;
         }
-
-        .highlight-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+        
+        /* NOVO ESTILO PARA O BOTÃO NO CANTO SUPERIOR DIREITO */
+        .btn-destaques {
+            position: absolute; /* Posiciona o elemento em relação ao seu pai (.header) */
+            top: 20px;          /* Distância do topo */
+            right: 20px;        /* Distância da direita */
             z-index: 3;
-            background-color: #4a75a7;
+            
+            /* Estilo visual para parecer com o botão VERIFICAR */
+            background-color: #3b73b2;
             color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
+            padding: 12px 25px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 14px;
-            transition: background 0.3s;
+            font-size: 16px;
             text-transform: uppercase;
+            transition: background 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
-        .highlight-button:hover {
-            background: #5b87c7;
+        .btn-destaques:hover {
+            background: #2c598a;
         }
 
         /* títulos + imagem lado a lado */
@@ -79,6 +84,7 @@
             align-items: center;
             gap: 20px;
         }
+        /* ... (Mantenha o H1 e o subtitle) ... */
 
         h1 {
             font-family: "Share Tech Mono", monospace;
@@ -99,6 +105,8 @@
             margin-top: 5px;
             font-weight: 400;
         }
+
+        /* ... (Mantenha o container, input-box, input[type="text"]) ... */
 
         .container {
             max-width: 650px;
@@ -130,6 +138,7 @@
             color: #8c9fae;
         }
 
+        /* ESTILO DO BOTÃO "VERIFICAR" - BASEADO NA IMAGEM ENVIADA */
         button {
             padding: 15px 25px;
             border: none;
@@ -140,12 +149,15 @@
             font-size: 18px;
             font-weight: bold;
             transition: background 0.3s;
+            text-transform: uppercase; /* Para garantir que seja em maiúsculas */
         }
 
         button:hover {
             background: #5b87c7;
         }
 
+        /* ... (Mantenha o result-box, support-container, etc.) ... */
+        
         .result-box {
             margin-top: 20px;
             background: #1a2a40;
@@ -256,7 +268,8 @@
 <body>
 
     <div class="header">
-  <a href="ataque.html" class="btn-destaques">★ Destaques</a>
+        <a href="ataque.html" class="btn-destaques">★ DESTAQUES</a>
+        
         <div class="header-title">
             <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo" alt="Coruja">
             <h1>STRIPED OWL SECURITY</h1>
@@ -287,14 +300,14 @@
             <div class="support-options">
 
                 <a id="paypal-box"
-                   href="https://www.paypal.com/donate?business=machshevreis@mailfence.com&currency_code=BRL"
-                   target="_blank">
+                    href="https://www.paypal.com/donate?business=machshevreis@mailfence.com&currency_code=BRL"
+                    target="_blank">
                     <div class="paypal-text">Doar com PayPal</div>
                 </a>
 
                 <div id="pix-box-unified"
-                     onclick="navigator.clipboard.writeText('machshevreis@mailfence.com'); 
-                              alert('Chave PIX copiada: machshevreis@mailfence.com');">
+                    onclick="navigator.clipboard.writeText('machshevreis@mailfence.com'); 
+                            alert('Chave PIX copiada: machshevreis@mailfence.com');">
                     <div class="pix-text">PIX</div>
                     <div class="pix-key">machshevreis@mailfence.com</div>
                 </div>
