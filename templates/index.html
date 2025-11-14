@@ -48,6 +48,29 @@
             z-index: 2; 
         }
 
+        /* ESTILO DO BOTÃO DE DESTAQUES (NOVO) */
+        .highlight-button {
+            position: absolute; /* Posição absoluta dentro do cabeçalho */
+            top: 20px;
+            right: 20px;
+            z-index: 3; /* Acima de tudo */
+            background-color: #4a75a7;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.3s;
+            text-transform: uppercase;
+        }
+
+        .highlight-button:hover {
+            background: #5b87c7;
+        }
+        /* FIM DO ESTILO DO BOTÃO DESTAQUES */
+
+
         /* ESTILO DO H1 HACKER */
         h1 {
             font-family: "Share Tech Mono", monospace; 
@@ -126,54 +149,7 @@
             font-size: 16px;
         }
         
-        /* ESTILOS PARA O NOVO BLOCO DE ARTIGOS */
-        .articles-container {
-            max-width: 650px;
-            margin: 40px auto;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .articles-container h2 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .article-item {
-            background: #1a2a40;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            border-left: 4px solid #4a75a7; 
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .article-item:hover {
-            background: #2a3a50; 
-        }
-
-        .article-item a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .article-item span {
-            font-size: 12px;
-            color: #a0c3e7;
-        }
-        /* FIM DOS ESTILOS PARA ARTIGOS */
-        
+        /* ESTILOS DE SUPORTE */
         .support-container {
             max-width: 600px;
             margin: 40px auto;
@@ -265,6 +241,8 @@
 <body>
 
     <div class="header">
+        <a href="ataque.html" class="highlight-button">Destaques</a>
+        
         <h1>STRIPED OWL SECURITY</h1>
         <p class="subtitle">Analise arquivos, domínios, IPs e URLs suspeitos para detectar malware e outras violações</p>
     </div>
@@ -284,24 +262,6 @@
         {% endif %}
     </div>
 
-    <div class="articles-container">
-        <h2>Alertas de Segurança</h2>
-        
-        <div class="article-item">
-            <a href="#">Novo Ransomware ataca empresas de energia globais</a>
-            <span>Malware | 13 de Novembro, 2025</span>
-        </div>
-
-        <div class="article-item">
-            <a href="#">Vulnerabilidade crítica em Zoom permite acesso remoto</a>
-            <span>Vulnerabilidade | 12 de Novembro, 2025</span>
-        </div>
-
-        <div class="article-item">
-            <a href="#">Hackers usam IA para criar campanhas de Phishing sofisticadas</a>
-            <span>Cibersegurança & IA | 10 de Novembro, 2025</span>
-        </div>
-    </div>
     <div class="support-container">
         <div class="support-card">
             <h2>Apoie</h2>
