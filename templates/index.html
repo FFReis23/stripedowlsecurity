@@ -1,37 +1,149 @@
-
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Striped Owl Security</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    /* Seu CSS do projeto aqui (copiado do que você já enviou) */
-    body { font-family: "Roboto Mono", monospace; background:#071227; color:#cfe9ff; margin:0; padding:0; }
-    .container { max-width: 980px; margin: 0 auto; padding: 36px; display:flex; flex-direction:column; align-items:center;}
-    .search-container { margin-top:12px; }
-    input[type="text"] { padding:10px; border-radius:6px; border:none; width:400px; }
-    button.primary { padding:10px 16px; border:none; border-radius:6px; cursor:pointer; background:#00a0ff; color:#041726; font-weight:bold; }
-    .result-box { margin-top:16px; padding:12px; border-radius:6px; background:#00387f; color:#fff; max-width:720px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fc; /* fundo claro */
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #0a1a33;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #444;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.08);
+    }
+
+    .input-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #005fcc;
+    }
+
+    .result-box {
+      margin-top: 20px;
+      background: #eef4ff;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #007bff;
+      white-space: pre-wrap;
+    }
+
+    .support-box {
+      margin-top: 40px;
+      padding: 20px;
+      text-align: center;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.06);
+    }
+
+    .support-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .support-method {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .support-method img {
+      width: 26px;
+      height: 26px;
+    }
   </style>
+
 </head>
 <body>
-  <div class="container">
-    <h1>STRIPED OWL SECURITY</h1>
-    <p>Analise domínios, IPs e URLs suspeitos.</p>
 
-    <div class="search-container">
-      <form method="POST" style="display:flex; gap:8px;">
-        <input type="text" name="url" placeholder="Digite a URL ou IP para verificar" required>
-        <button type="submit" class="primary">Verificar</button>
-      </form>
-    </div>
+  <div class="header">
+    <h1>Striped Owl Security</h1>
+    <p class="subtitle">Análise segura de URLs, domínios e possíveis ameaças</p>
+  </div>
+
+  <div class="container">
+    <form method="POST">
+      <div class="input-box">
+        <input type="text" name="url" placeholder="Digite uma URL ou domínio..." required>
+        <button type="submit">Verificar</button>
+      </div>
+    </form>
 
     {% if result %}
       <div class="result-box">{{ result|safe }}</div>
     {% endif %}
   </div>
+
+  <div class="support-box">
+    <div class="support-title">Apoie este projeto</div>
+
+    <!-- PayPal -->
+    <div class="support-method">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174861.png">
+      <span>PayPal: <b>machshevreis@mailfence.com</b></span>
+    </div>
+
+    <!-- PIX -->
+    <div class="support-method">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/PIX_logo.svg">
+      <span>PIX: <b>machshevreis@mailfence.com</b></span>
+    </div>
+  </div>
+
 </body>
 </html>
