@@ -169,10 +169,12 @@
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         
+        /* Tornamos o botão PayPal um <a> estilizado para funcionar como link */
         #paypal-box {
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
             width: 250px; 
@@ -185,6 +187,8 @@
             cursor: pointer;
             font-weight: bold;
             text-align: center;
+            text-decoration: none;
+            color: #ffffff;
         }
         
         #paypal-box:hover {
@@ -205,72 +209,3 @@
             transition: background 0.3s;
             cursor: pointer;
             font-weight: bold;
-            text-align: center;
-        }
-
-        #pix-box-unified:hover {
-            background: #5b87c7;
-        }
-
-        .paypal-text, .pix-text {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 5px;
-        }
-        
-        .pix-key {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 15px;
-            color: #ffffff;
-            word-break: break-all;
-        }
-        
-        .support-card p, .btn-paypal, .pix-box {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="header">
-        <a href="ataque.html" class="highlight-button">Destaques</a>
-        
-        <h1>STRIPED OWL SECURITY</h1>
-        <p class="subtitle">Analise IPs e URLs suspeitos para detectar malware e outras violações</p>
-    </div>
-
-    <div class="container">
-        <form method="POST">
-            <div class="input-box">
-                <input type="text" name="url" placeholder="Digite o que você deseja testar" required>
-                <button type="submit">VERIFICAR</button>
-            </div>
-        </form>
-
-        {% if result %}
-        <div class="result-box">
-            {{ result|safe }}
-        </div>
-        {% endif %}
-    </div>
-
-    <div class="support-container">
-        <div class="support-card">
-            <h2>Apoie o site e ajude a manter no ar</h2>
-            
-            <div class="support-options">
-                <div id="paypal-box">
-                    <div class="paypal-text">Doar com PayPal</div>
-                </div>
-
-                <div id="pix-box-unified">
-                    <div class="pix-text">PIX</div> 
-                    <div class="pix-key">machshevreis@mailfence.com</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</body>
-</html>
