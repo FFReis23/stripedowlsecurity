@@ -5,244 +5,226 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"> <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            /* Azul de fundo mais claro, similar ao céu na imagem, mas um tom mais vibrante */
-            background-color: #1a4a82; 
-            color: #ffffff; /* Texto claro */
+            background-color: #3f51b5; /* Azul do fundo da Image 1 */
+            color: #ffffff; /* Texto branco */
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Garante que o footer fique no final */
+        }
+
+        .main-content {
+            flex-grow: 1; /* Permite que o conteúdo principal ocupe o espaço disponível */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Centraliza verticalmente o conteúdo */
+            padding: 40px 20px;
         }
 
         .header {
             text-align: center;
-            padding: 60px 20px 40px;
+            margin-bottom: 40px;
         }
 
         h1 {
-            /* Fonte mais chamativa estilo hacker */
-            font-family: 'Press Start 2P', cursive; 
-            font-size: 40px; /* Ajustado para caber o estilo da fonte */
-            font-weight: 400; /* Fontes pixeladas geralmente não usam bold */
-            color: #72f23b; /* Verde neon vibrante */
-            text-shadow: 
-                0 0 7px #72f23b, 
-                0 0 15px #72f23b, 
-                0 0 25px rgba(114, 242, 59, 0.7); /* Efeito neon mais forte */
-            letter-spacing: 5px; 
-            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif; /* Fonte para o título principal, similar à Image 1 */
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+            margin: 0;
         }
 
-        .subtitle {
-            font-size: 18px;
-            color: #a0c3e7; /* Azul claro para o subtítulo */
-            margin-top: 5px;
-        }
-
-        .container {
-            max-width: 650px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.3); /* Fundo um pouco mais escuro para contraste */
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.2); /* Borda mais visível */
-        }
-
-        .input-box {
+        .search-container {
+            max-width: 700px;
+            width: 100%;
+            background-color: #5c6bc0; /* Fundo do container da search bar da Image 1 */
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
+            align-items: center;
+            gap: 15px;
         }
 
         input[type="text"] {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #557096;
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #7986cb; /* Borda do input */
             border-radius: 6px;
-            font-size: 18px;
-            background-color: #1a2a40;
-            color: #ffffff;
+            font-size: 16px;
+            background-color: #ffffff;
+            color: #333;
+            outline: none;
         }
-        
+
         input[type="text"]::placeholder {
             color: #8c9fae;
         }
 
         button {
-            padding: 15px 25px;
+            padding: 12px 25px;
             border: none;
-            /* Cor do botão mais vibrante */
-            background: #2196f3; 
+            background-color: #5c6bc0; /* Cor do botão da Image 1 */
             color: white;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #0d8aee; /* Cor mais escura no hover */
-        }
-
-        .result-box {
-            margin-top: 20px;
-            background: #1a2a40;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #2196f3;
-            white-space: pre-wrap;
-            color: #ffffff;
             font-size: 16px;
-        }
-
-        .support-box {
-            margin-top: 40px;
-            padding: 20px;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 600px;
-            margin: 40px auto;
-        }
-
-        .support-title {
-            font-size: 20px; /* Aumentado */
             font-weight: bold;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-
-        .support-method {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px; /* Mais espaço entre os métodos */
-            font-size: 16px;
-        }
-
-        .support-method img {
-            width: 30px; /* Ícones um pouco maiores */
-            height: 30px;
-            filter: invert(0); /* Remove o filtro padrão, vamos aplicar individualmente */
-            margin-right: 5px; /* Espaço entre ícone e texto */
-        }
-        
-        /* PayPal icon */
-        .support-method img[src*="174861.png"] {
-            filter: invert(1) brightness(1.5); /* Branco com brilho */
-        }
-
-        /* PIX icon */
-        .support-method img[src*="PIX_logo.svg"] {
-            background-color: white; /* Fundo branco para o logo PIX */
-            border-radius: 5px; /* Cantos levemente arredondados */
-            padding: 2px;
-            width: 35px; /* Ajuste para o padding */
-            height: 35px;
-        }
-
-        /* Estilo para a caixa de chave Pix/PayPal */
-        .copy-input-container {
-            display: flex;
-            align-items: center;
-            background-color: #2a3d53; /* Fundo mais escuro para a chave */
-            border-radius: 5px;
-            padding: 8px 10px;
-            margin-left: 10px;
-            max-width: 250px; /* Limitar largura da caixa */
-        }
-
-        .copy-input {
-            border: none;
-            background: none;
-            color: #ffffff;
-            font-size: 15px;
-            flex-grow: 1;
-            padding: 0;
-            outline: none; /* Remover outline no focus */
-            cursor: text; /* Indicar que é selecionável */
-        }
-
-        .copy-button {
-            background-color: #4CAF50; /* Verde para copiar */
-            color: white;
-            border: none;
-            border-radius: 3px;
-            padding: 5px 8px;
-            margin-left: 8px;
-            cursor: pointer;
-            font-size: 14px;
             transition: background-color 0.2s;
         }
 
-        .copy-button:hover {
-            background-color: #45a049;
+        button:hover {
+            background-color: #4b5ca9; /* Escurece um pouco no hover */
+        }
+
+        /* Seção de Doação (adaptada da Image 2) */
+        .donation-section {
+            margin-top: 60px; /* Espaço entre a busca e a doação */
+            background-color: #213042; /* Fundo da seção de doação da Image 2 */
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid #33485c; /* Borda sutil */
+        }
+
+        .donation-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            color: #26c6da; /* Cor do título da doação da Image 2 */
+            margin-bottom: 10px;
+        }
+
+        .donation-subtitle {
+            font-size: 16px;
+            text-align: center;
+            color: #a0c3e7;
+            margin-bottom: 30px;
+        }
+
+        .donation-methods {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
+        }
+
+        .paypal-box, .pix-box {
+            background-color: #1a2a40; /* Fundo interno das caixas */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            flex: 1; /* Permite que as caixas cresçam e diminuam */
+            min-width: 250px; /* Largura mínima para as caixas */
+            border: 1px solid #26c6da; /* Borda da Image 2 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Para espaçar o conteúdo verticalmente */
+        }
+
+        .paypal-box button {
+            background-color: #00bcd4; /* Cor do botão "Doar com PayPal" da Image 2 */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px; /* Espaço acima do botão */
+        }
+
+        .paypal-box button:hover {
+            background-color: #00acc1;
+        }
+
+        .pix-box p {
+            margin: 0 0 10px 0;
+            color: #a0c3e7;
+            font-size: 15px;
+        }
+
+        .pix-box strong {
+            color: #ffffff;
+            font-size: 16px;
+            word-break: break-all; /* Garante que a chave Pix não estoure o layout */
+        }
+
+        .footer {
+            margin-top: 60px; /* Espaço antes do footer */
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #a0c3e7;
+            background-color: #213042; /* Fundo do footer da Image 2 */
+            border-top: 1px solid #33485c;
+            width: 100%;
+        }
+
+        /* Adaptação para telas menores */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 38px;
+            }
+            .search-container {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+            }
+            button {
+                width: 100%;
+            }
+            .donation-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+            .paypal-box, .pix-box {
+                width: 90%;
+            }
         }
     </style>
 
 </head>
 <body>
 
-    <div class="header">
-        <h1>STRIPED OWL SECURITY</h1>
-        <p class="subtitle">Análise de URLs e domínios suspeitos</p>
-    </div>
-
-    <div class="container">
-        <form method="POST">
-            <div class="input-box">
-                <input type="text" name="url" placeholder="Digite uma URL ou domínio..." required>
-                <button type="submit">Verificar</button>
-            </div>
-        </form>
-
-        {% if result %}
-            <div class="result-box">{{ result|safe }}</div>
-        {% endif %}
-    </div>
-
-    <div class="support-box">
-        <div class="support-title">Apoie este projeto</div>
-
-        <div class="support-method">
-            <img src="https://cdn-icons-png.flaticon.com/512/174/174861.png" alt="PayPal Icon">
-            <span>PayPal:</span>
-            <div class="copy-input-container">
-                <input type="text" class="copy-input" value="machshevreis@mailfence.com" readonly id="paypalKey">
-                <button class="copy-button" onclick="copyToClipboard('paypalKey')">Copiar</button>
-            </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>STRIPED OWL SECURITY</h1>
         </div>
 
-        <div class="support-method">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/PIX_logo.svg" alt="PIX Icon">
-            <span>PIX:</span>
-            <div class="copy-input-container">
-                <input type="text" class="copy-input" value="machshevreis@mailfence.com" readonly id="pixKey">
-                <button class="copy-button" onclick="copyToClipboard('pixKey')">Copiar</button>
+        <div class="search-container">
+            <input type="text" name="url" placeholder="Digite a URL ou IP para verificar" required>
+            <button type="submit">Verificar</button>
+        </div>
+
+        <div class="donation-section">
+            <h2 class="donation-title">Apoie o Striped Owl Security</h2>
+            <p class="donation-subtitle">Ajude a manter este site online e atualizado.</p>
+
+            <div class="donation-methods">
+                <div class="paypal-box">
+                    <button>Doar com PayPal</button>
+                </div>
+
+                <div class="pix-box">
+                    <p>Doação via Pix - Mercado Pago</p>
+                    <p>Chave Pix: <strong>machshevreis@mailfence.com</strong></p>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-        function copyToClipboard(elementId) {
-            const copyText = document.getElementById(elementId);
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // Para mobile
-            document.execCommand("copy");
-            alert("Chave copiada: " + copyText.value);
-        }
-    </script>
+    <footer class="footer">
+        © 2025 Striped Owl Security. Todos os direitos reservados.
+    </footer>
 
 </body>
 </html>
