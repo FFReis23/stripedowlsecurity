@@ -5,16 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Cores inspiradas na imagem: Fundo escuro/azul marinho, montanhas/céu escuros, texto claro */
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            /* Cor de fundo base: Azul escuro, similar ao céu/água na imagem */
-            background-color: #0b1a2f; 
+            /* Azul de fundo mais claro, similar ao céu na imagem, mas um tom mais vibrante */
+            background-color: #1a4a82; 
             color: #ffffff; /* Texto claro */
             margin: 0;
             padding: 0;
@@ -22,16 +21,20 @@
 
         .header {
             text-align: center;
-            padding: 60px 20px 40px; /* Mais padding no topo para centralizar */
+            padding: 60px 20px 40px;
         }
 
         h1 {
-            font-family: "Share Tech Mono", monospace;
-            font-size: 56px; /* Aumentado para destaque */
-            font-weight: 600;
-            color: #ffffff; /* Texto branco puro */
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); /* Leve brilho branco */
-            letter-spacing: 4px; /* Aumentado */
+            /* Fonte mais chamativa estilo hacker */
+            font-family: 'Press Start 2P', cursive; 
+            font-size: 40px; /* Ajustado para caber o estilo da fonte */
+            font-weight: 400; /* Fontes pixeladas geralmente não usam bold */
+            color: #72f23b; /* Verde neon vibrante */
+            text-shadow: 
+                0 0 7px #72f23b, 
+                0 0 15px #72f23b, 
+                0 0 25px rgba(114, 242, 59, 0.7); /* Efeito neon mais forte */
+            letter-spacing: 5px; 
             margin-bottom: 5px;
         }
 
@@ -42,14 +45,13 @@
         }
 
         .container {
-            max-width: 650px; /* Levemente mais largo para acomodar o input box */
+            max-width: 650px;
             margin: 0 auto;
-            /* Fundo do container transparente ou sutilmente diferente do body */
-            background: rgba(255, 255, 255, 0.05); 
+            background: rgba(0, 0, 0, 0.3); /* Fundo um pouco mais escuro para contraste */
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra mais escura */
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Borda mais visível */
         }
 
         .input-box {
@@ -60,11 +62,11 @@
 
         input[type="text"] {
             flex: 1;
-            padding: 15px; /* Aumentado o padding para se parecer com a imagem */
-            border: 1px solid #557096; /* Borda cinza/azul sutil */
+            padding: 15px;
+            border: 1px solid #557096;
             border-radius: 6px;
             font-size: 18px;
-            background-color: #1a2a40; /* Fundo do input mais escuro que o container */
+            background-color: #1a2a40;
             color: #ffffff;
         }
         
@@ -73,10 +75,10 @@
         }
 
         button {
-            padding: 15px 25px; /* Aumentado o padding para se parecer com a imagem */
+            padding: 15px 25px;
             border: none;
-            /* Cor do botão similar ao botão CHECK da imagem */
-            background: #4a75a7; 
+            /* Cor do botão mais vibrante */
+            background: #2196f3; 
             color: white;
             border-radius: 6px;
             cursor: pointer;
@@ -86,7 +88,7 @@
         }
 
         button:hover {
-            background: #5b87c7; /* Cor mais clara no hover */
+            background: #0d8aee; /* Cor mais escura no hover */
         }
 
         .result-box {
@@ -94,7 +96,7 @@
             background: #1a2a40;
             padding: 20px;
             border-radius: 8px;
-            border-left: 4px solid #4a75a7;
+            border-left: 4px solid #2196f3;
             white-space: pre-wrap;
             color: #ffffff;
             font-size: 16px;
@@ -104,17 +106,17 @@
             margin-top: 40px;
             padding: 20px;
             text-align: center;
-            background: rgba(255, 255, 255, 0.05); /* Fundo sutil */
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             max-width: 600px;
             margin: 40px auto;
         }
 
         .support-title {
-            font-size: 18px;
+            font-size: 20px; /* Aumentado */
             font-weight: bold;
             margin-bottom: 15px;
             color: #ffffff;
@@ -125,21 +127,67 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 15px; /* Mais espaço entre os métodos */
             font-size: 16px;
         }
 
         .support-method img {
-            width: 26px;
-            height: 26px;
-            filter: invert(1) hue-rotate(180deg) brightness(1.5); /* Ajuste de cor para ícones em fundo escuro */
+            width: 30px; /* Ícones um pouco maiores */
+            height: 30px;
+            filter: invert(0); /* Remove o filtro padrão, vamos aplicar individualmente */
+            margin-right: 5px; /* Espaço entre ícone e texto */
         }
         
-        /* Ajuste específico para o PIX, que é SVG preto */
-        .support-method img[src*="PIX_logo"] {
-            filter: invert(0) !important; /* PIX deve ter a cor original (branco/cinza) */
-            background-color: white;
-            border-radius: 50%;
+        /* PayPal icon */
+        .support-method img[src*="174861.png"] {
+            filter: invert(1) brightness(1.5); /* Branco com brilho */
+        }
+
+        /* PIX icon */
+        .support-method img[src*="PIX_logo.svg"] {
+            background-color: white; /* Fundo branco para o logo PIX */
+            border-radius: 5px; /* Cantos levemente arredondados */
+            padding: 2px;
+            width: 35px; /* Ajuste para o padding */
+            height: 35px;
+        }
+
+        /* Estilo para a caixa de chave Pix/PayPal */
+        .copy-input-container {
+            display: flex;
+            align-items: center;
+            background-color: #2a3d53; /* Fundo mais escuro para a chave */
+            border-radius: 5px;
+            padding: 8px 10px;
+            margin-left: 10px;
+            max-width: 250px; /* Limitar largura da caixa */
+        }
+
+        .copy-input {
+            border: none;
+            background: none;
+            color: #ffffff;
+            font-size: 15px;
+            flex-grow: 1;
+            padding: 0;
+            outline: none; /* Remover outline no focus */
+            cursor: text; /* Indicar que é selecionável */
+        }
+
+        .copy-button {
+            background-color: #4CAF50; /* Verde para copiar */
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 8px;
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .copy-button:hover {
+            background-color: #45a049;
         }
     </style>
 
@@ -154,9 +202,9 @@
     <div class="container">
         <form method="POST">
             <div class="input-box">
-                <input type="text" name="url" placeholder="Type what you want to test for phishing..." required>
-                <button type="submit">CHECK</button>
-                </div>
+                <input type="text" name="url" placeholder="Digite uma URL ou domínio..." required>
+                <button type="submit">Verificar</button>
+            </div>
         </form>
 
         {% if result %}
@@ -169,14 +217,32 @@
 
         <div class="support-method">
             <img src="https://cdn-icons-png.flaticon.com/512/174/174861.png" alt="PayPal Icon">
-            <span>PayPal: <b>machshevreis@mailfence.com</b></span>
+            <span>PayPal:</span>
+            <div class="copy-input-container">
+                <input type="text" class="copy-input" value="machshevreis@mailfence.com" readonly id="paypalKey">
+                <button class="copy-button" onclick="copyToClipboard('paypalKey')">Copiar</button>
+            </div>
         </div>
 
         <div class="support-method">
             <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/PIX_logo.svg" alt="PIX Icon">
-            <span>PIX: <b>machshevreis@mailfence.com</b></span>
+            <span>PIX:</span>
+            <div class="copy-input-container">
+                <input type="text" class="copy-input" value="machshevreis@mailfence.com" readonly id="pixKey">
+                <button class="copy-button" onclick="copyToClipboard('pixKey')">Copiar</button>
+            </div>
         </div>
     </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const copyText = document.getElementById(elementId);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // Para mobile
+            document.execCommand("copy");
+            alert("Chave copiada: " + copyText.value);
+        }
+    </script>
 
 </body>
 </html>
