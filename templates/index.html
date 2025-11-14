@@ -17,9 +17,7 @@
             padding: 0;
         }
         
-        /* ESTILO DO CABEÇALHO COM A IMAGEM DE FUNDO */
         .header {
-            /* Use a URL da sua imagem da montanha aqui. Substitua 'URL_DA_SUA_IMAGEM_DA_MONTANHA' */
             background-image: url('URL_DA_SUA_IMAGEM_DA_MONTANHA'); 
             background-size: cover;
             background-position: center;
@@ -48,12 +46,11 @@
             z-index: 2; 
         }
 
-        /* ESTILO DO BOTÃO DE DESTAQUES (NOVO) */
         .highlight-button {
-            position: absolute; /* Posição absoluta dentro do cabeçalho */
+            position: absolute;
             top: 20px;
             right: 20px;
-            z-index: 3; /* Acima de tudo */
+            z-index: 3;
             background-color: #4a75a7;
             color: white;
             padding: 8px 15px;
@@ -68,10 +65,7 @@
         .highlight-button:hover {
             background: #5b87c7;
         }
-        /* FIM DO ESTILO DO BOTÃO DESTAQUES */
 
-
-        /* ESTILO DO H1 HACKER */
         h1 {
             font-family: "Share Tech Mono", monospace; 
             font-size: 56px;
@@ -149,7 +143,6 @@
             font-size: 16px;
         }
         
-        /* ESTILOS DE SUPORTE */
         .support-container {
             max-width: 600px;
             margin: 40px auto;
@@ -165,7 +158,7 @@
         }
 
         .support-card h2 {
-            font-size: 24px;
+            font-size: 18px; /* TAMANHO REDUZIDO */
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 20px; 
@@ -188,7 +181,6 @@
             border: none;
             border-radius: 6px;
             padding: 15px 20px; 
-            box-shadow: none; 
             transition: background 0.3s;
             cursor: pointer;
             font-weight: bold;
@@ -210,7 +202,6 @@
             border: none;
             border-radius: 6px;
             padding: 15px 20px;
-            box-shadow: none;
             transition: background 0.3s;
             cursor: pointer;
             font-weight: bold;
@@ -235,7 +226,9 @@
             word-break: break-all;
         }
         
-        .support-card p, .btn-paypal, .pix-box { display: none; }
+        .support-card p, .btn-paypal, .pix-box {
+            display: none;
+        }
     </style>
 </head>
 <body>
