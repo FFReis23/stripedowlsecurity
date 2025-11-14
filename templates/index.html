@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
     <style>
-        /* Variáveis de Cor baseadas na imagem de montanhas (Captura de tela de 2025-11-13 16-54-25.jpg) */
+        /* Variáveis de Cor baseadas na imagem de montanhas */
         :root {
             --bg-color-fallback: #38426b; /* Cor de fallback caso a imagem não carregue */
             --accent: #5c6bc0;           /* Azul Escuro do botão "CHECK" */
@@ -19,43 +19,35 @@
         }
 
         body {
-            /* 1. ADICIONANDO IMAGEM DE FUNDO (USAR SUA IMAGEM) */
-            background-color: var(--bg-color-fallback); 
-            background-image: url('CAMINHO_PARA_SUA_IMAGEM_DE_FUNDO.jpg'); /* Substitua pelo caminho real */
+            background-color: var(--bg-color-fallback);
+            background-image: url('/mnt/data/12d02cea-cf84-4ac5-8bbb-3408c591e657.png'); /* Caminho da imagem carregada */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            
-            color: var(--title-color); 
+            color: var(--title-color);
             font-family: 'Orbitron', sans-serif;
             margin: 0;
             padding: 0;
-            
-            /* CENTRALIZAÇÃO VERTICAL E HORIZONTAL */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; 
-            min-height: 100vh; 
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        /* Container Principal */
         .container {
             padding: 0 15px;
-            /* Largura total do bloco central, como na imagem */
-            max-width: 780px; 
+            max-width: 780px;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: auto 0; 
+            margin: auto 0;
         }
 
-        /* --- Hero / Título --- */
         .hero-section {
             text-align: center;
-            /* Distância ajustada para imitar a imagem */
-            margin-bottom: 30px; 
+            margin-bottom: 30px;
             width: 100%;
         }
         
@@ -64,90 +56,85 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            /* Tamanho ajustado: entre 2.5rem e 3.5rem para imitar a imagem */
-            font-size: 3rem; 
+            font-size: 3rem;
             letter-spacing: 5px;
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
-            /* Remove margem inferior para deixar o título mais compacto */
-            margin: 0; 
+            margin: 0;
         }
-        /* DESCRIÇÃO REMOVIDA PARA IMITAR O LAYOUT DA IMAGEM */
+
         .hero-section p {
              display: none; 
         }
 
-        /* --- Formulário (Caixa de Busca) --- */
         .form-container {
-            background-color: transparent; 
-            padding: 0; 
+            background-color: transparent;
+            padding: 0;
             margin: 0;
-            box-shadow: none; 
+            box-shadow: none;
         }
         
         .search-form {
             display: flex;
             width: 100%;
-            gap: 0; 
+            gap: 0;
         }
 
         input[type="text"] {
             flex-grow: 1;
-            /* AUMENTO DO CAMPO: Padding maior para altura */
-            padding: 20px; 
-            border-radius: 4px 0 0 4px; 
+            padding: 20px;
+            border-radius: 4px 0 0 4px;
             border: none;
-            background-color: var(--input-bg); 
+            background-color: var(--input-bg);
             color: var(--input-color);
-            /* AUMENTO DA LETRA */
-            font-size: 1.3rem; 
+            font-size: 1.3rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            height: 65px; 
+            height: 65px;
         }
+
         input[type="text"]::placeholder {
             color: #999;
         }
+
         button {
-            width: 160px; 
+            width: 160px;
             padding: 20px 25px;
-            background-color: var(--accent); 
+            background-color: var(--accent);
             border: none;
-            border-radius: 0 4px 4px 0; 
+            border-radius: 0 4px 4px 0;
             color: white;
-            /* AUMENTO DA LETRA (CHECK) */
-            font-size: 1.3rem; 
+            font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            height: 65px; 
+            height: 65px;
         }
+
         button:hover {
             background-color: var(--accent-hover);
         }
 
-        /* --- Elementos Invisíveis --- */
         .donation-section, .footer-text, .result-box {
-            display: none; 
+            display: none;
         }
 
-        /* Responsividade */
         @media (max-width: 600px) {
             .logo-title {
                 font-size: 2.2rem;
                 letter-spacing: 3px;
             }
             .search-form {
-                flex-direction: column; 
+                flex-direction: column;
             }
             input[type="text"] {
                 padding: 15px;
                 font-size: 1.1rem;
-                border-radius: 4px; 
+                border-radius: 4px;
                 height: 55px;
             }
             button {
                 width: 100%;
                 font-size: 1.1rem;
-                border-radius: 4px; 
+                border-radius: 4px;
                 height: 55px;
             }
         }
@@ -158,7 +145,7 @@
 <div class="container">
     <div class="hero-section">
         <p class="logo-title">STRIPED OWL SECURITY</p>
-        </div>
+    </div>
 
     <div class="form-container">
         <form method="POST" class="search-form">
@@ -170,6 +157,7 @@
     {% if result %}<div class="result-box"></div>{% endif %}
     <div class="donation-section"></div>
 </div>
+
 <div class="footer-text"></div>
 
 </body>
