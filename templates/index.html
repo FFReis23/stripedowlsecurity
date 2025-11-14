@@ -10,15 +10,15 @@
     <style>
         /* Variáveis de Cor baseadas na imagem de montanhas (image_3574e8.jpg) */
         :root {
-            --bg-color-main: #38426b;    /* Azul/Roxo Escuro que simula o tom do fundo */
-            --card-bg: rgba(0, 0, 0, 0.15); /* Quase transparente para a caixa principal */
-            --accent: #5c6bc0;           /* Azul Escuro do botão "CHECK" */
-            --accent-hover: #4b5ca9;     /* Hover do botão */
-            --title-color: #ffffff;      /* Título Branco Puro */
-            --input-bg: #ffffff;         /* Fundo do Input Branco Puro */
-            --input-color: #333;         /* Texto do Input Escuro */
-            --text-light: #ffffff;       /* Texto Claro */
-            --text-muted: #d1d9ec;       /* Texto Secundário (sutilmente claro) */
+            --bg-color-main: #38426b;    
+            --card-bg: rgba(0, 0, 0, 0.15); 
+            --accent: #5c6bc0;           
+            --accent-hover: #4b5ca9;     
+            --title-color: #ffffff;      
+            --input-bg: #ffffff;         
+            --input-color: #333;         
+            --text-light: #ffffff;       
+            --text-muted: #d1d9ec;       
         }
 
         body {
@@ -28,48 +28,48 @@
             margin: 0;
             padding: 0;
             
-            /* --- CENTRALIZAÇÃO VERTICAL E HORIZONTAL --- */
+            /* CENTRALIZAÇÃO VERTICAL E HORIZONTAL */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Centraliza o conteúdo verticalmente */
-            min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
-            /* ------------------------------------------- */
+            justify-content: center; 
+            min-height: 100vh; 
         }
 
-        /* Container Principal (Apenas para limitar a largura) */
+        /* Container Principal */
         .container {
             max-width: 980px;
             width: 100%;
             padding: 0 15px;
-            /* Se quiser que o conteúdo principal (Hero, Form, Doação) fique em um bloco centralizado */
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* Hero / Título */
+        /* --- Hero / Título --- */
         .hero-section {
             text-align: center;
             margin-bottom: 35px;
         }
         
         .logo-title {
-            color: var(--title-color); 
-            font-family: 'Orbitron', sans-serif; 
+            color: var(--title-color);
+            font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 2.5rem; /* Tamanho do título aumentado */
-            letter-spacing: 3px;
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            /* AUMENTADO O TAMANHO DO TÍTULO PARA FICAR MAIOR */
+            font-size: 3.5rem; 
+            letter-spacing: 5px; /* Aumentado o espaçamento para melhorar a leitura em tamanho grande */
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
         }
         .hero-section p {
             color: var(--text-muted); 
-            font-size: 1.1rem; /* Tamanho da descrição aumentado */
-            margin-top: 10px;
+            /* AUMENTADO A FONTE DA DESCRIÇÃO PARA COMPATIBILIDADE */
+            font-size: 1.3rem; 
+            margin-top: 15px;
         }
 
-        /* Formulário */
+        /* --- Formulário --- */
         .form-container {
             background-color: var(--card-bg); 
             padding: 15px 25px; 
@@ -119,7 +119,7 @@
             background-color: var(--accent-hover);
         }
 
-        /* Doações */
+        /* --- Doações --- */
         .donation-section {
             background-color: #213042; 
             max-width: 600px;
@@ -175,14 +175,13 @@
             word-break: break-all;
         }
 
-        /* Footer (Para manter o footer no fim da tela em layouts centralizados) */
+        /* Footer */
         .footer-text {
             text-align: center;
             margin-top: 40px;
             padding-bottom: 20px;
             font-size: 0.85rem;
             color: var(--text-muted);
-            /* Importante para a centralização vertical: */
             margin-top: auto;
         }
         .footer-text span {
@@ -192,10 +191,11 @@
         /* Responsividade */
         @media (max-width: 600px) {
             .logo-title {
-                font-size: 1.8rem;
+                font-size: 2.2rem; /* Ajustado para telas menores */
+                letter-spacing: 3px;
             }
             .hero-section p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             .form-container, .donation-section {
                 margin-left: 10px;
