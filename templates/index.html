@@ -8,27 +8,26 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
     <style>
-        /* Variáveis de Cor baseadas na imagem de montanhas (image_3574e8.jpg) */
+        /* Variáveis de Cor baseadas na imagem de montanhas (Captura de tela de 2025-11-13 16-54-25.jpg) */
         :root {
-            --bg-color-main: #38426b;    
-            --card-bg: rgba(0, 0, 0, 0.15); 
-            --accent: #5c6bc0;           
+            --bg-color-main: #38426b;    /* Azul/Roxo Escuro */
+            --card-bg: rgba(0, 0, 0, 0.15); /* Quase transparente */
+            --accent: #5c6bc0;           /* Azul Escuro do botão "CHECK" */
             --accent-hover: #4b5ca9;     
-            --title-color: #ffffff;      
-            --input-bg: #ffffff;         
-            --input-color: #333;         
-            --text-light: #ffffff;       
-            --text-muted: #d1d9ec;       
+            --title-color: #ffffff;      /* Título Branco Puro */
+            --input-bg: #ffffff;         /* Fundo do Input Branco Puro */
+            --input-color: #333;         /* Texto do Input Escuro */
+            --text-muted: #d1d9ec;       /* Texto Secundário (sutilmente claro) */
         }
 
         body {
             background-color: var(--bg-color-main); 
-            color: var(--text-light);
+            color: var(--title-color); /* Texto padrão branco */
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
             
-            /* CENTRALIZAÇÃO VERTICAL E HORIZONTAL */
+            /* CENTRALIZAÇÃO VERTICAL E HORIZONTAL para que o conteúdo fique no meio da tela */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -36,20 +35,27 @@
             min-height: 100vh; 
         }
 
-        /* Container Principal */
+        /* Container Principal (Apenas para limitar a largura e centralizar o bloco de conteúdo) */
         .container {
-            max-width: 980px;
-            width: 100%;
+            /* Definido o padding-top/bottom como 0 para forçar o alinhamento vertical */
             padding: 0 15px;
+            
+            /* Usamos max-width 780px para simular o tamanho do bloco central da imagem */
+            max-width: 780px; 
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            /* Margem vertical para afastar o conteúdo principal das bordas se a tela for maior que 100vh */
+            margin: auto 0; 
         }
 
         /* --- Hero / Título --- */
         .hero-section {
             text-align: center;
-            margin-bottom: 35px;
+            /* Ajusta a distância entre o título e a caixa de busca, imitando o layout da imagem */
+            margin-bottom: 25px; 
+            width: 100%;
         }
         
         .logo-title {
@@ -57,159 +63,93 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            /* AUMENTADO O TAMANHO DO TÍTULO PARA FICAR MAIOR */
+            /* Tamanho ajustado para o estilo da imagem de referência */
             font-size: 3.5rem; 
-            letter-spacing: 5px; /* Aumentado o espaçamento para melhorar a leitura em tamanho grande */
+            letter-spacing: 5px;
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+            margin-bottom: 5px;
         }
         .hero-section p {
             color: var(--text-muted); 
-            /* AUMENTADO A FONTE DA DESCRIÇÃO PARA COMPATIBILIDADE */
             font-size: 1.3rem; 
-            margin-top: 15px;
+            margin-top: 0;
         }
 
-        /* --- Formulário --- */
+        /* --- Formulário (Caixa de Busca) --- */
         .form-container {
-            background-color: var(--card-bg); 
-            padding: 15px 25px; 
-            border-radius: 10px;
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto 40px auto;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: transparent; /* Removido o fundo preto semi-transparente para imitar a imagem */
+            padding: 0; 
+            border-radius: 0;
+            max-width: 100%; /* Ocupa a largura total do container */
+            margin: 0;
+            box-shadow: none; /* Removida a sombra */
         }
         
         .search-form {
             display: flex;
-            gap: 10px;
             width: 100%;
+            /* Remover gap para que o input e o botão se encostem, como na imagem */
+            gap: 0; 
         }
 
         input[type="text"] {
             flex-grow: 1;
-            padding: 12px;
-            border-radius: 4px;
+            padding: 15px; /* Aumentado o padding para simular o campo grande da imagem */
+            border-radius: 4px 0 0 4px; /* Apenas na esquerda */
             border: none;
             background-color: var(--input-bg); 
             color: var(--input-color);
-            font-size: 1rem;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            font-size: 1.1rem; /* Fonte maior */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            height: 55px; /* Altura fixa para simular o botão */
         }
         input[type="text"]::placeholder {
             color: #999;
         }
         button {
-            margin-top: 0;
-            padding: 12px 25px;
+            width: 150px; /* Tamanho fixo para o botão, como na imagem */
+            padding: 15px 25px;
             background-color: var(--accent); 
             border: none;
-            border-radius: 4px;
+            border-radius: 0 4px 4px 0; /* Apenas na direita */
             color: white;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            height: 55px;
         }
         button:hover {
             background-color: var(--accent-hover);
         }
 
-        /* --- Doações --- */
-        .donation-section {
-            background-color: #213042; 
-            max-width: 600px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            border: 1px solid var(--accent);
-        }
-        .donation-section h4 {
-            color: var(--text-light);
-            font-weight: 600;
-        }
-        .donation-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-            align-items: stretch;
-        }
-        
-        .donation-paypal-form {
-            flex-basis: 40%;
-            min-width: 150px;
+        /* --- Elementos Removidos (Doações e Footer) --- */
+        .donation-section, .footer-text {
+            /* Deixados no código, mas invisíveis, caso você queira trazê-los de volta */
+            display: none; 
         }
 
-        .donation-buttons button {
-            width: 100%;
-            background-color: var(--accent); 
-            padding: 12px 20px;
-            font-size: 1rem;
-        }
-        .pix-box {
-            flex-basis: 50%;
-            min-width: 200px;
-            border: 1px solid var(--accent);
-            border-radius: 5px;
-            padding: 12px 20px;
-            background-color: #1a2a40;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            text-align: left;
-        }
-        .pix-box p {
-            margin: 0;
-            line-height: 1.5;
-        }
-        .pix-box strong {
-            color: var(--text-light);
-            word-break: break-all;
-        }
-
-        /* Footer */
-        .footer-text {
-            text-align: center;
-            margin-top: 40px;
-            padding-bottom: 20px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: auto;
-        }
-        .footer-text span {
-            color: var(--accent);
-        }
-
-        /* Responsividade */
+        /* Responsividade para o Título */
         @media (max-width: 600px) {
             .logo-title {
-                font-size: 2.2rem; /* Ajustado para telas menores */
-                letter-spacing: 3px;
+                font-size: 1.8rem;
+                letter-spacing: 2px;
             }
             .hero-section p {
-                font-size: 1.1rem;
-            }
-            .form-container, .donation-section {
-                margin-left: 10px;
-                margin-right: 10px;
+                font-size: 1rem;
             }
             .search-form {
-                flex-direction: column;
+                /* Em telas pequenas, o layout de coluna é melhor */
+                flex-direction: column; 
             }
-            .donation-buttons {
-                flex-direction: column;
-                align-items: center;
+            input[type="text"] {
+                border-radius: 4px; /* Arredonda tudo */
+                height: 50px;
             }
-            .donation-paypal-form, .pix-box {
+            button {
                 width: 100%;
+                border-radius: 4px; /* Arredonda tudo */
+                height: 50px;
             }
         }
     </style>
@@ -219,7 +159,7 @@
 <div class="container">
     <div class="hero-section">
         <p class="logo-title">STRIPED OWL SECURITY</p>
-        <p>Analise domínios, IPs e URLs suspeitos para detectar malware e outras violações.</p>
+        <p>Analise domínios, IPs e URLs suspeitos.</p>
     </div>
 
     <div class="form-container">
@@ -237,22 +177,9 @@
 
 
     <div class="donation-section">
-        <h4>Apoie o Striped Owl Security</h4>
-        <p>Ajude a manter este site online e atualizado.</p>
-        <div class="donation-buttons">
-            <form action="https://www.paypal.com/donate" method="post" target="_blank" class="donation-paypal-form">
-                <input type="hidden" name="business" value="machshevreis@mailfence.com">
-                <input type="hidden" name="currency_code" value="BRL">
-                <button type="submit">Doar com PayPal</button>
-            </form>
-            
-            <div class="pix-box">
-                <p><strong>Doação via Pix - Mercado Pago</strong></p>
-                <p>Chave Pix: <strong>machshevreis@mailfence.com</strong></p>
-            </div>
         </div>
-    </div>
 </div>
+
 <div class="footer-text">
     <p>© 2025 <span>Striped Owl Security</span>. Todos os direitos reservados.</p>
 </div>
