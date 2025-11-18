@@ -11,10 +11,16 @@
     <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            background-color: #0b1a2f;
+            background-color: #0b1a2f; 
             color: #ffffff;
             margin: 0;
             padding: 0;
+
+            /* ⭐️ CONFIGURAÇÃO DE FUNDO TOTAL (DO SEU LINK RAW DO GITHUB) ⭐️ */
+            background-image: url('https://raw.githubusercontent.com/FFReis23/stripedowlsecurity/main/static/fundo.png'); 
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed; /* O fundo permanece fixo ao rolar a página */
         }
 
         .header-logo {
@@ -22,11 +28,8 @@
             height: auto;
         }
 
-        /* 👈 IMAGEM DE FUNDO INSERIDA AQUI COM O LINK RAW DO GITHUB */
+        /* O HEADER AGORA SÓ DEFINE DIMENSÃO E POSICIONAMENTO */
         .header {
-            background-image: url('https://raw.githubusercontent.com/FFReis23/stripedowlsecurity/main/static/fundo.png'); 
-            background-size: cover;
-            background-position: center;
             height: 250px;
             display: flex;
             flex-direction: column;
@@ -44,7 +47,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.2);
+            /* Overlay escuro apenas para o header, para melhorar o contraste do texto */
+            background: rgba(0, 0, 0, 0.2); 
             z-index: 1;
         }
 
@@ -102,7 +106,7 @@
         .container {
             max-width: 650px;
             margin: 20px auto;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05); /* Mantém o efeito semi-transparente sobre o fundo */
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
