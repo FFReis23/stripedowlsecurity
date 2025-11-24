@@ -258,7 +258,7 @@
 <body>
 
     <div class="header">
-        <a href="ataque.html" class="btn-destaques">DESTAQUES</a>
+        <a href="ataques.html" class="btn-destaques">DESTAQUES</a>
         
         <div class="header-title">
             <img src="static/coruja.png" class="header-logo" alt="Coruja">
@@ -276,7 +276,11 @@
             </div>
         </form>
 
-        <div class="result-box" id="result"></div>
+        {% if result %}
+        <div class="result-box" id="result">
+            {{ result | safe }}
+        </div>
+        {% endif %}
     </div>
 
     <div class="support-container">
