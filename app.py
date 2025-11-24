@@ -5,7 +5,7 @@ import requests
 import socket
 import ssl
 from datetime import datetime
-import whois # Novo import para a verificação WHOIS
+# Import whois foi removido, pois usaremos requests novamente
 
 app = Flask(__name__)
 
@@ -30,13 +30,12 @@ def is_suspicious(url):
         try:
             # Tenta verificar o SSL/TLS
             ctx = ssl.create_default_context()
-            # Certifique-se de usar o hostname correto para a conexão SSL
             host_for_ssl = hostname
             
-            # Se a url original tinha um subdomínio, é melhor usar o domínio completo
             if ext.subdomain:
                 host_for_ssl = ext.subdomain + "." + hostname
 
+            # ATENÇÃO: A CONEXÃO SSL É MELHOR FEITA COM O HOSTNAME PURO PARA A PORTA 443
             with ctx.wrap_socket(socket.socket(), server_hostname=host_for_ssl) as s:
                 s.settimeout(3)
                 s.connect((hostname, 443))
@@ -45,12 +44,9 @@ def is_suspicious(url):
                 # Verifica expiração
                 exp_date_str = cert.get("notAfter", "")
                 
-                # Tenta parsear a data do certificado (formato: Nov 24 18:00:00 2025 GMT)
                 try:
                     exp_date = datetime.strptime(exp_date_str, "%b %d %H:%M:%S %Y %Z")
                 except ValueError:
-                    # Fallback robusto se o formato for ligeiramente diferente
-                    # Para fins práticos, assumimos que se não parsear, não está expirado agora.
                     exp_date = datetime(2099, 12, 31) 
                     
                 if exp_date < datetime.utcnow():
@@ -81,34 +77,47 @@ def is_suspicious(url):
     if ext.domain in blacklist:
         reasons.append(f"Domínio na lista negra: {ext.domain}")
 
-    # 6. WHOIS (Idade do domínio) - USANDO python-whois
+    # 6. WHOIS (Idade do domínio) - USANDO API EXTERNA (WhoisFreaks)
     try:
-        # Consulta WHOIS
-        w = whois.whois(hostname)
+        # ATENÇÃO: É NECESSÁRIO QUE ESTA API ESTEJA FUNCIONANDO E QUE A CHAVE SEJA VÁLIDA.
+        api_url = f"https://api.whoisfreaks.com/v1.0/whois?apiKey=free&whois=live&domainName={hostname}"
         
-        # O campo 'creation_date' pode ser uma lista ou um único objeto datetime
-        creation_date = w.creation_date
-        
-        if isinstance(creation_date, list):
-            creation_date = creation_date[0] # Pega o primeiro se for uma lista
+        # Ajustei o timeout e adicionei verificação do status code
+        resp = requests.get(api_url, timeout=5)
+        resp.raise_for_status() # Lança erro para status 4xx/5xx
+        whois_data = resp.json()
+
+        # Verifica se o registro WHOIS existe e se tem a data de criação
+        if (whois_data.get("whoisRecord") and 
+            "creation_date" in whois_data["whoisRecord"] and
+            whois_data["whoisRecord"]["creation_date"]):
             
-        if creation_date and isinstance(creation_date, datetime):
-            # Calcula a idade
+            creation_date_str = whois_data["whoisRecord"]["creation_date"]
+            
+            # Tenta parsear o formato YYYY-MM-DD (a API WhoisFreaks costuma retornar assim)
+            try:
+                 # Pega apenas os primeiros 10 caracteres (YYYY-MM-DD)
+                 creation_date = datetime.strptime(creation_date_str[:10], "%Y-%m-%d")
+            except:
+                 # Se falhar, tenta formatos mais comuns ou usa fallback
+                 creation_date = datetime(2000, 1, 1) # Fallback seguro
+                 details.append("Aviso: Falha ao parsear data WHOIS, usando fallback.")
+                 
             age_days = (datetime.now() - creation_date).days
 
-            if age_days < 90: # Domínios muito recentes são suspeitos (90 dias)
+            if age_days < 90:
                 reasons.append("Domínio muito recente (menos de 90 dias)")
 
-            details.append(f"Idade do domínio: {age_days} dias (Criado em: {creation_date.strftime('%Y-%m-%d')})")
+            details.append(f"Idade do domínio: {age_days} dias")
 
         else:
              details.append("Não foi possível obter a data de criação WHOIS")
 
-
-    except whois.parser.WhoisParseError:
-        details.append("Não foi possível obter informações WHOIS (erro de parse ou domínio não registrado)")
+    except requests.exceptions.RequestException:
+        details.append("Não foi possível obter informações WHOIS (timeout ou erro de API externa)")
     except Exception:
-        details.append("Não foi possível obter informações WHOIS (erro geral na biblioteca whois)")
+        details.append("Não foi possível obter informações WHOIS (erro geral)")
+
         
     # 7. Redirecionamentos
     try:
@@ -155,5 +164,4 @@ def index():
 
 # Iniciar localmente
 if __name__ == "__main__":
-    # Use host='0.0.0.0' para acessar de outras máquinas na rede
     app.run(debug=True)
