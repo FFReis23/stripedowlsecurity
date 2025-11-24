@@ -7,11 +7,11 @@ import ssl
 from datetime import datetime
 from collections import Counter
 import math
-# Importações existentes: flask, re, tldextract, requests, socket, ssl, datetime
+import urllib.parse # Necessário para analisar a URL em partes
 
 app = Flask(__name__)
 
-# --- Funções Auxiliares Adicionadas ---
+# --- Funções Auxiliares (Mantidas) ---
 
 def levenshtein_distance(s1, s2):
     """Calcula a distância de Levenshtein entre duas strings."""
@@ -38,24 +38,23 @@ def shannon_entropy(data):
     if not data:
         return 0
     entropy = 0
-    # Calcula a frequência de cada caractere
     probabilities = [float(c) / len(data) for c in Counter(data).values()]
-    # Calcula a entropia
     for prob in probabilities:
         if prob > 0:
-            entropy -= prob * math.log(prob, 2)
+            # log na base 2 para bits
+            entropy -= prob * math.log(prob, 2) 
     return entropy
 
-# Domínios conhecidos para checagem de spoofing (apenas o nome do domínio)
+# Domínios conhecidos para checagem de spoofing 
 DOMINIOS_LEGITIMOS = ["google", "microsoft", "apple", "netflix", "paypal", "itau", "amazon", "facebook"] 
 
-# --- Função Principal de Verificação ---
+# --- Função Principal de Verificação (Atualizada) ---
 
 def is_suspicious(url):
     reasons = []
     details = []
 
-    # 0. Preparação da URL
+    # 0. Preparação da URL e Extração de Componentes
     if not url.startswith(("http://", "https://")):
         processed_url = "https://" + url
     else:
@@ -64,28 +63,26 @@ def is_suspicious(url):
     ext = tldextract.extract(processed_url)
     hostname = ext.domain + "." + ext.suffix
     
+    # Adiciona parsing para detectar o símbolo '@'
+    parsed_url = urllib.parse.urlparse(processed_url)
+
+
     # 1. HTTPS e Certificado (Mantido)
-    # ... (Bloco de código 1 original) ...
-    
     if not processed_url.startswith("https://"):
         reasons.append("URL não utiliza HTTPS")
     else:
         try:
             ctx = ssl.create_default_context()
             host_for_ssl = hostname
-            
             if ext.subdomain:
                 host_for_ssl = ext.subdomain + "." + hostname
 
-            # ATENÇÃO: A CONEXÃO SSL É MELHOR FEITA COM O HOSTNAME PURO PARA A PORTA 443
             with ctx.wrap_socket(socket.socket(), server_hostname=host_for_ssl) as s:
                 s.settimeout(3)
                 s.connect((hostname, 443))
                 cert = s.getpeercert()
 
-                # Verifica expiração
                 exp_date_str = cert.get("notAfter", "")
-                
                 try:
                     exp_date = datetime.strptime(exp_date_str, "%b %d %H:%M:%S %Y %Z")
                 except ValueError:
@@ -94,7 +91,6 @@ def is_suspicious(url):
                 if exp_date < datetime.utcnow():
                     reasons.append("Certificado SSL expirado")
                 
-                # Detalhes do Certificado
                 subject_info = cert.get('subject', [[]])
                 cn = [item[1] for item in subject_info[0] if item[0] == 'commonName']
                 details.append(f"Emissor do Certificado: {cn[0] if cn else 'Desconhecido'}")
@@ -124,7 +120,7 @@ def is_suspicious(url):
     if ext.domain in blacklist:
         reasons.append(f"Domínio na lista negra: {ext.domain}")
 
-    # 6. WHOIS (Idade do domínio) - (Mantido, com melhoria no detalhe)
+    # 6. WHOIS (Idade do domínio) - (Mantido)
     try:
         api_url = f"https://api.whoisfreaks.com/v1.0/whois?apiKey=free&whois=live&domainName={hostname}"
         resp = requests.get(api_url, timeout=5)
@@ -159,7 +155,8 @@ def is_suspicious(url):
         details.append("Não foi possível obter informações WHOIS (erro geral)")
 
         
-    # --- 8. NOVA: Entropia de Shannon (Aleatoriedade) ---
+    # 7. Redirecionamentos (Movido para o final e melhorado)
+    # 8. Entropia de Shannon (Mantido)
     domain_part = ext.subdomain + ext.domain
     entropy_value = shannon_entropy(domain_part)
     
@@ -169,7 +166,7 @@ def is_suspicious(url):
     details.append(f"Entropia do Domínio: {entropy_value:.2f}")
 
 
-    # --- 9. NOVA: Distância de Levenshtein (Spoofing) ---
+    # 9. Distância de Levenshtein (Mantido)
     min_distance = float('inf')
     closest_legit_domain = ""
 
@@ -180,12 +177,22 @@ def is_suspicious(url):
             min_distance = dist
             closest_legit_domain = legit_name
 
-    # Heurística: Se a distância for 1 ou 2, é suspeito
     if min_distance in [1, 2]:
         reasons.append(f"Alta semelhança com '{closest_legit_domain}' (distância {min_distance})")
 
+    # --- 10. NOVA: Símbolo '@' (Phishing por Credencial) ---
+    if parsed_url.netloc and "@" in parsed_url.netloc:
+        reasons.append("Presença de '@' na URL (Tentativa de esconder o host real)")
 
-    # --- 10. NOVA: Análise de Conteúdo e Redirecionamentos ---
+    # --- 11. NOVA: Análise de Ofuscamento (Codificação) ---
+    # Conta caracteres '%' no path e query. URLs legítimas não têm muitos.
+    encoded_count = processed_url.count('%')
+    if encoded_count > 5: # Um limite razoável
+        reasons.append(f"Excesso de codificação na URL ({encoded_count}x '%')")
+        details.append(f"Codificação excessiva: {encoded_count} caracteres '%'")
+
+
+    # --- 12. Redirecionamentos e Análise de Conteúdo (Final) ---
     try:
         # Usamos requests.get para obter o conteúdo para análise
         resp = requests.get(processed_url, allow_redirects=True, timeout=5)
@@ -197,14 +204,19 @@ def is_suspicious(url):
         details.append(f"Redirecionamentos detectados: {len(resp.history)}")
 
         # Análise de Formulário de Login (phishing)
-        # Busca por campos de senha e o texto "login" no corpo
         if "<input type=\"password\"" in resp.text.lower() and "login" in resp.text.lower():
              reasons.append("Página contém formulário de login (Alto Risco)")
              
+        # Análise de Redirecionamento por Meta Tag (Novo)
+        if re.search(r'<meta\s+http-equiv=["\']refresh["\'].*url=', resp.text, re.IGNORECASE):
+             reasons.append("Página usa meta tag refresh (Potencial redirecionamento furtivo)")
+
+             
     except requests.exceptions.Timeout:
         details.append("Não foi possível acessar a URL (Timeout)")
-    except Exception:
-        details.append("Não foi possível realizar análise de conteúdo/redirecionamentos")
+    except Exception as e:
+        details.append(f"Não foi possível realizar análise de conteúdo/redirecionamentos: {type(e).__name__}")
+
 
     # Resultado final
     if reasons:
