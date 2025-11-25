@@ -8,13 +8,14 @@ from datetime import datetime
 from collections import Counter
 import math
 import urllib.parse
-import idna # Novo: Para checagem de Homograph Attacks
+import idna # Para checagem de Homograph Attacks
+import html # Para remover entidades HTML (opcional, mas bom para limpeza)
 
 app = Flask(__name__)
 
 # --- Constantes e Configuração ---
 
-# Domínios conhecidos para checagem de spoofing (expandidos)
+# Domínios conhecidos para checagem de spoofing
 DOMINIOS_LEGITIMOS = ["google", "microsoft", "apple", "netflix", "paypal", "itau", "amazon", "facebook", "twitter", "instagram", "linkedin"]
 # Palavras-chave de alto risco
 PALAVRAS_SUSPEITAS = [
@@ -22,10 +23,15 @@ PALAVRAS_SUSPEITAS = [
     "account", "bank", "confirm", "payment",
     "password", "auth", "webscr", "transfer"
 ]
-# Limite de dias para domínio "jovem"
+# Encurtadores de URL comuns
+URL_SHORTENERS = ["bit.ly", "tinyurl.com", "t.co", "goo.gl", "ow.ly", "is.gd", "buff.ly", "rebrand.ly"]
+# TLDs (Top Level Domains) com histórico de abuso/spam
+SUSPICIOUS_TLDS = [".xyz", ".top", ".tk", ".cf", ".ga", ".ml", ".gq", ".bid", ".win", ".icu", ".fun"]
+
+# Limites de Heurística
 IDADE_MINIMA_DIAS = 90
-# Limite de comprimento da URL
 COMPRIMENTO_MAXIMO = 150
+MAX_DOTS_ALLOWED = 4 # Máximo de pontos permitidos no hostname
 
 # --- Funções Auxiliares (Mantidas) ---
 
@@ -33,10 +39,9 @@ def levenshtein_distance(s1, s2):
     """Calcula a distância de Levenshtein entre duas strings."""
     if len(s1) < len(s2):
         return levenshtein_distance(s2, s1)
-
     if len(s2) == 0:
         return len(s1)
-
+    
     previous_row = list(range(len(s2) + 1))
     for i, c1 in enumerate(s1):
         current_row = [i + 1]
@@ -46,7 +51,6 @@ def levenshtein_distance(s1, s2):
             substitutions = previous_row[j] + (c1 != c2)
             current_row.append(min(insertions, deletions, substitutions))
         previous_row = current_row
-    
     return previous_row[-1]
 
 def shannon_entropy(data):
@@ -54,10 +58,11 @@ def shannon_entropy(data):
     if not data:
         return 0
     entropy = 0
+    # Normaliza a string para evitar erro em caracteres não-ASCII se houver.
+    data = data.encode('utf-8', 'ignore').decode('utf-8')
     probabilities = [float(c) / len(data) for c in Counter(data).values()]
     for prob in probabilities:
         if prob > 0:
-            # log na base 2 para bits
             entropy -= prob * math.log(prob, 2)
     return entropy
 
@@ -73,19 +78,32 @@ def is_suspicious(url):
     else:
         processed_url = url
     
-    # Adiciona tratamento para que tldextract não falhe em URLs com @
     try:
         parsed_url = urllib.parse.urlparse(processed_url)
-        # Use o netloc para extração, excluindo a parte 'user:pass@' se houver
+        # Usa o netloc para extração, excluindo a parte 'user:pass@' se houver
         safe_netloc = parsed_url.netloc.split('@')[-1]
-        ext = tldextract.extract(parsed_url.scheme + '://' + safe_netloc + parsed_url.path)
+        
+        # Se a URL começar com um encurtador, penalizamos
+        if any(shortener in safe_netloc for shortener in URL_SHORTENERS):
+            reasons.append("Uso de **encurtador de URL** (Ocultação de destino)")
+            
+        ext = tldextract.extract(processed_url)
         hostname = ext.domain + "." + ext.suffix
+        
     except Exception as e:
         reasons.append(f"Falha na análise da URL (Erro: {type(e).__name__})")
-        details.append(f"URL original: {url}")
         return "⚠️ <strong>URL suspeita:</strong> Falha na análise de componentes.", reasons
 
-    # 1. HTTPS e Certificado (Mantido)
+    # 1. Checagem de TLD Suspeito
+    if ext.suffix in SUSPICIOUS_TLDS:
+        reasons.append(f"Uso de **TLD suspeito** ({ext.suffix})")
+
+    # 2. Contagem de Pontos no Hostname (NOVO)
+    dot_count = safe_netloc.count('.')
+    if dot_count > MAX_DOTS_ALLOWED:
+        reasons.append(f"Excesso de pontos ({dot_count}) no hostname (Potencial ofuscamento)")
+
+    # 3. HTTPS e Certificado (Mantido)
     if not processed_url.startswith("https://"):
         reasons.append("URL não utiliza **HTTPS**")
     else:
@@ -99,14 +117,14 @@ def is_suspicious(url):
                 s.settimeout(3)
                 s.connect((hostname, 443))
                 cert = s.getpeercert()
-
+                
                 exp_date_str = cert.get("notAfter", "")
+                
                 try:
                     exp_date = datetime.strptime(exp_date_str, "%b %d %H:%M:%S %Y %Z")
                 except ValueError:
-                    exp_date = datetime(2099, 12, 31) # Fallback seguro
-                    details.append("Aviso: Falha ao parsear data de expiração SSL.")
-                        
+                    exp_date = datetime(2099, 12, 31) 
+                    
                 if exp_date < datetime.utcnow():
                     reasons.append("Certificado SSL **expirado**")
                 
@@ -117,66 +135,48 @@ def is_suspicious(url):
         except Exception:
             reasons.append("Erro ao verificar SSL/TLS (host pode estar inacessível ou certificado inválido)")
 
-    # 2. Uso de IP ou Codificação Numérica/Hex (APRIMORADO)
+    # 4. Uso de IP ou Codificação Numérica/Hex
     if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", safe_netloc):
         reasons.append("Uso de **Endereço IP** no lugar de domínio")
-    
-    # Detecção de IP codificado (ex: 0x52.0x10.0x10.0x01)
     if re.search(r'(0x[0-9a-fA-F]+)', parsed_url.netloc):
         reasons.append("Uso de codificação **Hexadecimal/Numérica** no host")
 
 
-    # 3. Subdomínios excessivos (Mantido)
+    # 5. Subdomínios excessivos
     if len(ext.subdomain.split(".")) > 2:
         reasons.append("Muitos **subdomínios** (potencial ofuscamento)")
 
-    # 4. Palavras suspeitas (APRIMORADO: Checa path/query)
+    # 6. Palavras suspeitas (Checa path/query)
     url_path_query = parsed_url.path + parsed_url.query
     if any(p in url_path_query.lower() for p in PALAVRAS_SUSPEITAS):
-        reasons.append("Palavras de alto risco (**Login/Bank/Update**) no caminho/query")
+        reasons.append("Palavras de alto risco (**Login/Bank**) no caminho/query")
     elif any(p in ext.subdomain.lower() for p in PALAVRAS_SUSPEITAS):
          reasons.append("Palavras de alto risco no **subdomínio**")
 
-    # 5. Lista negra simples (Mantido)
-    blacklist = ["malicious-site.com", "phishing-domain.net"]
-    if ext.domain in blacklist:
-        reasons.append(f"Domínio na **lista negra** simples")
-
-    # 6. WHOIS (Idade do domínio)
+    # 7. Idade do domínio (WHOIS)
     try:
         api_url = f"https://api.whoisfreaks.com/v1.0/whois?apiKey=free&whois=live&domainName={hostname}"
-        resp = requests.get(api_url, timeout=5)
-        resp.raise_for_status()
-        whois_data = resp.json()
+        resp_whois = requests.get(api_url, timeout=5)
+        resp_whois.raise_for_status()
+        whois_data = resp_whois.json()
 
         if (whois_data.get("whoisRecord") and 
             "creation_date" in whois_data["whoisRecord"] and
             whois_data["whoisRecord"]["creation_date"]):
             
             creation_date_str = whois_data["whoisRecord"]["creation_date"]
-            
-            try:
-                creation_date = datetime.strptime(creation_date_str[:10], "%Y-%m-%d")
-            except:
-                creation_date = datetime(2000, 1, 1)
-                details.append("Aviso: Falha ao parsear data WHOIS, usando fallback.")
-                
+            creation_date = datetime.strptime(creation_date_str[:10], "%Y-%m-%d")
             age_days = (datetime.now() - creation_date).days
 
             if age_days < IDADE_MINIMA_DIAS:
                 reasons.append(f"Domínio muito **recente** (menos de {IDADE_MINIMA_DIAS} dias)")
-
             details.append(f"Idade do domínio: {age_days} dias")
-
         else:
             details.append("Não foi possível obter a data de criação WHOIS")
-
-    except requests.exceptions.RequestException:
-        details.append("Não foi possível obter informações WHOIS (timeout/erro de API)")
     except Exception:
-        details.append("Não foi possível obter informações WHOIS (erro geral)")
+        details.append("Não foi possível obter informações WHOIS (erro ou timeout)")
 
-    # 7. Entropia de Shannon (Mantido)
+    # 8. Entropia de Shannon
     domain_part = ext.subdomain + ext.domain
     entropy_value = shannon_entropy(domain_part)
     
@@ -185,8 +185,7 @@ def is_suspicious(url):
         
     details.append(f"Entropia do Domínio: {entropy_value:.2f}")
 
-
-    # 8. Distância de Levenshtein (Mantido)
+    # 9. Distância de Levenshtein (Typosquatting)
     min_distance = float('inf')
     closest_legit_domain = ""
 
@@ -200,19 +199,17 @@ def is_suspicious(url):
     if min_distance in [1, 2]:
         reasons.append(f"Alta semelhança com '{closest_legit_domain}' (distância {min_distance}) - **Typosquatting**")
 
-    # 9. Símbolo '@' (Phishing por Credencial)
+    # 10. Símbolo '@'
     if "@" in parsed_url.netloc:
         reasons.append("Presença de **'@' na URL** (Tentativa de esconder o host real)")
 
-    # 10. Ofuscamento (Codificação)
+    # 11. Ofuscamento (Codificação)
     encoded_count = processed_url.count('%')
     if encoded_count > 5:
         reasons.append(f"Excesso de **codificação** na URL ({encoded_count}x '%')")
 
-    # 11. Homograph Attack (Punycode/Unicode) (NOVO)
+    # 12. Homograph Attack (Punycode/Unicode)
     try:
-        # Se o domínio real difere da versão Punycode, é porque continha caracteres especiais
-        # A codificação IDNA (usada para Punycode) falha ou é diferente para caracteres homógrafos
         domain_without_tld = ext.domain
         punycode_domain = domain_without_tld.encode('idna').decode('ascii')
         
@@ -221,28 +218,70 @@ def is_suspicious(url):
     except idna.IDNAError:
         reasons.append("Erro na codificação do domínio (Suspeita de caracteres inválidos/maliciosos)")
         
-    # 12. Comprimento da URL (NOVO)
+    # 13. Comprimento da URL
     if len(url) > COMPRIMENTO_MAXIMO:
         reasons.append(f"URL muito **longa** ({len(url)} chars) - Potencial ofuscamento")
 
 
-    # 13. Redirecionamentos e Análise de Conteúdo (Final)
+    # 14. Redirecionamentos e Análise de Conteúdo (Final)
     try:
+        # Permite redirecionamentos para obter a página final
         resp = requests.get(processed_url, allow_redirects=True, timeout=5)
+        html_content = resp.text.lower()
         
         # Redirecionamentos excessivos
         if len(resp.history) > 3:
             reasons.append(f"Muitos **redirecionamentos** ({len(resp.history)})")
         
         details.append(f"Redirecionamentos detectados: {len(resp.history)}")
+        
+        # Obtém o domínio final
+        current_domain_final = tldextract.extract(resp.url).registered_domain
 
-        # Análise de Formulário de Login (phishing)
-        if re.search(r'<input\s+type=["\']password["\']', resp.text, re.IGNORECASE):
+        # A. Análise de Formulário de Senha (e C2 Externo) (NOVO)
+        if re.search(r'<input\s+type=["\']password["\']', html_content):
              reasons.append("Página contém **formulário de senha** (Alto Risco)")
-            
-        # Análise de Redirecionamento por Meta Tag
-        if re.search(r'<meta\s+http-equiv=["\']refresh["\'].*url=', resp.text, re.IGNORECASE):
+             
+             # Procura por <form action="URL_EXTERNA">
+             form_actions = re.findall(r'<form[^>]+action=["\'](http[s]?://[^"\']*)["\']', html_content)
+             
+             for action_url in form_actions:
+                 # Usa tldextract no action_url
+                 action_netloc = tldextract.extract(action_url).registered_domain
+                 
+                 # Se a ação do formulário de senha aponta para outro domínio (C2)
+                 if action_netloc and action_netloc != current_domain_final:
+                     reasons.append(f"Formulário envia dados para **domínio externo** ({action_netloc})")
+                     break
+
+        # B. Detecção de Iframe (NOVO)
+        if re.search(r'<iframe', html_content):
+            reasons.append("Página contém **iframe** (Potencial ocultação de conteúdo)")
+
+        # C. Análise de Redirecionamento por Meta Tag
+        if re.search(r'<meta\s+http-equiv=["\']refresh["\'].*url=', html_content):
              reasons.append("Página usa **meta tag refresh** (Potencial redirecionamento furtivo)")
+        
+        # D. Baixa Contagem de Links Externos
+        # Conta tags <a> que linkam para domínios DFERENTES do analisado
+        external_links = len(re.findall(f'<a[^>]+href=["\'](http[s]?://(?!.*{current_domain_final}))', html_content))
+        
+        if external_links < 3 and len(html_content) > 1000:
+             reasons.append(f"Baixa contagem de links externos ({external_links})")
+        
+        # E. Entropia em Blocos JavaScript (NOVO)
+        script_content = re.findall(r'<script[^>]*>(.*?)</script>', resp.text, re.DOTALL | re.IGNORECASE)
+        high_entropy_script_count = 0
+        
+        for script in script_content:
+            # Remove entidades HTML (ex: &#xNN;) e ignora scripts muito pequenos
+            clean_script = html.unescape(script)
+            if len(clean_script) > 100 and shannon_entropy(clean_script) > 6.0: 
+                high_entropy_script_count += 1
+                
+        if high_entropy_script_count > 0:
+            reasons.append(f"Conteúdo JS com **alta entropia** ({high_entropy_script_count} bloco(s))")
+
             
     except requests.exceptions.Timeout:
         details.append("Não foi possível acessar a URL (Timeout)")
