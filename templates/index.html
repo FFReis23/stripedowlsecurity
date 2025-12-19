@@ -9,63 +9,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+        /* RESET E BASE */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Roboto', Arial, sans-serif;
             background-color: #0b1a2f; 
             color: #ffffff;
             margin: 0;
             padding: 0;
-
-            /* FUNDO CORRIGIDO PARA GITHUB PAGES */
             background-image: url('./static/fundo.png');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
+            min-height: 100vh;
         }
 
-        .header-logo {
-            width: 120px;
-            height: auto;
-        }
-
+        /* HEADER RESPONSIVO */
         .header {
-            height: 250px;
+            min-height: 250px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px 40px;
+            padding: 80px 20px 40px;
             position: relative;
+            background: rgba(0, 0, 0, 0.3); 
         }
 
-        .header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2); 
-            z-index: 1;
-        }
-
-        .header > * {
-            z-index: 2;
-        }
-        
         .btn-destaques {
             position: absolute;
             top: 20px;
             right: 20px;
-            z-index: 3;
+            z-index: 10;
             background-color: #3b73b2;
             color: white;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
             text-transform: uppercase;
             transition: background 0.3s;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -77,19 +63,24 @@
 
         .header-title {
             display: flex;
+            flex-direction: column; /* Padrão mobile: um em cima do outro */
             align-items: center;
-            gap: 20px;
+            gap: 15px;
+            margin-bottom: 10px;
         }
-        
+
+        .header-logo {
+            width: 100px;
+            height: auto;
+        }
+
         h1 {
             font-family: "Share Tech Mono", monospace;
-            font-size: 34px;
+            font-size: 26px; /* Menor para mobile */
             font-weight: 700;
             color: #ffffff;
-            text-shadow: 0 0 7px rgba(255, 255, 255, 0.7),
-                         0 0 15px rgba(100, 200, 255, 0.3),
-                         0 0 25px rgba(100, 200, 255, 0.1);
-            letter-spacing: 6px;
+            text-shadow: 0 0 7px rgba(255, 255, 255, 0.7);
+            letter-spacing: 3px;
             margin: 0;
             text-transform: uppercase;
         }
@@ -97,161 +88,124 @@
         .subtitle {
             font-size: 14px;
             color: #d0d0d0;
-            margin-top: 5px;
-            font-weight: 400;
+            max-width: 500px;
+            margin: 10px auto 0;
+            line-height: 1.4;
         }
 
+        /* CONTAINER PRINCIPAL */
         .container {
+            width: 90%;
             max-width: 650px;
             margin: 20px auto;
             background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
+            padding: 25px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
         }
 
         .input-box {
             display: flex;
+            flex-direction: column; /* Empilha no mobile */
             gap: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         input[type="text"] {
-            flex: 1;
+            width: 100%;
             padding: 15px;
             border: 1px solid #557096;
             border-radius: 6px;
-            font-size: 18px;
+            font-size: 16px;
             background-color: #1a2a40;
             color: #ffffff;
-        }
-
-        input[type="text"]::placeholder {
-            color: #8c9fae;
+            outline: none;
         }
 
         button {
+            width: 100%; /* Botão largo no mobile */
             padding: 15px 25px;
             border: none;
             background: #4a75a7;
             color: white;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            transition: background 0.3s;
+            transition: 0.3s;
             text-transform: uppercase;
         }
 
         button:hover {
             background: #5b87c7;
         }
-        
+
         .result-box {
             margin-top: 20px;
             background: #1a2a40;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             border-left: 4px solid #4a75a7;
             white-space: pre-wrap;
+            word-wrap: break-word; /* Evita que o texto saia da caixa */
             color: #ffffff;
-            font-size: 16px;
+            font-size: 14px;
         }
 
-        .support-container {
-            max-width: 600px;
-            margin: 40px auto;
-            text-align: center;
-        }
-
-        .support-card {
-            background-color: #1a2a40;
-            border-radius: 10px;
-            padding: 30px 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .support-card h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-
-        .support-options {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        #paypal-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 250px;
-            height: 56px;
-            background-color: #4a75a7;
-            border-radius: 6px;
-            padding: 15px 20px;
-            transition: background 0.3s;
-            cursor: pointer;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            color: #ffffff;
-        }
-
-        #paypal-box:hover {
-            background: #5b87c7;
-        }
-
-        #pix-box-unified {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 250px;
-            height: 56px;
-            background-color: #4a75a7;
-            border-radius: 6px;
-            padding: 15px 20px;
-            transition: background 0.3s;
-            cursor: pointer;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        #pix-box-unified:hover {
-            background: #5b87c7;
-        }
-
-        .pix-text,
-        .paypal-text {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 5px;
-        }
-
-        .pix-key {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 15px;
-            color: #ffffff;
-            word-break: break-all;
-        }
-
+        /* RODAPÉ */
         .footer {
             margin-top: 40px;
             text-align: center;
-            padding: 20px 0;
-            font-size: 14px;
+            padding: 30px 20px;
+            font-size: 13px;
             color: #ffffffb0;
             border-top: 1px solid #ffffff22;
         }
 
+        /* --- MEDIA QUERIES PARA DESKTOP --- */
+        @media (min-width: 600px) {
+            .header-title {
+                flex-direction: row; /* Lado a lado no PC */
+                text-align: left;
+            }
+
+            h1 {
+                font-size: 34px;
+                letter-spacing: 6px;
+            }
+
+            .header-logo {
+                width: 120px;
+            }
+
+            .input-box {
+                flex-direction: row; /* Input e botão lado a lado no PC */
+            }
+
+            button {
+                width: auto;
+            }
+
+            .result-box {
+                font-size: 16px;
+            }
+        }
+
+        /* AJUSTE PARA O BOTÃO DESTAQUES EM CELULARES PEQUENOS */
+        @media (max-width: 450px) {
+            .btn-destaques {
+                position: relative;
+                top: 0;
+                right: 0;
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+            .header {
+                padding-top: 40px;
+            }
+        }
     </style>
 </head>
 
@@ -271,7 +225,7 @@
     <div class="container">
         <form method="POST">
             <div class="input-box">
-                <input type="text" name="url" placeholder="Digite o que você deseja testar" required>
+                <input type="text" name="url" placeholder="Digite o que deseja testar..." required>
                 <button type="submit">VERIFICAR</button>
             </div>
         </form>
