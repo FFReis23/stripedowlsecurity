@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 import tldextract
 import urllib.parse
+import whois
+import requests
 
 app = Flask(__name__)
 
@@ -24,6 +26,40 @@ def levenshtein_distance(s1, s2):
         previous_row = current_row
     return previous_row[-1]
 
+def analyze_security_headers(url):
+    headers_info = []
+    try:
+        response = requests.get(url, timeout=5)
+        headers = response.headers
+        
+        security_headers = {
+            'Strict-Transport-Security': 'Força uso de HTTPS',
+            'Content-Security-Policy': 'Previne injeção de scripts',
+            'X-Frame-Options': 'Previne ataques de Clickjacking'
+        }
+        
+        for header, desc in security_headers.items():
+            if header in headers:
+                headers_info.append(f"✅ {header}: Presente ({desc})")
+            else:
+                headers_info.append(f"❌ {header}: Ausente (Risco de segurança)")
+    except:
+        headers_info.append("⚠️ Não foi possível analisar os cabeçalhos HTTP.")
+    return headers_info
+
+def get_whois_data(url):
+    try:
+        ext = tldextract.extract(url)
+        domain = f"{ext.domain}.{ext.suffix}"
+        w = whois.whois(domain)
+        return {
+            "registrar": w.registrar,
+            "creation_date": w.creation_date[0] if isinstance(w.creation_date, list) else w.creation_date,
+            "country": w.country
+        }
+    except:
+        return None
+
 def is_suspicious(url):
     reasons = []
     if not url.startswith(("http://", "https://")):
@@ -39,43 +75,43 @@ def is_suspicious(url):
 
         if any(shortener in netloc for shortener in URL_SHORTENERS):
             reasons.append("Uso de **encurtador de URL** detectado.")
-
         if f".{ext.suffix}" in SUSPICIOUS_TLDS:
-            reasons.append(f"Domínio com extensão suspeita (**{ext.suffix}**).")
-
+            reasons.append(f"Extensão suspeita (**{ext.suffix}**).")
         if not url.startswith("https://"):
-            reasons.append("A conexão **não é segura** (falta certificado SSL/HTTPS).")
-
+            reasons.append("Conexão **não segura** (sem HTTPS).")
         for legit in DOMINIOS_LEGITIMOS:
             dist = levenshtein_distance(domain, legit)
             if 0 < dist <= 2:
-                reasons.append(f"Possível **Typosquatting**: nome muito similar ao site oficial da {legit.capitalize()}.")
+                reasons.append(f"Possível **Typosquatting** (similar a {legit.capitalize()}).")
                 break
-
-        if any(word in processed_url.lower() for word in PALAVRAS_SUSPEITAS):
-            reasons.append("A URL contém palavras comumente usadas em páginas de captura de dados (phishing).")
-
-    except Exception as e:
-        return [f"Erro na análise: {str(e)}"]
-
+    except:
+        reasons.append("Erro ao processar a estrutura da URL.")
     return reasons
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     result = None
     reasons = []
+    whois_info = None
+    headers_info = []
     url_digitada = ""
     
     if request.method == "POST":
         url_digitada = request.form.get("url")
         if url_digitada:
-            reasons = is_suspicious(url_digitada)
-            if not reasons:
-                result = "✅ Esta URL parece ser segura."
+            if not url_digitada.startswith(("http://", "https://")):
+                full_url = "https://" + url_digitada
             else:
-                result = "⚠️ Alerta: Detectamos riscos nesta URL!"
+                full_url = url_digitada
+                
+            reasons = is_suspicious(url_digitada)
+            whois_info = get_whois_data(full_url)
+            headers_info = analyze_security_headers(full_url)
+            
+            result = "⚠️ Alerta: Riscos detectados!" if reasons else "✅ URL parece segura."
     
-    return render_template("index.html", result=result, reasons=reasons, url_digitada=url_digitada)
+    return render_template("index.html", result=result, reasons=reasons, 
+                           whois_info=whois_info, headers_info=headers_info, url_digitada=url_digitada)
 
 if __name__ == "__main__":
     app.run(debug=True)
