@@ -4,222 +4,86 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Striped Owl Security | Intelligence Unit</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <style>
         * { box-sizing: border-box; }
-
         body {
             font-family: 'Roboto', Arial, sans-serif;
             background-color: #0b1e33; 
             color: #ffffff;
             margin: 0;
-            background-image: url('/static/fundo.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-image: linear-gradient(rgba(11,30,51,0.9), rgba(11,30,51,0.9)), url('/static/fundo.png');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
         }
+        .header { text-align: center; padding: 50px 20px 20px; }
+        .header-logo { width: 100px; margin-bottom: 15px; }
+        h1 { font-family: "Share Tech Mono", monospace; font-size: 32px; letter-spacing: 6px; text-transform: uppercase; margin: 0; }
+        .container { width: 90%; max-width: 550px; background: rgba(16, 38, 64, 0.9); padding: 30px; border-radius: 12px; border: 1px solid rgba(109, 162, 223, 0.3); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); }
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        input[type="text"] { flex: 1; padding: 14px; border-radius: 6px; border: 1px solid #2c3e50; background: #1c2e4a; color: #ffffff; outline: none; }
+        .btn-verificar { padding: 0 25px; background: #547fb3; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        
+        /* ESTILO DOS RESULTADOS */
+        .result-container { margin-bottom: 20px; padding: 15px; border-radius: 8px; animation: fadeIn 0.4s ease; }
+        .danger { background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; color: #ff6b6b; }
+        .success { background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; }
+        .reason-item { font-size: 13px; color: #bdc3c7; margin-top: 8px; list-style-type: square; }
 
-        .header {
-            text-align: center;
-            padding: 50px 20px 20px;
-        }
-
-        .header-logo { 
-            width: 100px; 
-            margin-bottom: 15px; 
-        }
-
-        h1 {
-            font-family: "Share Tech Mono", monospace;
-            font-size: 32px;
-            color: #ffffff;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin: 0;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 550px;
-            background: rgba(16, 38, 64, 0.9); 
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid rgba(109, 162, 223, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            margin-bottom: 20px;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 14px;
-            border-radius: 6px;
-            border: 1px solid #2c3e50;
-            background: #1c2e4a;
-            color: #ffffff;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .btn-verificar {
-            padding: 0 25px;
-            background: #547fb3;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 13px;
-            transition: 0.3s;
-        }
-
-        /* Estilo dos botões secundários conforme imagem 2 */
-        .btn-secondary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 13px;
-            transition: 0.3s;
-            margin-bottom: 15px;
-        }
-
-        .btn-leak {
-            background: rgba(231, 76, 60, 0.1);
-            color: #ff6b6b;
-            border: 1px solid rgba(231, 76, 60, 0.3);
-        }
-
-        .btn-bitwarden {
-            background: rgba(52, 152, 219, 0.1);
-            color: #5dade2;
-            border: 1px solid rgba(52, 152, 219, 0.3);
-        }
-
-        .btn-leak:hover, .btn-bitwarden:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-        }
-
-        /* Seção CVE conforme imagem 2 */
-        .cve-section {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(109, 162, 223, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 10px;
-        }
-
-        .cve-title {
-            font-family: "Share Tech Mono", monospace;
-            font-size: 13px;
-            color: #547fb3;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .cve-description {
-            font-size: 12px;
-            color: #bdc3c7;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .btn-global {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 10px;
-            background: #1c2e4a;
-            color: #547fb3;
-            border: none;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .btn-global:hover {
-            background: #243b5e;
-            color: #ffffff;
-        }
-
-        .footer {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.3);
-            text-align: center;
-            padding: 20px;
-        }
+        .btn-secondary { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 13px; margin-bottom: 15px; transition: 0.3s; }
+        .btn-leak { background: rgba(231, 76, 60, 0.1); color: #ff6b6b; border: 1px solid rgba(231, 76, 60, 0.3); }
+        .btn-bitwarden { background: rgba(52, 152, 219, 0.1); color: #5dade2; border: 1px solid rgba(52, 152, 219, 0.3); }
+        .cve-section { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(109, 162, 223, 0.1); border-radius: 8px; padding: 20px; }
+        .footer { font-size: 11px; color: rgba(255, 255, 255, 0.3); padding: 20px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-
     <div class="header">
-        <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo" alt="Logo">
+        <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo">
         <h1>STRIPED OWL SECURITY</h1>
     </div>
 
     <div class="container">
         <form method="POST">
             <div class="input-group">
-                <input type="text" name="url" placeholder="Digite a URL para verificar..." required>
+                <input type="text" name="url" placeholder="Digite a URL para verificar..." value="{{ url_digitada }}" required>
                 <button type="submit" class="btn-verificar">VERIFICAR</button>
             </div>
         </form>
 
+        {% if result %}
+        <div class="result-container {{ 'danger' if reasons else 'success' }}">
+            <div style="font-weight: bold; font-size: 15px;"><i class="fas {{ 'fa-exclamation-triangle' if reasons else 'fa-check-circle' }}"></i> {{ result }}</div>
+            {% if reasons %}
+                <ul style="margin: 10px 0 0 15px; padding: 0;">
+                {% for reason in reasons %}
+                    <li class="reason-item">{{ reason | safe }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+
         <a href="https://haveibeenpwned.com/" target="_blank" class="btn-secondary btn-leak">
             <i class="fas fa-search"></i> CONSULTA SENHA VAZADA DARK WEB
         </a>
-
         <a href="https://bitwarden.com/password-generator/" target="_blank" class="btn-secondary btn-bitwarden">
             <i class="fas fa-key"></i> GERADOR DE SENHAS BITWARDEN
         </a>
 
         <div class="cve-section">
-            <div class="cve-title">
+            <div style="font-family: 'Share Tech Mono'; color: #547fb3; font-size: 13px; margin-bottom: 10px;">
                 <i class="fas fa-shield-halved"></i> THREAT INTELLIGENCE (CVE)
             </div>
-            <p class="cve-description">
-                Consulte o banco de dados oficial da MITRE para identificar as vulnerabilidades e exposições comuns mais recentes de 2025.
-            </p>
-            <a href="https://cve.mitre.org/" target="_blank" class="btn-global">
-                <i class="fas fa-external-link-alt"></i> Acessar Base de Dados Global
+            <p style="font-size: 12px; color: #bdc3c7; line-height: 1.6;">Consulte a base MITRE para vulnerabilidades de 2025.</p>
+            <a href="https://cve.mitre.org/" target="_blank" style="color: #547fb3; font-size: 12px; text-decoration: none; font-weight: bold; display: block; margin-top: 10px;">
+                <i class="fas fa-external-link-alt"></i> ACESSAR BASE GLOBAL
             </a>
         </div>
     </div>
-
-    <div class="footer">
-        © 2025 Striped Owl Security — Todos os direitos reservados.
-    </div>
-
+    <div class="footer">© 2025 Striped Owl Security — Todos os direitos reservados.</div>
 </body>
 </html>
