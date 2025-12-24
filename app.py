@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, url_for
 import tldextract
-from collections import Counter
-import math
 import urllib.parse
 
 app = Flask(__name__)
@@ -28,8 +26,6 @@ def levenshtein_distance(s1, s2):
 
 def is_suspicious(url):
     reasons = []
-    
-    # Normalização básica
     if not url.startswith(("http://", "https://")):
         processed_url = "https://" + url
     else:
@@ -41,28 +37,23 @@ def is_suspicious(url):
         ext = tldextract.extract(processed_url)
         domain = ext.domain.lower()
 
-        # 1. Verificar Encurtadores
         if any(shortener in netloc for shortener in URL_SHORTENERS):
-            reasons.append("Uso de **encurtador de URL** (comum em phishing).")
+            reasons.append("Uso de **encurtador de URL** detectado.")
 
-        # 2. Verificar TLD (Extensão)
         if f".{ext.suffix}" in SUSPICIOUS_TLDS:
             reasons.append(f"Domínio com extensão suspeita (**{ext.suffix}**).")
 
-        # 3. Verificar HTTPS
         if not url.startswith("https://"):
-            reasons.append("A conexão **não é segura** (falta HTTPS).")
+            reasons.append("A conexão **não é segura** (falta certificado SSL/HTTPS).")
 
-        # 4. Typosquatting (Simular domínios famosos)
         for legit in DOMINIOS_LEGITIMOS:
             dist = levenshtein_distance(domain, legit)
-            if dist > 0 and dist <= 2:
-                reasons.append(f"O nome assemelha-se muito ao site oficial da **{legit.capitalize()}**.")
+            if 0 < dist <= 2:
+                reasons.append(f"Possível **Typosquatting**: nome muito similar ao site oficial da {legit.capitalize()}.")
                 break
 
-        # 5. Palavras suspeitas no caminho
         if any(word in processed_url.lower() for word in PALAVRAS_SUSPEITAS):
-            reasons.append("Contém palavras-chave frequentemente usadas em golpes de roubo de conta.")
+            reasons.append("A URL contém palavras comumente usadas em páginas de captura de dados (phishing).")
 
     except Exception as e:
         return [f"Erro na análise: {str(e)}"]
@@ -80,7 +71,7 @@ def index():
         if url_digitada:
             reasons = is_suspicious(url_digitada)
             if not reasons:
-                result = "✅ Esta URL parece ser segura para navegar."
+                result = "✅ Esta URL parece ser segura."
             else:
                 result = "⚠️ Alerta: Detectamos riscos nesta URL!"
     
