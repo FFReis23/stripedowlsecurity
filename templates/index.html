@@ -47,14 +47,14 @@
 </head>
 <body>
     <div class="header">
-        <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo">
+        <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo" alt="Logo">
         <h1>STRIPED OWL SECURITY</h1>
     </div>
 
     <div class="container">
         <form method="POST">
             <div class="input-group">
-                <input type="text" name="url" placeholder="Digite a URL para verificar..." value="{{ url_digitada }}" required>
+                <input type="text" name="url" placeholder="Digite a URL para verificar..." value="{{ url_digitada if url_digitada else '' }}" required>
                 <button type="submit" class="btn-verificar">VERIFICAR</button>
             </div>
         </form>
@@ -63,10 +63,16 @@
         <div class="info-card {{ 'danger' if reasons else '' }}">
             <span class="card-label"><i class="fas fa-search"></i> ANÁLISE DE HEURÍSTICA & TLD</span>
             <div class="status-msg">
-                {% if reasons %}<i class="fas fa-exclamation-triangle" style="color:#e74c3c"></i>{% else %}<i class="fas fa-check-circle" style="color:#2ecc71"></i>{% endif %}
+                {% if reasons %}
+                    <i class="fas fa-exclamation-triangle" style="color:#e74c3c"></i>
+                {% else %}
+                    <i class="fas fa-check-circle" style="color:#2ecc71"></i>
+                {% endif %}
                 <span style="color: {{ '#e74c3c' if reasons else '#2ecc71' }}">{{ result }}</span>
             </div>
-            {% for r in reasons %}<div class="card-content">• {{ r | safe }}</div>{% endfor %}
+            {% for r in reasons %}
+                <div class="card-content">• {{ r | safe }}</div>
+            {% endfor %}
         </div>
 
         {% if whois_info %}
@@ -80,19 +86,30 @@
         </div>
         {% endif %}
 
+        {% if headers_info %}
         <div class="info-card">
             <span class="card-label"><i class="fas fa-shield-alt"></i> PROTEÇÕES TÉCNICAS (HEADERS)</span>
-            {% for h in headers_info %}<div class="card-content">{{ h }}</div>{% endfor %}
+            {% for h in headers_info %}
+                <div class="card-content">{{ h }}</div>
+            {% endfor %}
         </div>
         {% endif %}
+        {% endif %}
 
-        <a href="#" class="btn-secondary btn-leak"><i class="fas fa-search"></i> CONSULTA SENHA VAZADA DARK WEB</a>
-        <a href="#" class="btn-secondary btn-bitwarden"><i class="fas fa-key"></i> GERADOR DE SENHAS BITWARDEN</a>
+        <a href="https://haveibeenpwned.com/" target="_blank" class="btn-secondary btn-leak">
+            <i class="fas fa-search"></i> CONSULTA SENHA VAZADA DARK WEB
+        </a>
+
+        <a href="https://nordpass-com.translate.goog/password-generator/?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc&_x_tr_hist=true" target="_blank" class="btn-secondary btn-bitwarden">
+            <i class="fas fa-key"></i> GERADOR DE SENHAS BITWARDEN
+        </a>
 
         <div class="cve-section">
             <div class="cve-header">THREAT INTELLIGENCE (CVE)</div>
             <div class="cve-desc">Consulte o banco de dados oficial da MITRE para identificar as vulnerabilidades e exposições comuns mais recentes de 2025.</div>
-            <a href="https://cve.mitre.org/" target="_blank" class="btn-global"><i class="fas fa-external-link-alt"></i> Acessar Base de Dados Global</a>
+            <a href="https://cve.mitre.org/" target="_blank" class="btn-global">
+                <i class="fas fa-external-link-alt"></i> Acessar Base de Dados Global
+            </a>
         </div>
     </div>
 
