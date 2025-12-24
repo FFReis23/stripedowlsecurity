@@ -7,6 +7,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         * { box-sizing: border-box; }
@@ -16,7 +17,6 @@
             background-color: #0b1a2f; 
             color: #ffffff;
             margin: 0;
-            /* Caminho ajustado para funcionar no Render */
             background-image: url('/static/fundo.png');
             background-size: cover;
             background-position: center center;
@@ -73,34 +73,83 @@
 
         button:hover { background: #5b87c7; }
 
-        /* SEÇÃO DE CONSULTA DIRETA */
-        .leak-link-container {
+        /* SEÇÃO DE LINKS E FERRAMENTAS */
+        .tool-section {
             margin-top: 25px;
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .leak-link {
-            display: block;
-            background: rgba(231, 76, 60, 0.15);
-            padding: 18px;
+        .btn-tool {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
             border-radius: 8px;
             text-decoration: none;
-            color: #ff6b6b;
-            text-align: center;
             font-weight: bold;
-            font-size: 16px;
-            border: 1px solid rgba(231, 76, 60, 0.3);
             transition: all 0.3s;
             text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        /* Cores específicas para cada ferramenta */
+        .leak-link {
+            background: rgba(231, 76, 60, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(231, 76, 60, 0.3);
         }
 
         .leak-link:hover {
             background: rgba(231, 76, 60, 0.25);
-            transform: scale(1.02);
             border-color: #e74c3c;
             color: #ffffff;
         }
+
+        .bitwarden-link {
+            background: rgba(23, 93, 220, 0.15);
+            color: #6da2df;
+            border: 1px solid rgba(23, 93, 220, 0.3);
+        }
+
+        .bitwarden-link:hover {
+            background: rgba(23, 93, 220, 0.25);
+            border-color: #175ddc;
+            color: #ffffff;
+        }
+
+        /* PAINEL DE NOTÍCIAS (CVE FEED) */
+        .news-panel {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .news-header {
+            font-family: "Share Tech Mono", monospace;
+            font-size: 14px;
+            color: #4a75a7;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .news-item {
+            font-size: 13px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .news-item a { color: #a3c2e0; text-decoration: none; }
+        .news-item a:hover { text-decoration: underline; }
+        .news-date { font-size: 11px; color: #5c7899; display: block; }
 
         .result-box {
             background: #1a2a40; padding: 15px; border-radius: 8px; 
@@ -118,7 +167,7 @@
     <div class="container">
         <form method="POST">
             <div class="input-box">
-                <input type="text" name="url" placeholder="Digite a URL para verificar..." required>
+                <input type="text" name="url" placeholder="Verificar URL maliciosa..." required>
                 <button type="submit">VERIFICAR</button>
             </div>
         </form>
@@ -129,16 +178,59 @@
         </div>
         {% endif %}
 
-        <div class="leak-link-container">
-            <a href="https://haveibeenpwned.com/" target="_blank" class="leak-link">
-                🔍 CONSULTA SENHA VAZADA DARK WEB
+        <div class="tool-section">
+            <a href="https://haveibeenpwned.com/" target="_blank" class="btn-tool leak-link">
+                <i class="fas fa-user-secret"></i> Consulta Senha Vazada
             </a>
+
+            <a href="https://bitwarden.com/password-generator/" target="_blank" class="btn-tool bitwarden-link">
+                <i class="fas fa-key"></i> Gerador de Senhas Bitwarden
+            </a>
+        </div>
+
+        <div class="news-panel">
+            <div class="news-header">
+                <i class="fas fa-rss"></i> ÚLTIMAS VULNERABILIDADES (CVEs)
+            </div>
+            <div id="cve-feed">
+                <p style="font-size: 12px; color: #5c7899;">Sincronizando feed global...</p>
+            </div>
         </div>
     </div>
 
     <div style="text-align: center; padding: 20px; font-size: 12px; color: rgba(255,255,255,0.4);">
-        © 2025 Striped Owl Security — Todos os direitos reservados.
+        © 2025 Striped Owl Security — Intelligence Unit
     </div>
+
+    <script>
+        // Função para buscar as últimas vulnerabilidades reais (CVEs)
+        async function fetchCVEs() {
+            const feedContainer = document.getElementById('cve-feed');
+            try {
+                // API pública da CIRCL para últimas vulnerabilidades
+                const response = await fetch('https://cve.circl.lu/api/last/5');
+                const data = await response.json();
+                
+                feedContainer.innerHTML = '';
+                
+                data.forEach(cve => {
+                    const item = document.createElement('div');
+                    item.className = 'news-item';
+                    item.innerHTML = `
+                        <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${cve.id}" target="_blank">
+                            <strong>${cve.id}</strong>: ${cve.summary.substring(0, 80)}...
+                        </a>
+                        <span class="news-date">Impacto: ${cve.cvss || 'N/A'} | Data: ${new Date(cve.Published).toLocaleDateString()}</span>
+                    `;
+                    feedContainer.appendChild(item);
+                });
+            } catch (error) {
+                feedContainer.innerHTML = '<p style="font-size:11px; color: #e74c3c;">Falha ao conectar ao feed de inteligência.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchCVEs);
+    </script>
 
 </body>
 </html>
