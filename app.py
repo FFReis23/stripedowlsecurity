@@ -1,19 +1,12 @@
 from flask import Flask, render_template, request, url_for
-import re
 import tldextract
-import requests
-import socket
-import ssl
-from datetime import datetime
 from collections import Counter
 import math
 import urllib.parse
-import idna
-import html
 
 app = Flask(__name__)
 
-# --- Configurações ---
+# --- Configurações de Segurança ---
 DOMINIOS_LEGITIMOS = ["google", "microsoft", "apple", "netflix", "paypal", "itau", "amazon", "facebook", "twitter", "instagram", "linkedin"]
 PALAVRAS_SUSPEITAS = ["login", "secure", "update", "verify", "account", "bank", "confirm", "payment", "password", "auth", "webscr", "transfer"]
 URL_SHORTENERS = ["bit.ly", "tinyurl.com", "t.co", "goo.gl", "ow.ly", "is.gd", "buff.ly", "rebrand.ly"]
@@ -33,16 +26,10 @@ def levenshtein_distance(s1, s2):
         previous_row = current_row
     return previous_row[-1]
 
-def shannon_entropy(data):
-    if not data: return 0
-    data = data.encode('utf-8', 'ignore').decode('utf-8')
-    probabilities = [float(c) / len(data) for c in Counter(data).values()]
-    return -sum(p * math.log(p, 2) for p in probabilities if p > 0)
-
 def is_suspicious(url):
     reasons = []
-    details = []
     
+    # Normalização básica
     if not url.startswith(("http://", "https://")):
         processed_url = "https://" + url
     else:
@@ -50,51 +37,54 @@ def is_suspicious(url):
     
     try:
         parsed_url = urllib.parse.urlparse(processed_url)
-        safe_netloc = parsed_url.netloc.split('@')[-1]
+        netloc = parsed_url.netloc.lower()
         ext = tldextract.extract(processed_url)
-        hostname = ext.domain + "." + ext.suffix
+        domain = ext.domain.lower()
 
-        if any(shortener in safe_netloc for shortener in URL_SHORTENERS):
-            reasons.append("Uso de **encurtador de URL**")
+        # 1. Verificar Encurtadores
+        if any(shortener in netloc for shortener in URL_SHORTENERS):
+            reasons.append("Uso de **encurtador de URL** (comum em phishing).")
 
-        if ext.suffix in SUSPICIOUS_TLDS:
-            reasons.append(f"TLD suspeito ({ext.suffix})")
+        # 2. Verificar TLD (Extensão)
+        if f".{ext.suffix}" in SUSPICIOUS_TLDS:
+            reasons.append(f"Domínio com extensão suspeita (**{ext.suffix}**).")
 
-        if not processed_url.startswith("https://"):
-            reasons.append("Não utiliza **HTTPS**")
+        # 3. Verificar HTTPS
+        if not url.startswith("https://"):
+            reasons.append("A conexão **não é segura** (falta HTTPS).")
 
-        # Typosquatting
+        # 4. Typosquatting (Simular domínios famosos)
         for legit in DOMINIOS_LEGITIMOS:
-            if levenshtein_distance(ext.domain, legit) in [1, 2]:
-                reasons.append(f"Semelhante a '{legit}' (Typosquatting)")
+            dist = levenshtein_distance(domain, legit)
+            if dist > 0 and dist <= 2:
+                reasons.append(f"O nome assemelha-se muito ao site oficial da **{legit.capitalize()}**.")
                 break
 
+        # 5. Palavras suspeitas no caminho
+        if any(word in processed_url.lower() for word in PALAVRAS_SUSPEITAS):
+            reasons.append("Contém palavras-chave frequentemente usadas em golpes de roubo de conta.")
+
     except Exception as e:
-        return f"Erro na análise: {str(e)}", []
+        return [f"Erro na análise: {str(e)}"]
 
-    return (reasons, details)
-
-# --- ROTAS CORRIGIDAS ---
+    return reasons
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     result = None
     reasons = []
-    if request.method == "POST":
-        url = request.form.get("url")
-        if url:
-            reasons, details = is_suspicious(url)
-            if not reasons:
-                result = "✅ URL parece segura."
-            else:
-                result = "⚠️ URL suspeita detectada!"
+    url_digitada = ""
     
-    return render_template("index.html", result=result, reasons=reasons)
-
-@app.route("/ataque")
-def ataque():
-    # Renderiza o arquivo ataque.html que está na pasta templates
-    return render_template("ataque.html")
+    if request.method == "POST":
+        url_digitada = request.form.get("url")
+        if url_digitada:
+            reasons = is_suspicious(url_digitada)
+            if not reasons:
+                result = "✅ Esta URL parece ser segura para navegar."
+            else:
+                result = "⚠️ Alerta: Detectamos riscos nesta URL!"
+    
+    return render_template("index.html", result=result, reasons=reasons, url_digitada=url_digitada)
 
 if __name__ == "__main__":
     app.run(debug=True)
