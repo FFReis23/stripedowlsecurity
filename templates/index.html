@@ -3,101 +3,188 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Striped Owl Security</title>
+    <title>Striped Owl Security | Intel Unit</title>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; }
-        body {
-            font-family: 'Roboto', sans-serif; background-color: #0b1e33; color: #fff; margin: 0;
-            background-image: radial-gradient(circle at top, #162a44 0%, #0b1e33 70%); min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        /* Estética Hacker e Cores */
+        :root {
+            --neon-blue: #547fb3;
+            --neon-red: #ff4d4d;
+            --terminal-green: #00ff41;
+            --bg-dark: #0b1e33;
         }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header-logo { width: 90px; margin-bottom: 10px; }
-        h1 { font-family: 'Share Tech Mono', monospace; letter-spacing: 5px; font-size: 28px; text-transform: uppercase; margin: 0; }
+
+        * { box-sizing: border-box; }
         
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-dark);
+            color: #fff;
+            margin: 0;
+            background-image: radial-gradient(circle at top, #162a44 0%, #0b1e33 80%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* Título com Efeito Glow */
+        .header { text-align: center; margin-bottom: 30px; }
+        .header-logo { width: 90px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
+        h1 { 
+            font-family: 'Share Tech Mono', monospace; 
+            letter-spacing: 8px; 
+            font-size: 28px; 
+            text-transform: uppercase; 
+            text-shadow: 0 0 15px var(--neon-blue);
+        }
+
         .container { 
-            width: 95%; max-width: 600px; background: rgba(16, 38, 64, 0.8); 
-            padding: 30px; border-radius: 12px; border: 1px solid rgba(109, 162, 223, 0.1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 95%; 
+            max-width: 600px; 
+            background: rgba(16, 38, 64, 0.9); 
+            padding: 30px; 
+            border-radius: 4px; 
+            border: 1px solid rgba(84, 127, 179, 0.3);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efeito de Linha de Scanner */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue);
+            animation: scan 4s linear infinite;
+            opacity: 0.5;
+            z-index: 10;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        /* Terminal de Logs Inferior */
+        .terminal-box {
+            background: #000;
+            border: 1px solid #1a3a5a;
+            padding: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--terminal-green);
+            margin-bottom: 20px;
+            border-radius: 4px;
+            opacity: 0.8;
         }
 
         .input-group { display: flex; gap: 10px; margin-bottom: 25px; }
-        input[type="text"] { flex: 1; padding: 15px; border-radius: 6px; border: 1px solid #2c3e50; background: rgba(21, 37, 58, 0.8); color: white; outline: none; }
-        .btn-verificar { padding: 0 30px; background: #547fb3; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 14px; }
+        input[type="text"] { 
+            flex: 1; 
+            padding: 15px; 
+            border-radius: 4px; 
+            border: 1px solid #2c3e50; 
+            background: rgba(0, 0, 0, 0.5); 
+            color: var(--terminal-green); 
+            font-family: 'Share Tech Mono';
+            outline: none; 
+        }
 
-        .info-card { background: #112235; border-radius: 8px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #547fb3; }
-        .info-card.danger { border-left-color: #e74c3c; }
-        .card-label { font-family: 'Share Tech Mono'; color: #547fb3; font-size: 12px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .status-msg { font-weight: bold; font-size: 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-        .card-content { font-size: 13px; color: #bdc3c7; line-height: 1.6; }
+        .btn-verificar { 
+            padding: 0 30px; 
+            background: var(--neon-blue); 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn-verificar:hover { background: #6da2df; box-shadow: 0 0 15px var(--neon-blue); }
 
-        .btn-secondary { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 15px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; margin-bottom: 12px; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1); }
-        .btn-leak { color: #ff6b6b; background: rgba(231, 76, 60, 0.05); border-color: rgba(231, 76, 60, 0.2); }
-        .btn-bitwarden { color: #547fb3; background: rgba(84, 127, 179, 0.05); border-color: rgba(84, 127, 179, 0.2); }
+        /* Cards de Resultado */
+        .info-card { 
+            background: rgba(17, 34, 53, 0.8); 
+            border: 1px solid rgba(84, 127, 179, 0.2); 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            border-left: 4px solid var(--neon-blue); 
+        }
+        .info-card.danger { border-left-color: var(--neon-red); }
+        .card-label { font-family: 'Share Tech Mono'; color: var(--neon-blue); font-size: 12px; margin-bottom: 8px; display: block; }
+        .card-content { font-size: 13px; color: #bdc3c7; }
 
-        .cve-section { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .cve-header { font-family: 'Share Tech Mono'; color: #547fb3; font-size: 13px; margin-bottom: 12px; }
-        .cve-desc { font-size: 12px; color: #95a5a6; line-height: 1.5; margin-bottom: 15px; }
-        .btn-global { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; background: #1c2e4a; color: #547fb3; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; }
+        /* Botões Estilo Bot de Resgate */
+        .btn-secondary { 
+            display: flex; align-items: center; justify-content: center; gap: 10px; 
+            width: 100%; padding: 15px; text-decoration: none; font-weight: bold; font-size: 13px; 
+            margin-bottom: 12px; text-transform: uppercase; border-radius: 4px;
+        }
+        .btn-leak { color: var(--neon-red); border: 1px solid rgba(255, 77, 77, 0.3); background: rgba(255, 77, 77, 0.05); }
+        .btn-bitwarden { color: var(--neon-blue); border: 1px solid rgba(84, 127, 179, 0.3); background: rgba(84, 127, 179, 0.05); }
 
-        .footer { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 40px; text-align: center; }
+        .cve-section { background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid #1a3a5a; border-radius: 4px; }
+        .btn-global { background: #1c2e4a; color: var(--neon-blue); padding: 10px; text-decoration: none; display: block; text-align: center; font-size: 12px; margin-top: 10px; border-radius: 4px; font-weight: bold; }
+
+        .footer { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 30px; }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo" alt="Logo">
+        <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo">
         <h1>STRIPED OWL SECURITY</h1>
     </div>
 
     <div class="container">
+        <div class="terminal-box">
+            <div>> SYSTEM STATUS: ONLINE</div>
+            <div>> READY FOR URL INJECTION...</div>
+        </div>
+
         <form method="POST">
             <div class="input-group">
-                <input type="text" name="url" placeholder="Digite a URL para verificar..." value="{{ url_digitada if url_digitada else '' }}" required>
+                <input type="text" name="url" placeholder="DIGITE A URL ALVO..." value="{{ url_digitada if url_digitada else '' }}" required>
                 <button type="submit" class="btn-verificar">VERIFICAR</button>
             </div>
         </form>
 
         {% if result %}
         <div class="info-card {{ 'danger' if reasons else '' }}">
-            <span class="card-label"><i class="fas fa-search"></i> ANÁLISE DE HEURÍSTICA & TLD</span>
-            <div class="status-msg">
-                {% if reasons %}
-                    <i class="fas fa-exclamation-triangle" style="color:#e74c3c"></i>
-                {% else %}
-                    <i class="fas fa-check-circle" style="color:#2ecc71"></i>
-                {% endif %}
-                <span style="color: {{ '#e74c3c' if reasons else '#2ecc71' }}">{{ result }}</span>
+            <span class="card-label"><i class="fas fa-microchip"></i> HEURISTIC_ENGINE_SCAN</span>
+            <div style="font-weight: bold; color: {{ '#ff4d4d' if reasons else '#00ff41' }}">
+                {{ result }}
             </div>
-            {% for r in reasons %}
-                <div class="card-content">• {{ r | safe }}</div>
-            {% endfor %}
+            {% for r in reasons %}<div class="card-content">• {{ r | safe }}</div>{% endfor %}
         </div>
 
         {% if whois_info %}
         <div class="info-card">
-            <span class="card-label"><i class="fas fa-fingerprint"></i> INTELIGÊNCIA WHOIS</span>
+            <span class="card-label"><i class="fas fa-database"></i> WHOIS_INTEL_REPORT</span>
             <div class="card-content">
-                <b>Registrador:</b> {{ whois_info.registrar }}<br>
-                <b>Criação:</b> {{ whois_info.creation_date }}<br>
-                <b>País:</b> {{ whois_info.country }}
+                <b>REGISTRAR:</b> {{ whois_info.registrar }}<br>
+                <b>BORN:</b> {{ whois_info.creation_date }}<br>
+                <b>GEO:</b> {{ whois_info.country }}
             </div>
         </div>
         {% endif %}
 
-        {% if headers_info %}
         <div class="info-card">
-            <span class="card-label"><i class="fas fa-shield-alt"></i> PROTEÇÕES TÉCNICAS (HEADERS)</span>
-            {% for h in headers_info %}
-                <div class="card-content">{{ h }}</div>
-            {% endfor %}
+            <span class="card-label"><i class="fas fa-terminal"></i> SECURITY_HEADERS_CHECK</span>
+            {% for h in headers_info %}<div class="card-content" style="font-size: 11px;">{{ h }}</div>{% endfor %}
         </div>
-        {% endif %}
         {% endif %}
 
         <a href="https://haveibeenpwned.com/" target="_blank" class="btn-secondary btn-leak">
-            <i class="fas fa-search"></i> CONSULTA SENHA VAZADA DARK WEB
+            <i class="fas fa-user-secret"></i> CONSULTA SENHA VAZADA DARK WEB
         </a>
 
         <a href="https://bitwarden.com/password-generator/" target="_blank" class="btn-secondary btn-bitwarden">
@@ -105,14 +192,12 @@
         </a>
 
         <div class="cve-section">
-            <div class="cve-header">THREAT INTELLIGENCE (CVE)</div>
-            <div class="cve-desc">Consulte o banco de dados oficial da MITRE para identificar as vulnerabilidades e exposições comuns mais recentes de 2025.</div>
-            <a href="https://cve.mitre.org/" target="_blank" class="btn-global">
-                <i class="fas fa-external-link-alt"></i> Acessar Base de Dados Global
-            </a>
+            <div style="font-family: 'Share Tech Mono'; color: var(--neon-blue); font-size: 13px;">THREAT_INTELLIGENCE (CVE)</div>
+            <div style="font-size: 11px; color: #95a5a6; margin: 8px 0;">Acessar base de dados da MITRE para vulnerabilidades 2025.</div>
+            <a href="https://cve.mitre.org/" target="_blank" class="btn-global">ACESSAR BASE GLOBAL</a>
         </div>
     </div>
 
-    <div class="footer">© 2025 Striped Owl Security — Todos os direitos reservados.</div>
+    <div class="footer">© 2025 Striped Owl Security — [INTEL UNIT ACCESS]</div>
 </body>
 </html>
