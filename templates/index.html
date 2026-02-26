@@ -27,7 +27,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Ajustado para scroll */
+            padding-top: 50px;
             overflow-x: hidden;
         }
 
@@ -40,6 +41,7 @@
             font-size: 28px; 
             text-transform: uppercase; 
             text-shadow: 0 0 15px var(--neon-blue);
+            margin-top: 15px;
         }
 
         .container { 
@@ -52,6 +54,7 @@
             box-shadow: 0 0 30px rgba(0,0,0,0.8);
             position: relative;
             overflow: hidden;
+            margin-bottom: 40px;
         }
 
         /* Efeito de Linha de Scanner */
@@ -74,7 +77,7 @@
             100% { top: 100%; }
         }
 
-        /* Terminal de Logs Inferior */
+        /* Terminal de Logs */
         .terminal-box {
             background: #000;
             border: 1px solid #1a3a5a;
@@ -111,18 +114,6 @@
         }
         .btn-verificar:hover { background: #6da2df; box-shadow: 0 0 15px var(--neon-blue); }
 
-        /* Cards de Resultado */
-        .info-card { 
-            background: rgba(17, 34, 53, 0.8); 
-            border: 1px solid rgba(84, 127, 179, 0.2); 
-            padding: 15px; 
-            margin-bottom: 15px; 
-            border-left: 4px solid var(--neon-blue); 
-        }
-        .info-card.danger { border-left-color: var(--neon-red); }
-        .card-label { font-family: 'Share Tech Mono'; color: var(--neon-blue); font-size: 12px; margin-bottom: 8px; display: block; }
-        .card-content { font-size: 13px; color: #bdc3c7; }
-
         /* Botões Estilo Bot de Resgate */
         .btn-secondary { 
             display: flex; align-items: center; justify-content: center; gap: 10px; 
@@ -135,7 +126,59 @@
         .cve-section { background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid #1a3a5a; border-radius: 4px; }
         .btn-global { background: #1c2e4a; color: var(--neon-blue); padding: 10px; text-decoration: none; display: block; text-align: center; font-size: 12px; margin-top: 10px; border-radius: 4px; font-weight: bold; }
 
-        .footer { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 30px; }
+        /* --- SEÇÃO DOS MAPAS --- */
+        .maps-wrapper {
+            display: flex;
+            gap: 20px;
+            width: 95%;
+            max-width: 1200px; /* Mais largo que o container superior */
+            margin: 0 auto 50px auto;
+            flex-wrap: wrap;
+        }
+
+        .map-container {
+            flex: 1;
+            min-width: 320px;
+            height: 450px; /* Tamanho médio ideal */
+            background: rgba(16, 38, 64, 0.9);
+            border: 1px solid rgba(84, 127, 179, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .map-header {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--neon-blue);
+            border-bottom: 1px solid rgba(84, 127, 179, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: calc(100% - 38px);
+            border: none;
+            filter: brightness(0.9) contrast(1.1);
+        }
+
+        .footer { font-size: 10px; color: rgba(255,255,255,0.3); padding-bottom: 30px; }
+
+        /* Ajustes para o Flask (Jinja2) - Manter se estiver usando Python */
+        .info-card { 
+            background: rgba(17, 34, 53, 0.8); 
+            border: 1px solid rgba(84, 127, 179, 0.2); 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            border-left: 4px solid var(--neon-blue); 
+        }
+        .info-card.danger { border-left-color: var(--neon-red); }
+        .card-label { font-family: 'Share Tech Mono'; color: var(--neon-blue); font-size: 12px; margin-bottom: 8px; display: block; }
+        .card-content { font-size: 13px; color: #bdc3c7; }
     </style>
 </head>
 <body>
@@ -165,22 +208,6 @@
             </div>
             {% for r in reasons %}<div class="card-content">• {{ r | safe }}</div>{% endfor %}
         </div>
-
-        {% if whois_info %}
-        <div class="info-card">
-            <span class="card-label"><i class="fas fa-database"></i> WHOIS_INTEL_REPORT</span>
-            <div class="card-content">
-                <b>REGISTRAR:</b> {{ whois_info.registrar }}<br>
-                <b>BORN:</b> {{ whois_info.creation_date }}<br>
-                <b>GEO:</b> {{ whois_info.country }}
-            </div>
-        </div>
-        {% endif %}
-
-        <div class="info-card">
-            <span class="card-label"><i class="fas fa-terminal"></i> SECURITY_HEADERS_CHECK</span>
-            {% for h in headers_info %}<div class="card-content" style="font-size: 11px;">{{ h }}</div>{% endfor %}
-        </div>
         {% endif %}
 
         <a href="https://haveibeenpwned.com/" target="_blank" class="btn-secondary btn-leak">
@@ -195,6 +222,18 @@
             <div style="font-family: 'Share Tech Mono'; color: var(--neon-blue); font-size: 13px;">THREAT_INTELLIGENCE (CVE)</div>
             <div style="font-size: 11px; color: #95a5a6; margin: 8px 0;">Acessar base de dados da MITRE para vulnerabilidades 2025.</div>
             <a href="https://cve.mitre.org/" target="_blank" class="btn-global">ACESSAR BASE GLOBAL</a>
+        </div>
+    </div>
+
+    <div class="maps-wrapper">
+        <div class="map-container">
+            <div class="map-header"><i class="fas fa-shield-alt"></i> CHECK POINT LIVE THREAT MAP</div>
+            <iframe src="https://sc1.checkpoint.com/threatmap/" loading="lazy"></iframe>
+        </div>
+
+        <div class="map-container">
+            <div class="map-header"><i class="fas fa-network-wired"></i> FORTIGUARD THREAT INTELLIGENCE</div>
+            <iframe src="https://threatmap.fortiguard.com/" loading="lazy"></iframe>
         </div>
     </div>
 
