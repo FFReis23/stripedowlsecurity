@@ -27,7 +27,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Ajustado para scroll */
+            justify-content: flex-start;
             padding-top: 50px;
             overflow-x: hidden;
         }
@@ -131,7 +131,7 @@
             display: flex;
             gap: 20px;
             width: 95%;
-            max-width: 1200px; /* Mais largo que o container superior */
+            max-width: 1200px;
             margin: 0 auto 50px auto;
             flex-wrap: wrap;
         }
@@ -139,7 +139,7 @@
         .map-container {
             flex: 1;
             min-width: 320px;
-            height: 450px; /* Tamanho médio ideal */
+            height: 450px;
             background: rgba(16, 38, 64, 0.9);
             border: 1px solid rgba(84, 127, 179, 0.3);
             border-radius: 4px;
@@ -163,12 +163,18 @@
             width: 100%;
             height: calc(100% - 38px);
             border: none;
+            /* Invertemos levemente as cores para o mapa da Check Point não ficar tão branco */
+            filter: brightness(0.8) contrast(1.2) hue-rotate(180deg) invert(1);
+        }
+
+        /* O mapa da Fortinet não precisa de inversão, então resetamos o filtro nele especificamente */
+        .map-container:last-child iframe {
             filter: brightness(0.9) contrast(1.1);
         }
 
         .footer { font-size: 10px; color: rgba(255,255,255,0.3); padding-bottom: 30px; }
 
-        /* Ajustes para o Flask (Jinja2) - Manter se estiver usando Python */
+        /* Estilo dos Cards de Resultado */
         .info-card { 
             background: rgba(17, 34, 53, 0.8); 
             border: 1px solid rgba(84, 127, 179, 0.2); 
@@ -228,12 +234,12 @@
     <div class="maps-wrapper">
         <div class="map-container">
             <div class="map-header"><i class="fas fa-shield-alt"></i> CHECK POINT LIVE THREAT MAP</div>
-            <iframe src="https://sc1.checkpoint.com/threatmap/" loading="lazy"></iframe>
+            <iframe src="https://threatmap.checkpoint.com/" scrolling="no" loading="lazy"></iframe>
         </div>
 
         <div class="map-container">
             <div class="map-header"><i class="fas fa-network-wired"></i> FORTIGUARD THREAT INTELLIGENCE</div>
-            <iframe src="https://threatmap.fortiguard.com/" loading="lazy"></iframe>
+            <iframe src="https://threatmap.fortiguard.com/" scrolling="no" loading="lazy"></iframe>
         </div>
     </div>
 
