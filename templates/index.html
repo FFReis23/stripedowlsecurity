@@ -126,20 +126,21 @@
         .cve-section { background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid #1a3a5a; border-radius: 4px; }
         .btn-global { background: #1c2e4a; color: var(--neon-blue); padding: 10px; text-decoration: none; display: block; text-align: center; font-size: 12px; margin-top: 10px; border-radius: 4px; font-weight: bold; }
 
-        /* --- SEÇÃO DOS MAPAS --- */
+        /* --- SEÇÃO DOS MAPAS (AJUSTADA PARA 3) --- */
         .maps-wrapper {
             display: flex;
-            gap: 20px;
-            width: 95%;
-            max-width: 1200px;
+            gap: 15px;
+            width: 98%;
+            max-width: 1600px; /* Aumentado para caber os 3 lado a lado */
             margin: 0 auto 50px auto;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .map-container {
             flex: 1;
-            min-width: 320px;
-            height: 450px;
+            min-width: 350px; /* Largura mínima para manter visibilidade */
+            height: 400px;
             background: rgba(16, 38, 64, 0.9);
             border: 1px solid rgba(84, 127, 179, 0.3);
             border-radius: 4px;
@@ -151,7 +152,7 @@
             background: rgba(0, 0, 0, 0.6);
             padding: 10px;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--neon-blue);
             border-bottom: 1px solid rgba(84, 127, 179, 0.3);
             display: flex;
@@ -163,18 +164,15 @@
             width: 100%;
             height: calc(100% - 38px);
             border: none;
-            /* Invertemos levemente as cores para o mapa da Check Point não ficar tão branco */
-            filter: brightness(0.8) contrast(1.2) hue-rotate(180deg) invert(1);
         }
 
-        /* O mapa da Fortinet não precisa de inversão, então resetamos o filtro nele especificamente */
-        .map-container:last-child iframe {
-            filter: brightness(0.9) contrast(1.1);
-        }
+        /* Filtros específicos para combinar com o tema */
+        .checkpoint-map { filter: brightness(0.8) contrast(1.2) hue-rotate(180deg) invert(1); }
+        .fortinet-map { filter: brightness(0.9) contrast(1.1); }
+        .kaspersky-map { filter: brightness(0.9) hue-rotate(-10deg); }
 
         .footer { font-size: 10px; color: rgba(255,255,255,0.3); padding-bottom: 30px; }
 
-        /* Estilo dos Cards de Resultado */
         .info-card { 
             background: rgba(17, 34, 53, 0.8); 
             border: 1px solid rgba(84, 127, 179, 0.2); 
@@ -182,7 +180,6 @@
             margin-bottom: 15px; 
             border-left: 4px solid var(--neon-blue); 
         }
-        .info-card.danger { border-left-color: var(--neon-red); }
         .card-label { font-family: 'Share Tech Mono'; color: var(--neon-blue); font-size: 12px; margin-bottom: 8px; display: block; }
         .card-content { font-size: 13px; color: #bdc3c7; }
     </style>
@@ -196,7 +193,7 @@
     <div class="container">
         <div class="terminal-box">
             <div>> SYSTEM STATUS: ONLINE</div>
-            <div>> READY FOR URL INJECTION...</div>
+            <div>> INTEL_UNIT_ACTIVE...</div>
         </div>
 
         <form method="POST">
@@ -207,12 +204,9 @@
         </form>
 
         {% if result %}
-        <div class="info-card {{ 'danger' if reasons else '' }}">
-            <span class="card-label"><i class="fas fa-microchip"></i> HEURISTIC_ENGINE_SCAN</span>
-            <div style="font-weight: bold; color: {{ '#ff4d4d' if reasons else '#00ff41' }}">
-                {{ result }}
-            </div>
-            {% for r in reasons %}<div class="card-content">• {{ r | safe }}</div>{% endfor %}
+        <div class="info-card">
+            <span class="card-label"><i class="fas fa-microchip"></i> SCAN_REPORT</span>
+            <div style="font-weight: bold; color: var(--terminal-green)">{{ result }}</div>
         </div>
         {% endif %}
 
@@ -226,20 +220,24 @@
 
         <div class="cve-section">
             <div style="font-family: 'Share Tech Mono'; color: var(--neon-blue); font-size: 13px;">THREAT_INTELLIGENCE (CVE)</div>
-            <div style="font-size: 11px; color: #95a5a6; margin: 8px 0;">Acessar base de dados da MITRE para vulnerabilidades 2025.</div>
             <a href="https://cve.mitre.org/" target="_blank" class="btn-global">ACESSAR BASE GLOBAL</a>
         </div>
     </div>
 
     <div class="maps-wrapper">
         <div class="map-container">
-            <div class="map-header"><i class="fas fa-shield-alt"></i> CHECK POINT LIVE THREAT MAP</div>
-            <iframe src="https://threatmap.checkpoint.com/" scrolling="no" loading="lazy"></iframe>
+            <div class="map-header"><i class="fas fa-shield-alt"></i> CHECK POINT THREAT MAP</div>
+            <iframe src="https://threatmap.checkpoint.com/" class="checkpoint-map" scrolling="no" loading="lazy"></iframe>
         </div>
 
         <div class="map-container">
-            <div class="map-header"><i class="fas fa-network-wired"></i> FORTIGUARD THREAT INTELLIGENCE</div>
-            <iframe src="https://threatmap.fortiguard.com/" scrolling="no" loading="lazy"></iframe>
+            <div class="map-header"><i class="fas fa-virus"></i> KASPERSKY CYBERMAP</div>
+            <iframe src="https://cybermap.kaspersky.com/en/widget/" class="kaspersky-map" scrolling="no" loading="lazy"></iframe>
+        </div>
+
+        <div class="map-container">
+            <div class="map-header"><i class="fas fa-network-wired"></i> FORTIGUARD THREAT MAP</div>
+            <iframe src="https://threatmap.fortiguard.com/" class="fortinet-map" scrolling="no" loading="lazy"></iframe>
         </div>
     </div>
 
