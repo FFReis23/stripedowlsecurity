@@ -39,7 +39,7 @@
             text-shadow: 0 0 15px var(--neon-blue); margin-top: 15px;
         }
 
-        /* Container Principal */
+        /* Painel Central */
         .container { 
             width: 95%; max-width: 600px; background: rgba(16, 38, 64, 0.9); 
             padding: 30px; border-radius: 4px; border: 1px solid rgba(84, 127, 179, 0.3);
@@ -56,6 +56,7 @@
         input[type="text"] { 
             flex: 1; padding: 15px; border-radius: 4px; border: 1px solid #2c3e50; 
             background: rgba(0, 0, 0, 0.5); color: var(--terminal-green); font-family: 'Share Tech Mono';
+            outline: none;
         }
 
         .btn-verificar { 
@@ -71,18 +72,21 @@
         .btn-leak { color: var(--neon-red); border: 1px solid rgba(255, 77, 77, 0.3); background: rgba(255, 77, 77, 0.05); }
         .btn-bitwarden { color: var(--neon-blue); border: 1px solid rgba(84, 127, 179, 0.3); background: rgba(84, 127, 179, 0.05); }
 
-        /* Seção de Mapas (Grade 2x2) */
+        /* Seção de Mapas (3 Mapas) */
         .maps-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 20px;
-            width: 95%;
-            max-width: 1400px;
+            width: 98%;
+            max-width: 1500px;
             margin: 0 auto 50px auto;
+            justify-content: center;
         }
 
         .map-container {
-            height: 400px;
+            flex: 1;
+            min-width: 400px; /* Garante que os mapas não fiquem muito pequenos */
+            height: 420px;
             background: rgba(16, 38, 64, 0.9);
             border: 1px solid rgba(84, 127, 179, 0.3);
             border-radius: 4px;
@@ -98,13 +102,16 @@
 
         .map-container iframe { width: 100%; height: calc(100% - 38px); border: none; }
 
-        /* Ajustes Visuais por Mapa */
+        /* Estilização para combinar com o tema escuro */
         .map-checkpoint { filter: invert(0.9) hue-rotate(180deg) brightness(0.8); }
-        .map-kaspersky { filter: brightness(0.9); }
         .map-fortinet { filter: brightness(0.9) contrast(1.1); }
-        .map-bitdefender { filter: hue-rotate(15deg) brightness(0.9); }
+        .map-bitdefender { filter: hue-rotate(15deg) brightness(0.8); }
 
         .footer { font-size: 10px; color: rgba(255,255,255,0.3); padding-bottom: 30px; }
+
+        @media (max-width: 850px) {
+            .map-container { min-width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -139,11 +146,6 @@
         <div class="map-container">
             <div class="map-header"><i class="fas fa-shield-alt"></i> CHECK POINT THREAT MAP</div>
             <iframe src="https://threatmap.checkpoint.com/" class="map-checkpoint" scrolling="no"></iframe>
-        </div>
-
-        <div class="map-container">
-            <div class="map-header"><i class="fas fa-virus"></i> KASPERSKY CYBERMAP</div>
-            <iframe src="https://cybermap.kaspersky.com/pt/widget/" class="map-kaspersky" scrolling="no"></iframe>
         </div>
 
         <div class="map-container">
