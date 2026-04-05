@@ -14,8 +14,6 @@
             --bg-dark: #0b1e33;
         }
 
-        * { box-sizing: border-box; }
-        
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--bg-dark);
@@ -26,97 +24,64 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 50px;
-            overflow-x: hidden;
+            padding: 50px 20px;
         }
 
-        /* Cabeçalho */
         .header { text-align: center; margin-bottom: 30px; }
-        .header-logo { width: 90px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
         h1 { 
             font-family: 'Share Tech Mono', monospace; 
-            letter-spacing: 8px; font-size: 28px; text-transform: uppercase; 
-            text-shadow: 0 0 15px var(--neon-blue); margin-top: 15px;
+            letter-spacing: 5px; font-size: 24px; text-transform: uppercase; 
+            text-shadow: 0 0 15px var(--neon-blue);
         }
 
-        /* Painel Central */
         .container { 
-            width: 95%; max-width: 600px; background: rgba(16, 38, 64, 0.9); 
+            width: 100%; max-width: 650px; background: rgba(16, 38, 64, 0.9); 
             padding: 30px; border-radius: 4px; border: 1px solid rgba(84, 127, 179, 0.3);
-            box-shadow: 0 0 30px rgba(0,0,0,0.8); position: relative; margin-bottom: 40px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
         }
 
         .terminal-box {
             background: #000; border: 1px solid #1a3a5a; padding: 10px;
             font-family: 'Share Tech Mono', monospace; font-size: 11px;
-            color: var(--terminal-green); margin-bottom: 20px; border-radius: 4px;
+            color: var(--terminal-green); margin-bottom: 20px;
         }
 
         .input-group { display: flex; gap: 10px; margin-bottom: 25px; }
         input[type="text"] { 
-            flex: 1; padding: 15px; border-radius: 4px; border: 1px solid #2c3e50; 
-            background: rgba(0, 0, 0, 0.5); color: var(--terminal-green); font-family: 'Share Tech Mono';
-            outline: none;
+            flex: 1; padding: 15px; background: rgba(0, 0, 0, 0.5); 
+            color: var(--terminal-green); border: 1px solid #2c3e50; outline: none;
+            font-family: 'Share Tech Mono';
         }
 
         .btn-verificar { 
-            padding: 0 30px; background: var(--neon-blue); color: white; 
-            border: none; cursor: pointer; font-weight: bold; text-transform: uppercase;
+            padding: 0 25px; background: var(--neon-blue); color: white; 
+            border: none; cursor: pointer; font-weight: bold;
         }
+
+        /* ESTILO DOS RESULTADOS */
+        .result-panel {
+            margin-bottom: 25px; padding: 20px; border-left: 4px solid var(--neon-blue);
+            background: rgba(0,0,0,0.3);
+        }
+        .reason-list { list-style: none; padding: 0; font-size: 14px; color: #ced4da; }
+        .reason-list li { margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); pb-5; }
 
         .btn-secondary { 
             display: flex; align-items: center; justify-content: center; gap: 10px; 
-            width: 100%; padding: 15px; text-decoration: none; font-weight: bold; font-size: 13px; 
-            margin-bottom: 12px; text-transform: uppercase; border-radius: 4px;
+            width: 100%; padding: 12px; text-decoration: none; font-weight: bold; font-size: 12px; 
+            margin-bottom: 10px; text-transform: uppercase; border-radius: 4px;
         }
-        .btn-leak { color: var(--neon-red); border: 1px solid rgba(255, 77, 77, 0.3); background: rgba(255, 77, 77, 0.05); }
-        .btn-bitwarden { color: var(--neon-blue); border: 1px solid rgba(84, 127, 179, 0.3); background: rgba(84, 127, 179, 0.05); }
+        .btn-leak { color: var(--neon-red); border: 1px solid var(--neon-red); }
+        .btn-bitwarden { color: var(--neon-blue); border: 1px solid var(--neon-blue); }
 
-        /* Seção de Mapas (3 Mapas) */
-        .maps-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            width: 98%;
-            max-width: 1500px;
-            margin: 0 auto 50px auto;
-            justify-content: center;
-        }
-
-        .map-container {
-            flex: 1;
-            min-width: 400px; /* Garante que os mapas não fiquem muito pequenos */
-            height: 420px;
-            background: rgba(16, 38, 64, 0.9);
-            border: 1px solid rgba(84, 127, 179, 0.3);
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .map-header {
-            background: rgba(0, 0, 0, 0.6); padding: 10px; font-family: 'Share Tech Mono', monospace;
-            font-size: 11px; color: var(--neon-blue); border-bottom: 1px solid rgba(84, 127, 179, 0.3);
-            display: flex; align-items: center; gap: 8px;
-        }
-
-        .map-container iframe { width: 100%; height: calc(100% - 38px); border: none; }
-
-        /* Estilização para combinar com o tema escuro */
-        .map-checkpoint { filter: invert(0.9) hue-rotate(180deg) brightness(0.8); }
-        .map-fortinet { filter: brightness(0.9) contrast(1.1); }
-        .map-bitdefender { filter: hue-rotate(15deg) brightness(0.8); }
-
-        .footer { font-size: 10px; color: rgba(255,255,255,0.3); padding-bottom: 30px; }
-
-        @media (max-width: 850px) {
-            .map-container { min-width: 100%; }
-        }
+        .maps-wrapper { display: flex; flex-wrap: wrap; gap: 20px; width: 100%; max-width: 1200px; margin-top: 40px; justify-content: center; }
+        .map-container { flex: 1; min-width: 350px; height: 350px; background: #000; border: 1px solid #1a3a5a; }
+        .map-header { padding: 8px; font-family: 'Share Tech Mono'; font-size: 10px; background: #111; color: var(--neon-blue); }
+        iframe { width: 100%; height: 310px; border: none; filter: brightness(0.7) contrast(1.2); }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="{{ url_for('static', filename='coruja.png') }}" class="header-logo">
         <h1>STRIPED OWL SECURITY</h1>
     </div>
 
@@ -128,15 +93,38 @@
 
         <form method="POST">
             <div class="input-group">
-                <input type="text" name="url" placeholder="DIGITE A URL ALVO..." required>
+                <input type="text" name="url" placeholder="DIGITE A URL ALVO..." value="{{ url_digitada }}" required>
                 <button type="submit" class="btn-verificar">VERIFICAR</button>
             </div>
         </form>
 
+        {% if result %}
+        <div class="result-panel" style="border-color: {{ 'var(--neon-red)' if reasons else 'var(--terminal-green)' }};">
+            <h3 style="margin-top:0; color: {{ 'var(--neon-red)' if reasons else 'var(--terminal-green)' }};">
+                {{ result }}
+            </h3>
+            
+            {% if reasons %}
+            <ul class="reason-list">
+                {% for reason in reasons %}
+                    <li>{{ reason | safe }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if whois_info %}
+            <div style="font-family: 'Share Tech Mono'; font-size: 11px; color: #888; border-top: 1px solid #222; padding-top: 10px;">
+                <div>> REGISTRADOR: {{ whois_info.registrar }}</div>
+                <div>> DATA CRIAÇÃO: {{ whois_info.creation_date }}</div>
+                <div>> LOCAL: {{ whois_info.country }}</div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
         <a href="https://haveibeenpwned.com/" target="_blank" class="btn-secondary btn-leak">
             <i class="fas fa-user-secret"></i> CONSULTA SENHA VAZADA DARK WEB
         </a>
-
         <a href="https://bitwarden.com/password-generator/" target="_blank" class="btn-secondary btn-bitwarden">
             <i class="fas fa-key"></i> GERADOR DE SENHAS BITWARDEN
         </a>
@@ -144,21 +132,13 @@
 
     <div class="maps-wrapper">
         <div class="map-container">
-            <div class="map-header"><i class="fas fa-shield-alt"></i> CHECK POINT THREAT MAP</div>
-            <iframe src="https://threatmap.checkpoint.com/" class="map-checkpoint" scrolling="no"></iframe>
+            <div class="map-header">CHECK POINT THREAT MAP</div>
+            <iframe src="https://threatmap.checkpoint.com/"></iframe>
         </div>
-
         <div class="map-container">
-            <div class="map-header"><i class="fas fa-network-wired"></i> FORTIGUARD THREAT MAP</div>
-            <iframe src="https://threatmap.fortiguard.com/" class="map-fortinet" scrolling="no"></iframe>
-        </div>
-
-        <div class="map-container">
-            <div class="map-header"><i class="fas fa-radar"></i> BITDEFENDER LIVE THREATS</div>
-            <iframe src="https://threatmap.bitdefender.com/" class="map-bitdefender" scrolling="no"></iframe>
+            <div class="map-header">FORTIGUARD THREAT MAP</div>
+            <iframe src="https://threatmap.fortiguard.com/"></iframe>
         </div>
     </div>
-
-    <div class="footer">© 2025 Striped Owl Security — Todos os direitos reservados</div>
 </body>
 </html>
