@@ -8,7 +8,7 @@ import warnings
 import base64
 import re
 
-# Desabilita avisos de certificados inseguros
+# Desabilita avisos de certificados inseguros (comum em sites de phishing)
 warnings.filterwarnings('ignore', message='Unverified HTTPS request')
 
 app = Flask(__name__)
@@ -24,52 +24,37 @@ EXTENSOES_PERIGOSAS = [".exe", ".msi", ".bat", ".cmd", ".scr", ".vbs", ".js", ".
 # --- FUNÇÕES DE ANÁLISE ---
 
 def check_virustotal(url):
-    """Consulta a reputação da URL em +70 antivírus via VirusTotal API v3."""
     try:
-        # A API v3 exige o ID da URL em base64 (sem o '=' no final)
+        # A API v3 exige o ID da URL em base64 sem preenchimento
         url_id = base64.urlsafe_b64encode(url.encode()).decode().strip("=")
         api_url = f"https://www.virustotal.com/api/v3/urls/{url_id}"
         headers = {"x-apikey": VT_API_KEY}
-        
         response = requests.get(api_url, headers=headers, timeout=10)
         
         if response.status_code == 200:
             stats = response.json()['data']['attributes']['last_analysis_stats']
             malicious = stats.get('malicious', 0)
-            suspicious = stats.get('suspicious', 0)
-            
             if malicious > 0:
-                return f"🚨 **VirusTotal:** {malicious} antivírus confirmaram que este link contém MALWARE."
-            elif suspicious > 0:
-                return f"⚠️ **VirusTotal:** {suspicious} mecanismos marcaram este link como suspeito."
+                return f"🚨 <b>VirusTotal:</b> {malicious} antivírus detectaram ameaças neste link."
         elif response.status_code == 404:
-            return "ℹ️ VirusTotal: Esta URL é nova e ainda não foi analisada globalmente."
-    except Exception as e:
-        print(f"Erro VT: {e}")
+            return "ℹ️ VirusTotal: URL ainda não analisada globalmente."
+    except:
+        return "⚠️ Erro ao consultar VirusTotal."
     return None
 
 def analyze_malware_indicators(url):
-    """Analisa indicadores técnicos de download de malware."""
     indicators = []
     parsed = urllib.parse.urlparse(url)
     path = parsed.path.lower()
     hostname = parsed.netloc
 
-    # 1. Checa extensões executáveis
     for ext in EXTENSOES_PERIGOSAS:
         if path.endswith(ext):
-            indicators.append(f"🚩 O link tenta baixar um arquivo executável/compactado (**{ext}**).")
+            indicators.append(f"🚩 Link aponta para arquivo executável (<b>{ext}</b>).")
 
-    # 2. Checa se é um endereço IP direto (comum em servidores de ataque)
     if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", hostname.split(':')[0]):
-        indicators.append("🚩 A URL usa um **IP direto** em vez de um nome de domínio.")
-
+        indicators.append("🚩 URL utiliza um <b>IP direto</b> (comum em ataques).")
     return indicators
-
-def calculate_entropy(s):
-    if not s: return 0
-    prob = [float(s.count(c)) / len(s) for c in dict.fromkeys(list(s))]
-    return - sum([p * math.log(p) / math.log(2.0) for p in prob])
 
 def levenshtein_distance(s1, s2):
     if len(s1) < len(s2): return levenshtein_distance(s2, s1)
@@ -99,11 +84,7 @@ def get_whois_data(url):
 
 def is_suspicious_heuristics(url):
     reasons = []
-    if not url.startswith(("http://", "https://")):
-        url_proc = "https://" + url
-    else:
-        url_proc = url
-        
+    url_proc = url if url.startswith(("http://", "https://")) else "https://" + url
     try:
         parsed = urllib.parse.urlparse(url_proc)
         netloc = parsed.netloc.lower()
@@ -111,9 +92,9 @@ def is_suspicious_heuristics(url):
         domain = ext.domain.lower()
 
         if any(s in netloc for s in URL_SHORTENERS):
-            reasons.append("Uso de encurtador de URL.")
+            reasons.append("Uso de encurtador de URL detected.")
         if f".{ext.suffix}" in SUSPICIOUS_TLDS:
-            reasons.append(f"Extensão suspeita (**{ext.suffix}**).")
+            reasons.append(f"Extensão suspeita (<b>{ext.suffix}</b>).")
         if not url.startswith("https://"):
             reasons.append("Conexão sem criptografia (HTTP).")
         for legit in DOMINIOS_LEGITIMOS:
@@ -122,34 +103,24 @@ def is_suspicious_heuristics(url):
                 reasons.append(f"Possível Typosquatting (similar a {legit.capitalize()}).")
         for palavra in PALAVRAS_SUSPEITAS:
             if palavra in url.lower() and palavra != domain:
-                reasons.append(f"Termo sensível detectado: **{palavra}**.")
-        if calculate_entropy(domain) > 3.9:
-            reasons.append("Domínio com nome gerado aleatoriamente.")
+                reasons.append(f"Termo sensível detectado: <b>{palavra}</b>.")
     except:
-        reasons.append("Erro na estrutura da URL.")
+        reasons.append("Erro na análise da estrutura da URL.")
     return reasons
-
-# --- ROTAS FLASK ---
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     result, reasons, whois_info, url_digitada = None, [], None, ""
-    
     if request.method == "POST":
         url_digitada = request.form.get("url", "").strip()
         if url_digitada:
             full_url = url_digitada if url_digitada.startswith(("http://", "https://")) else "http://" + url_digitada
             
-            # 1. Análise de Malware (VT e Indicadores Técnicos)
-            vt_result = check_virustotal(full_url)
-            if vt_result: reasons.append(vt_result)
+            vt = check_virustotal(full_url)
+            if vt: reasons.append(vt)
             
             reasons.extend(analyze_malware_indicators(full_url))
-            
-            # 2. Heurística de Phishing
             reasons.extend(is_suspicious_heuristics(url_digitada))
-            
-            # 3. WHOIS
             whois_info = get_whois_data(full_url)
             
             result = "🚨 Riscos Detectados!" if reasons else "✅ URL parece Segura."
